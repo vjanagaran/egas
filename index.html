@@ -91,11 +91,11 @@
             </script> -->
         </div> <!-- shopping -->
 
-        <div data-role="page" id="shoppingitems" data-title="Sho Sho Restaurant">
+        <div data-role="page" id="shoppingitems" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <div id="cat_name"><h1 class="ui-title" role="heading">Menu Item</h1></div>
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
-                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="cart_items"> 0</span></a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="cart_items"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
                 <div id="menus">
@@ -112,7 +112,41 @@
                                     </div>
                                     <a class="add-btn" onclick="addToCart(1)">Add</a>
                                 </div>
-                                <input type="hidden" id="item_tax_1" value=""/>
+                                <input type="hidden" id="item_tax_1" value="3"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-items" id="menu_item_2"> 
+                        <a class="remove-item" onclick="removeFromCart(2)">X</a>
+                        <div class="item-info">
+                            <h3 id="item_name_2">Item two</h3><h3 class="item-decs">Short description about the item...</h3>
+                            <div>
+                                <span id="item_price_2">Rs. 150</span>
+                                <div class="item-qty">
+                                    <div class="select-qty"><a onclick="decreaseQty(2)">-</a> 
+                                        <input data-role="none" name="qty" type="text" readonly="true" id="item_qty_2" value="1"> 
+                                        <a onclick="increaseQty(2)">+</a>
+                                    </div>
+                                    <a class="add-btn" onclick="addToCart(2)">Add</a>
+                                </div>
+                                <input type="hidden" id="item_tax_2" value="4"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-items" id="menu_item_3"> 
+                        <a class="remove-item" onclick="removeFromCart(3)">X</a>
+                        <div class="item-info">
+                            <h3 id="item_name_3">Item two</h3><h3 class="item-decs">Short description about the item...</h3>
+                            <div>
+                                <span id="item_price_3">Rs. 200</span>
+                                <div class="item-qty">
+                                    <div class="select-qty"><a onclick="decreaseQty(3)">-</a> 
+                                        <input data-role="none" name="qty" type="text" readonly="true" id="item_qty_3" value="1"> 
+                                        <a onclick="increaseQty(3)">+</a>
+                                    </div>
+                                    <a class="add-btn" onclick="addToCart(3)">Add</a>
+                                </div>
+                                <input type="hidden" id="item_tax_3" value="6"/>
                             </div>
                         </div>
                     </div>

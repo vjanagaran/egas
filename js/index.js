@@ -338,7 +338,7 @@ function calcCart() {
         cart_qty = cart_qty + parseInt(row.qty);
     });
     $("#cart_items").html(cart_qty);
-    $("#catalog_cart").html(cart_qty);
+    $("#category_cart").html(cart_qty);
     $("#order_cart").html(cart_qty);
     $("#more_cart").html(cart_qty);
     $("#me_cart").html(cart_qty);
