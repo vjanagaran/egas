@@ -50,7 +50,8 @@ body, input, select, textarea, button, .ui-btn {
 }
 
 #intro{
-    background: url("../img/intro.jpg") no-repeat scroll 0 0 / 100% 100% rgba(0, 0, 0, 0);
+    background: url("../img/intro.jpg") no-repeat scroll 100% 100% / 100% 100% rgba(0, 0, 0, 0);
+    background-size: cover;
 }
 
 #home .homeimg, #intro .homeimg {
@@ -67,12 +68,16 @@ body, input, select, textarea, button, .ui-btn {
     width: 100%;
 }
 
-#catalog .category{
+.check {
+    list-style: none;
+}
+
+#shopping .category{
     margin: 10px;
     padding: 10px;
 }
 
-#catalog .category > img{
+#shopping .category > img{
     margin: 0;
     padding: 0;
     width: 60px;
@@ -80,7 +85,7 @@ body, input, select, textarea, button, .ui-btn {
     float: left;
 }
 
-#catalog .category > span{
+#shopping .category > span{
     margin-left: 10px;
     margin-top: 15px;
     font-size: 20px!important;

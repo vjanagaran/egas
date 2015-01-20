@@ -16,8 +16,7 @@ function onDeviceReady() {
 }
 
 var router = new $.mobile.Router([{
-        "#home": {handler: "homePage", events: "bs"},
-        "#catalog": {handler: "catalogPage", events: "bs"},
+        "#shopping": {handler: "shoppingPage", events: "bs"},
         "#catalogitems(?:[?/](.*))?": {handler: "catalogitemsPage", events: "bs"},
         "#cart": {handler: "cartPage", events: "bs"},
         "#delivery": {handler: "deliveryPage", events: "bs"},
@@ -29,12 +28,9 @@ var router = new $.mobile.Router([{
         "#details": {handler: "detailsPage", events: "bs"}
     }],
         {
-            homePage: function (type, match, ui) {
-                log("Home Page", 3);
-            },
-            catalogPage: function (type, match, ui) {
+            shoppingPage: function (type, match, ui) {
                 log("Catalog Page", 3)
-                loadCatalog();
+                loadShopping();
             },
             catalogitemsPage: function (type, match, ui) {
                 log("Catalog Items page", 3);
@@ -92,7 +88,7 @@ var router = new $.mobile.Router([{
 
 $.addTemplateFormatter({
     menuHref: function (value, options) {
-        return "#catalogitems?cat=" + value;
+        return "#shoppingitems?cat=" + value;
     },
     menuItemClass: function (value, options) {
         var cls = "menu-items";
@@ -168,8 +164,11 @@ function log(msg, level) {
 
 var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" width="60" /></div>';
 
-function loadCatalog() {
-    $("#categories").empty();
+/******** Shopping Functions **/
+
+function loadShopping() {
+    
+    /*$("#categories").empty();
     $("#categories").append(loading);
     $.ajax({
         type: "GET",
@@ -186,7 +185,7 @@ function loadCatalog() {
             $("#categories").empty();
             $("#categories").append('Error in loading data');
         }
-    });
+    });*/
 }
 
 function loadCatalogItems(cat) {
