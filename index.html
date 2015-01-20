@@ -1,0 +1,435 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>Sho Sho Feast Yourself</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.5.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+        <script type="text/javascript" charset="utf-8" src="js/libs/jquery-2.0.3.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/config.js"></script>
+        <script type="text/javascript" src="js/libs/jquery.loadTemplate-1.4.4.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/libs/jquery.mobile.router.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/libs/jquery.mobile-1.4.3.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/libs/jquery-dateFormat.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/push.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="intro" data-title="Sho Sho Restaurant">
+            <div role="main" class="ui-content">
+                <h3 class="align-center">Welcome to Sho Sho Restaurant</h3>
+                <div class="align-center">
+                    <img src="img/logo.jpg" alt="sho sho" class="homeimg"/>
+                </div>
+                <div class="ui-grid-solo">
+                    <div class=" align-center ui-block-a"><a class="ui-btn" href="#home">Get started</a></div>
+                </div>
+            </div>
+        </div> <!-- introduction page-->
+
+        <div data-role="page" id="home" data-title="Sho Sho Restaurant">
+            <div role="main" class="ui-content">
+                <div class="align-center">
+                    <img src="img/logo.jpg" alt="sho sho" class="homeimg"/>
+                </div>
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a"><a href="#catalogitems?cat=12" class="ui-btn ui-btn-corner-all">Today's Best Offer!!</a></div>
+                </div>
+                <fieldset class="ui-grid-a">
+                    <div class="ui-block-a"><a href="#catalog" class="ui-btn ui-btn-corner-all"><i class="fa fa-cutlery"></i><br/>Menu</a></div>
+                    <div class="ui-block-b"><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></div>
+                    <div class="ui-block-a"><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-user"></i><br/>Me</a></div>
+                    <div class="ui-block-b"><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></div>
+                </fieldset>
+            </div>
+        </div> <!-- home -->
+
+        <div data-role="page" id="me" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">User Profile</h1>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="me_cart"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="my_details"></div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#catalog" class="ui-btn ui-btn-corner-all"><i class="fa fa-cutlery"></i><br/>Menu</a></li>
+                        <li><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
+                        <li><a href="#me" class="ui-btn ui-btn-corner-all  ui-btn-active ui-state-persist"><i class="fa fa-home"></i><br/>Me</a></li>
+                        <li><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- me -->
+
+        <div data-role="page" id="catalog" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 class="ui-title" role="heading">Catalog</h1>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="catalog_cart"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="categories"></div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#catalog" class="ui-btn ui-btn-corner-all ui-btn-active ui-state-persist"><i class="fa fa-cutlery"></i><br/>Menu</a></li>
+                        <li><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
+                        <li><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-user"></i><br/>Me</a></li>
+                        <li><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <script type="text/html" id="category_list_tpl">
+                <a class="ui-btn ui-btn-b category" data-template-bind='[
+                   {"attribute": "href", "value": "id", "formatter": "menuHref"}]'>
+                    <img data-src="image" />
+                    <span data-content="name"></span>
+                </a>
+            </script>
+        </div> <!-- catalog -->
+
+        <div data-role="page" id="catalogitems" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <div id="cat_name"><h1 class="ui-title" role="heading">Menu Item</h1></div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="cart_items"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="menus"></div>
+            </div>
+
+            <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Confirm Item</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="confirm_text"></p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="addConfirmed();">Confirm</a>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
+                </div>
+            </div>
+
+            <script type="text/html" id="menus_list_tpl">
+                <div data-template-bind='[
+                     {"attribute": "class", "value": "id", "formatter": "menuItemClass"},
+                     {"attribute": "id", "value": "id", "formatter": "menuItemId"}]'> 
+                    <a class="remove-item" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemRemoveclick"}]'>X</a>
+                    <div class="item-info">
+                        <h3 data-content="name" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemNameId"}]'></h3><h3 class="item-decs" data-content="short_description"></h3>
+                        <div>
+                            <span data-content="original" data-template-bind='[
+                                  {"attribute": "class", "value": "is_spl", "formatter": "itemPriceSpl"}]'></span>
+                            <span data-content="rate" data-template-bind='[
+                                  {"attribute": "id", "value": "id", "formatter": "itemPriceId"}]'></span>
+                            <div class="item-qty">
+                                <div class="select-qty"><a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'>-</a> 
+                                    <input data-role="none" name="qty" type="text" readonly="true" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"},
+                                           {"attribute": "value", "value": "id", "formatter": "itemQtyVal"}]'> 
+                                    <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyIncreaseOnclick"}]'>+</a>
+                                </div>
+                                <a class="add-btn" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemOnclick"}]'>Add</a>
+                            </div>
+                            <input type="hidden" data-value="tax" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemTaxId"}]' />
+                        </div>
+                    </div>
+                </div>
+            </script> <!-- catalog items-->
+        </div> 
+
+        <div data-role="page" id="cart" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 class="ui-title" role="heading">My Cart</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="cart_items_total"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="my_cart_items"></div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <a href="#" onclick="processStep1();" class="ui-btn ui-btn-corner-all">Step 2: Delivery Type</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- cart -->
+
+        <div data-role="page" id="delivery" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 class="ui-title" role="heading">Delivery Mode</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="delivery_items_total"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="home_delivery" value="1">Home Delivery</label></div>
+                <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="takeaway" value="0">Take Away</label></div>
+                <div id="delivery_err"></div>
+                <div id="address_form">
+                    <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
+                    <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
+                    <select id="area" data-role="none">
+                        <option value="Palavakkam">Palavakkam</option>
+                        <option value="Kottivakkam">Kottivakkam</option>
+                        <option value="Neelankari">Neelankari</option>
+                        <option value="Kandancavadi">Kandancavadi</option>
+                        <option value="Perungudi">Perungudi</option>
+                        <option value="Thiruvanmiyur">Thiruvanmiyur</option>
+                    </select>
+                    <p>Home delivery is not done outside of the drop down listed area.</p>
+                    <input readonly="true" type="text" name="city" id="city" value="Chennai" placeholder="Your city" />
+                    <input type="text" name="pincode" id="pincode" value="" placeholder="Your area pincode" />
+                    <input type="text" name="alt_num" id="alt_num" value="" placeholder="Alternet phone number" />
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <a href="#" onclick="processStep2();" class="ui-btn ui-btn-corner-all">Step 3: Your Details</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- delivery -->
+
+        <div data-role="page" id="payment" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 class="ui-title" role="heading">Delivery Mode</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="payment_items_total"> 0</span></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="ui-content"><label><input data-role="none" type="radio" name="cash_pay" id="cash_pay" value="Cash">Cash on Delivery</label></div>
+                <div id="success_msg"></div>
+            </div>
+            <div data-role="popup" id="order_success" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="order_success_text"></p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Ok</a>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <a href="#" class="ui-btn ui-btn-corner-all" onclick="processOrder();">Confirm Order</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- payment mode -->
+
+        <div data-role="page" id="orders" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">My Orders</h1>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="ordered_items"></div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#catalog" class="ui-btn ui-btn-corner-all"><i class="fa fa-cutlery"></i><br/>Menu</a></li>
+                        <li><a href="#orders" class="ui-btn ui-btn-corner-all ui-state-persist ui-btn-active"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
+                        <li><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-user"></i><br/>Me</a></li>
+                        <li><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- orders -->
+
+        <div data-role="page" id="more" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">More Options</h1>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="more_cart"> 0</span></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+            </div>
+            <div role="main" class="ui-content">
+                <ul data-role="listview" data-inset="true" data-theme='b'>
+                    <li><a href="#policy">Policy</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ's</a></li>
+                    <li><a href="#share">Share this app</a></li>
+                    <li><a href="#feedback">Feedback Form</a></li>
+                    <li><a href="#refer">Refer Friend</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#catalog" class="ui-btn ui-btn-corner-all"><i class="fa fa-cutlery"></i><br/>Menu</a></li>
+                        <li><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
+                        <li><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-home"></i><br/>Me</a></li>
+                        <li><a href="#more" class="ui-btn ui-btn-corner-all ui-btn-active ui-state-persist"><i class="fa fa-bars"></i><br/>More</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- more -->
+
+        <div data-role="page" id="registration" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Registration</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" name="name" value="" id="name" placeholder="Your Name" />
+                <input type="text" name="mobile" id="mobile" value="" placeholder="Your Mobile Number" />
+                <input type="text" name="email" id="email" value="" placeholder="Your E-mail" />
+                <a class="ui-btn ui-corner-all ui-btn-b" href="#" onclick="createCode();">Submit</a>
+                <div id="err_msg"></div>
+            </div>
+        </div> <!-- registration -->
+
+        <div data-role="page" id="verify" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Registration</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" name="code" value="" id="code" placeholder="Your Verification Code" />
+                <a class="ui-btn ui-corner-all ui-btn-b" href="#" onclick="verifyCode();">Submit</a>
+                <div id="timer"></div><div id="resend"></div>
+            </div>
+            <div data-role="popup" id="verify_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="verify_err_text"></p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Ok</a>
+                </div>
+            </div>
+        </div> <!-- verify -->
+
+        <div data-role="page" id="policy" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Policy</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <p>Your policy and privacy will come here.</p>
+            </div>
+        </div> <!-- policy -->
+
+        <div data-role="page" id="refer" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Refer Friend</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="email" placeholder="Your friend's email id" value="" name="friend_email" id="friend_email"/>
+                <textarea name="friend_message" id="friend_message" placeholder="Your message for friend"></textarea>
+                <a href="#" class="ui-btn ui-btn-corner-all" onclick="referFriend();">Refer</a>
+            </div>
+            <div data-role="popup" id="refer_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="refer_err_text"></p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Ok</a>
+                </div>
+            </div>
+        </div> <!-- refer -->
+
+        <div data-role="page" id="share" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Share this app</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <ul data-role="listview">
+                    <li><a href="#" onclick="gplusShare()"><i class="fa fa-google-plus-square"></i> Share with google+</a></li>
+                    <li><a href="#" onclick="fbShare()"><i class="fa fa-facebook-square"></i> Share with facebook</a></li>
+                    <li><a href="#" onclick="twitterShare()"><i class="fa fa-twitter-square"></i> Share with twitter</a></li>
+                    <li><a href="#" onclick="rateUs()"><i class="fa fa-star"></i> Rate and Review</a></li>
+                </ul>
+            </div>
+        </div> <!-- share -->
+
+        <div data-role="page" id="feedback" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Feedback Form</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <form action="" method="post" onsubmit="return receiveForm();">
+                    <div><input value="" type="text" id="contact_name" name="name" placeholder="Your Name" autofocus></div>
+                    <div><input type="text" value="" id="contact_email" name="email" placeholder="Your Email"></div>
+                    <div><input type="text" name="phone" id="contact_num" placeholder="Your Mobile No"><span id="num_msg"></span></div>
+                    <div><textarea id="contact_message" name="message" placeholder="Your Feedback"></textarea></div>
+                    <div id="contact_submit"><button type="submit" value="Submit">Submit</button></div>
+                </form>
+            </div>
+            <div data-role="popup" id="feedback_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="feedback_err_text"></p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Ok</a>
+                </div>
+            </div>
+        </div> <!-- feedback -->
+
+        <div data-role="page" id="contact" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Contact</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="align-center">
+                    <img src="img/map.jpg" alt="sho sho map" class="mapimg" />
+                    <p>Sho Sho Restaurant<br/>No. 2<br/>Dargah Road,<br/>Pallavaram Chennai,<br/> Tamil Nadu 600043.</p>
+                </div>
+            </div>
+        </div> <!-- contact -->
+
+        <div data-role="page" id="faq" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Frequently Asked Questions</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 1</h2>
+                        <h3>Answer 1</h3>
+                    </div>
+                </div>
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 2</h2>
+                        <h3>Answer 2</h3>
+                    </div>
+                </div>
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 3</h2>
+                        <h3>Answer 3</h3>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- faq -->
+
+        <div data-role="page" id="about" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">About App</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <p>We have taken this app to get update and keep in touch with Sho Sho Restaurant.</p>
+            </div>
+        </div> <!-- about -->
+    </body>
+</html>

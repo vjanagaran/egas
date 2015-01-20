@@ -1,0 +1,224 @@
+@font-face {
+    font-family: 'futurastd_book';
+    src: url('fonts/futurastd-book-webfont.eot');
+    src: url('fonts/futurastd-book-webfont.eot?#iefix') format('embedded-opentype'),
+        url('fonts/futurastd-book-webfont.woff') format('woff'),
+        url('fonts/futurastd-book-webfont.ttf') format('truetype'),
+        url('fonts/futurastd-book-webfont.svg#futurastd_book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body{
+}
+
+div[data-role="page"]{
+    background: transparent;
+}
+
+div[data-role="header"]{
+    border: 0;
+}
+
+.ui-block-a a.ui-btn, .ui-block-b a.ui-btn, .ui-block-c a.ui-btn, .ui-block-d a.ui-btn{
+    border: 0!important;
+}
+
+div[data-role="footer"] .ui-grid-solo .ui-btn{
+    display: block;
+}
+
+body, input, select, textarea, button, .ui-btn {
+    font-family: futurastd_book;
+}
+
+.ui-title img {
+    margin: -8px 0;
+}
+
+.align-center{
+    text-align: center;
+}
+
+.align-right{
+    text-align: right!important;
+}
+
+.align-left{
+    text-align: left!important;
+}
+
+#intro{
+    background: url("../img/intro.jpg") no-repeat scroll 0 0 / 100% 100% rgba(0, 0, 0, 0);
+}
+
+#home .homeimg, #intro .homeimg {
+    width: 100%;
+    border-radius: 50%;
+    max-width: 300px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 2px;
+    border: 2px solid #9E9E9E;
+}
+
+#contact .mapimg{
+    width: 100%;
+}
+
+#catalog .category{
+    margin: 10px;
+    padding: 10px;
+}
+
+#catalog .category > img{
+    margin: 0;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+#catalog .category > span{
+    margin-left: 10px;
+    margin-top: 15px;
+    font-size: 20px!important;
+    float: left;
+}
+
+.menu-items{
+    color: #000000;
+    clear: both;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+#my_cart_items > table, #ordered_items > table{
+    width: 100%;
+}
+
+.menu-items > img{
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.menu-items .item-info{
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.item-info h3{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.select-qty{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    border: 1px solid #AAAAAA;
+}
+
+.select-qty > input, .select-qty > a{
+    width: 30px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.select-qty > a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.remove_form{
+    display: none;
+}
+
+.rateNormal {
+    display: none;
+}
+
+.rateSpl{
+    text-decoration: line-through;
+    color: #999999;
+}
+
+.selected{
+    background-color: #8AC500;
+}
+
+.item-decs{
+    font-size: 12px!important;
+    color: #555555;
+}
+
+.item-qty{
+    margin-right: 10px;
+    float: right;
+}
+
+.remove-item {
+    display: none;
+}
+
+.selected .remove-item {
+    display: inline-block;
+    background-color: tomato;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #999999;
+    padding: 3px 6px;
+    border-radius: 50%;
+}
+
+.symbol{
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.add-btn{
+    padding: 0;
+    margin-left: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ui-listview > li{
+    margin: 2px!important;
+}
+
+.ui-page {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+}
+
+@media screen and (min-width: 800px) {
+    .video {
+        width: 31%;
+        float: left;
+    }
+    .image {
+        width: 23.5%;
+        float: left;
+        margin-right: 1px;
+        height: 350px;
+    }
+    .image:hover {
+        overflow-y: auto;
+    }
+}
