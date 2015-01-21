@@ -17,7 +17,7 @@ function onDeviceReady() {
 
 var router = new $.mobile.Router([{
         "#shopping": {handler: "shoppingPage", events: "bs"},
-        "#catalogitems(?:[?/](.*))?": {handler: "catalogitemsPage", events: "bs"},
+        "#shoppingitems(?:[?/](.*))?": {handler: "shoppingitemsPage", events: "bs"},
         "#cart": {handler: "cartPage", events: "bs"},
         "#delivery": {handler: "deliveryPage", events: "bs"},
         "#payment": {handler: "paymentPage", events: "bs"},
@@ -32,10 +32,10 @@ var router = new $.mobile.Router([{
                 log("Catalog Page", 3)
                 loadShopping();
             },
-            catalogitemsPage: function (type, match, ui) {
+            shoppingitemsPage: function (type, match, ui) {
                 log("Catalog Items page", 3);
-                var params = router.getParams(match[1]);
-                loadCatalogItems(params.cat);
+                //var params = router.getParams(match[1]);
+                //loadShoppingItems(params.cat);
                 calcCart();
             },
             cartPage: function (type, match, ui) {
@@ -158,37 +158,54 @@ function log(msg, level) {
 }
 
 
-
-
-/********  General Functions **/
+/********  Common Functions and Variables **/
 
 var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" width="60" /></div>';
+var cart = {items: [], decs: "", delivery: ""};
+var confirm_id = 0;
+var grand_total = 0;
 
-/******** Shopping Functions **/
-
-function loadShopping() {
-    
-    /*$("#categories").empty();
-    $("#categories").append(loading);
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: config.api_url + "module=cat&action=list",
-        cache: false,
-        success: function (data) {
-            $("#categories").empty();
-            $.each(data.data, function (k, v) {
-                $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
-            });
-        },
-        error: function (request, status, error) {
-            $("#categories").empty();
-            $("#categories").append('Error in loading data');
-        }
-    });*/
+function calcCart() {
+    var cart_qty = 0;
+    $.each(cart.items, function (index, row) {
+        cart_qty = cart_qty + parseInt(row.qty);
+    });
+    $("#cart_items").html(cart_qty);
+    $("#category_cart").html(cart_qty);
+    $("#order_cart").html(cart_qty);
+    $("#more_cart").html(cart_qty);
+    $("#me_cart").html(cart_qty);
 }
 
-function loadCatalogItems(cat) {
+
+/********  Shopping Functions **/
+
+function loadShopping() {
+
+    /*$("#categories").empty();
+     $("#categories").append(loading);
+     $.ajax({
+     type: "GET",
+     dataType: 'json',
+     url: config.api_url + "module=cat&action=list",
+     cache: false,
+     success: function (data) {
+     $("#categories").empty();
+     $.each(data.data, function (k, v) {
+     $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
+     });
+     },
+     error: function (request, status, error) {
+     $("#categories").empty();
+     $("#categories").append('Error in loading data');
+     }
+     });*/
+}
+
+
+/**********  Shopping items functions ***/
+
+/*function loadShoppingItems(cat) {
     $("#menus").empty();
     $("#menus").append(loading);
     var heading = "";
@@ -215,7 +232,22 @@ function loadCatalogItems(cat) {
             }
         });
     }
+}*/
+
+
+/**********   Cart functions ***/
+
+function processStep1() {
+    /*var decs = $("#orderdecs").val();
+    cart.decs = decs;
+    if (getVal(config.user_id) != null) {
+        $(":mobile-pagecontainer").pagecontainer("change", "#payment");
+    } else {
+        $(":mobile-pagecontainer").pagecontainer("change", "#registration");
+    }*/
+    $(":mobile-pagecontainer").pagecontainer("change", "#payment");
 }
+
 
 function createCode() {
     if (validateRegistration()) {
@@ -295,10 +327,6 @@ function showMe() {
     $("#my_details").append(details);
 }
 
-var cart = {items: [], decs: "", delivery: ""};
-var confirm_id = 0;
-var grand_total = 0;
-
 function addToCart(id) {
     var qty = $("#item_qty_" + id).val();
     var name = $("#item_name_" + id).html();
@@ -330,18 +358,6 @@ function addConfirmed() {
     });
     cart.items.push(item);
     calcCart();
-}
-
-function calcCart() {
-    var cart_qty = 0;
-    $.each(cart.items, function (index, row) {
-        cart_qty = cart_qty + parseInt(row.qty);
-    });
-    $("#cart_items").html(cart_qty);
-    $("#category_cart").html(cart_qty);
-    $("#order_cart").html(cart_qty);
-    $("#more_cart").html(cart_qty);
-    $("#me_cart").html(cart_qty);
 }
 
 function showMyCart() {
@@ -500,16 +516,6 @@ function updateCart(id) {
     showMyCart();
     calcCart();
     $("#cart_items_total").html(grand_total);
-}
-
-function processStep1() {
-    var decs = $("#orderdecs").val();
-    cart.decs = decs;
-    if (getVal(config.user_id) != null) {
-        $(":mobile-pagecontainer").pagecontainer("change", "#delivery");
-    } else {
-        $(":mobile-pagecontainer").pagecontainer("change", "#registration");
-    }
 }
 
 function processStep2() {

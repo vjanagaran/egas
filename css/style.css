@@ -75,6 +75,7 @@ body, input, select, textarea, button, .ui-btn {
 #shopping .category{
     margin: 10px;
     padding: 10px;
+    border-radius: 5px;
 }
 
 #shopping .category > img{
@@ -86,10 +87,10 @@ body, input, select, textarea, button, .ui-btn {
 }
 
 #shopping .category > span{
-    margin-left: 10px;
-    margin-top: 15px;
-    font-size: 20px!important;
+    margin: auto 0 auto 10px;
+    line-height: 55px;
     float: left;
+    font-size: 1.25em;
 }
 
 .menu-items{
@@ -99,6 +100,7 @@ body, input, select, textarea, button, .ui-btn {
     padding: 10px;
     position: relative;
     border-bottom: 1px solid #AAAAAA;
+    border-radius: 5px;
 }
 
 #my_cart_items > table, #ordered_items > table{
@@ -225,5 +227,20 @@ body, input, select, textarea, button, .ui-btn {
     }
     .image:hover {
         overflow-y: auto;
+    }
+}
+
+@media screen and (max-width: 327px) {
+    body {
+        font-size: .9em;
+    }
+
+    #shopping .category > img {
+        width: 50px;
+
+    }
+
+    #shopping .category > span {
+        font-size: 1em;
     }
 }
