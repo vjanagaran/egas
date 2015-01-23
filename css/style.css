@@ -13,6 +13,10 @@
 body{
 }
 
+.ui-header-fixed {
+    z-index: 1002;
+}
+
 div[data-role="page"]{
     background: transparent;
 }
@@ -47,11 +51,6 @@ body, input, select, textarea, button, .ui-btn {
 
 .align-left{
     text-align: left!important;
-}
-
-#intro{
-    background: url("../img/intro.jpg") no-repeat scroll 100% 100% / 100% 100% rgba(0, 0, 0, 0);
-    background-size: cover;
 }
 
 #home .homeimg, #intro .homeimg {

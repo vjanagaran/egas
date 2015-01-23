@@ -29,7 +29,7 @@ var router = new $.mobile.Router([{
         {
             shoppingPage: function (type, match, ui) {
                 log("Catalog Page", 3)
-                loadShopping();
+                //loadShopping();
             },
             shoppingitemsPage: function (type, match, ui) {
                 log("Catalog Items page", 3);

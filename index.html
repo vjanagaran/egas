@@ -18,6 +18,12 @@
         <script type="text/javascript" charset="utf-8" src="js/push.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script id="panel-init">
+            $(function () {
+                $("body>[data-role='panel']").panel();
+                $("[data-role=panel]").panel().enhanceWithin();
+            });
+        </script>
     </head>
     <body>
         <div data-role="page" id="intro" data-title="E-Gas Cylinders">
@@ -39,7 +45,6 @@
                         <li><i class="fa fa-check"></i> Hassle free services</li>
                         <li><i class="fa fa-check"></i> Easy documentation</li>
                     </ul>
-                    <p>Beta version -Only supergas and certain areas of chennai(depending on the number of cylinders).</p>
                 </div>
             </div>
         </div> <!-- introduction page-->
@@ -61,7 +66,7 @@
         <div data-role="page" id="shopping" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">Category</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
                 <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
@@ -69,16 +74,6 @@
                     <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=1"> <img src="img/gas.jpg" alt="residential" /><span>Residential</span></a>
                     <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=2"> <img src="img/gas.jpg" alt="commercial" /><span>Commercial</span></a>
                     <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=3"> <img src="img/gas.jpg" alt="accessories" /><span>Accessories</span></a>
-                </div>
-            </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#shopping" class="ui-btn ui-btn-corner-all ui-btn-active ui-state-persist"><i class="fa fa-briefcase"></i><br/>Shop</a></li>
-                        <li><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
-                        <li><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-user"></i><br/>Me</a></li>
-                        <li><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></li>
-                    </ul>
                 </div>
             </div>
 
@@ -241,7 +236,7 @@
         <div data-role="page" id="me" data-title="Sho Sho Restaurant">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">User Profile</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#home"><i class="fa fa-home"></i></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
                 <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="me_cart"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
@@ -255,17 +250,17 @@ Tamilnadu,India.
                 </textarea>
                 <input type="text" value="info@jadian.in" placeholder="Your email"/>
             </div>
-            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-                <div data-role="navbar">
-                    <ul>
-                        <li><a href="#shopping" class="ui-btn ui-btn-corner-all"><i class="fa fa-briefcase"></i><br/>Shop</a></li>
-                        <li><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></li>
-                        <li><a href="#me" class="ui-btn ui-btn-corner-all  ui-btn-active ui-state-persist"><i class="fa fa-user"></i><br/>Me</a></li>
-                        <li><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></li>
-                    </ul>
-                </div>
-            </div>
         </div> <!-- me -->
 
+        <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
+            <br/><br/> 
+            <ul class="ui-content" data-role="listview">
+                <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#shopping"><i class="fa fa-briefcase"></i> Shop</a></li>
+                <li><a href="#orders"><i class="fa fa-paper-plane"></i> Orders</a></li>
+                <li><a href="#me"><i class="fa fa-user"></i> Me</a></li>
+                <li><a href="#more"><i class="fa fa-bars"></i> More</a></li>
+            </ul>
+        </div>
     </body>
 </html>
