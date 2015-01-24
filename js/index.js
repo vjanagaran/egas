@@ -72,6 +72,14 @@ function log(msg, level) {
 }
 
 
+/********  Intro Functions **/
+
+function goCategory() {
+    $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
+}
+
+
+
 /********  Common Functions and Variables **/
 
 var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" width="60" /></div>';

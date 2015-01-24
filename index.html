@@ -30,7 +30,7 @@
             <div role="main" class="ui-content">
                 <h3 class="align-center">Instant cooking gas connection</h3>
                 <div class="ui-grid-solo">
-                    <div class=" align-center ui-block-a"><a class="ui-btn" href="#home">Get started</a></div>
+                    <div class=" align-center ui-block-a"><a data-rel="popup" data-transition="pop" href="#intropopup">Get started</a></div>
                 </div>
                 <div class="ui-content">
                     <ul class="check">
@@ -42,6 +42,17 @@
                         <li><i class="fa fa-check"></i> Hassle free services</li>
                         <li><i class="fa fa-check"></i> Easy documentation</li>
                     </ul>
+                </div>
+            </div>
+            <div data-role="popup" id="intropopup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Information</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p>This is beta version and currently we deliver in selected parts of Chennai</p>
+                    <div >
+                        <a href="#" class="ui-btn ui-btn-corner-all ui-btn-inline ui-shadow" id="request_process" onclick="goCategory();">Ok</a>
+                    </div>
                 </div>
             </div>
         </div> <!-- introduction page-->
@@ -63,14 +74,15 @@
         <div data-role="page" id="shopping" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">Category</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
-                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
+                <a class="ui-btn-left ui-btn ui-btn-a ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-right ui-btn ui-btn-a ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
                 <div id="categories">
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=1"> <img src="img/gas.jpg" alt="residential" /><span>Residential</span></a>
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=2"> <img src="img/gas.jpg" alt="commercial" /><span>Commercial</span></a>
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=3"> <img src="img/gas.jpg" alt="accessories" /><span>Accessories</span></a>
+                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=1">Residential</a>
+                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=2">Commercial</a>
+                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=3">Stoves</a>
+                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=4">Accessories</a>
                 </div>
             </div>
 
@@ -94,7 +106,7 @@
                     <div class="menu-items" id="menu_item_1"> 
                         <a class="remove-item" onclick="removeFromCart(1)">X</a>
                         <div class="item-info">
-                            <h3 id="item_name_1">Item one</h3><h3 class="item-decs">Short description about the item...</h3>
+                            <h3 id="item_name_1">4 k.g.</h3><h3 class="item-decs">Short description about the item...</h3>
                             <div>
                                 <span id="item_price_1">Rs. 100</span>
                                 <div class="item-qty">
@@ -111,7 +123,7 @@
                     <div class="menu-items" id="menu_item_2"> 
                         <a class="remove-item" onclick="removeFromCart(2)">X</a>
                         <div class="item-info">
-                            <h3 id="item_name_2">Item two</h3><h3 class="item-decs">Short description about the item...</h3>
+                            <h3 id="item_name_2">12 k.g</h3><h3 class="item-decs">Short description about the item...</h3>
                             <div>
                                 <span id="item_price_2">Rs. 150</span>
                                 <div class="item-qty">
@@ -144,7 +156,6 @@
                     </div>
                 </div>
             </div>
-
             <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
                     <h1>Confirm Item</h1>
@@ -155,7 +166,6 @@
                     <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
                 </div>
             </div>
-
             <!-- <script type="text/html" id="menus_list_tpl">
                 <div data-template-bind='[
                      {"attribute": "class", "value": "id", "formatter": "menuItemClass"},
@@ -252,7 +262,6 @@ Tamilnadu,India.
         <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
             <ul class="ui-content" data-role="listview">
-                <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="#shopping"><i class="fa fa-briefcase"></i> Shop</a></li>
                 <li><a href="#orders"><i class="fa fa-paper-plane"></i> Orders</a></li>
                 <li><a href="#me"><i class="fa fa-user"></i> Me</a></li>
