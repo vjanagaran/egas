@@ -29,12 +29,12 @@ var router = new $.mobile.Router([{
         {
             shoppingPage: function (type, match, ui) {
                 log("Catalog Page", 3)
-                //loadShopping();
+                loadShopping();
             },
             shoppingitemsPage: function (type, match, ui) {
                 log("Catalog Items page", 3);
-                //var params = router.getParams(match[1]);
-                //loadShoppingItems(params.cat);
+                var params = router.getParams(match[1]);
+                loadShoppingItems(params.cat);
                 calcCart();
             },
             cartPage: function (type, match, ui) {
@@ -59,6 +59,66 @@ var router = new $.mobile.Router([{
     defaultHandlerEvents: "s",
     defaultArgsRe: true
 });
+
+$.addTemplateFormatter({
+    menuHref: function (value, options) {
+        return "#shoppingitems?cat=" + value;
+    },
+    menuItemClass: function (value, options) {
+        var cls = "menu-items";
+        $.each(cart.items, function (index, item) {
+            if (value == item.id) {
+                cls = cls + " selected";
+            }
+        });
+        return cls;
+    },
+    menuItemId: function (value, options) {
+        return "menu_item_" + value;
+    },
+    itemQtyId: function (value, options) {
+        return "item_qty_" + value;
+    },
+    itemQtyVal: function (value, options) {
+        var val = 1;
+        $.each(cart.items, function (index, item) {
+            if (value == item.id) {
+                val = item.qty;
+            }
+        });
+        return val;
+    },
+    itemPriceId: function (value, options) {
+        return "item_price_" + value;
+    },
+    itemPriceSpl: function (value, options) {
+        if (value == 1) {
+            return "rateSpl";
+        } else {
+            return "rateNormal";
+        }
+    },
+    itemNameId: function (value, options) {
+        return "item_name_" + value;
+    },
+    itemOnclick: function (value, options) {
+        return "addToCart(" + value + ")";
+    },
+    itemRemoveclick: function (value, options) {
+        return "removeFromCart(" + value + ")";
+    },
+    itemTaxId: function (value, options) {
+        return "item_tax_" + value;
+    },
+    qtyIncreaseOnclick: function (value, options) {
+        return "increaseQty(" + value + ")";
+    },
+    qtyDecreaseOnclick: function (value, options) {
+        return "decreaseQty(" + value + ")";
+    }
+});
+
+
 /**** Pre Defined Functions **/
 
 function log(msg, level) {
@@ -70,14 +130,6 @@ function log(msg, level) {
         console.log(logname[level] + ": " + msg);
     }
 }
-
-
-/********  Intro Functions **/
-
-function goCategory() {
-    $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
-}
-
 
 
 /********  Common Functions and Variables **/
@@ -99,7 +151,67 @@ function calcCart() {
 }
 
 
-/**********   Shoping Items functions ***/
+/********  Intro Page Functions **/
+
+function goCategory() {
+    $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
+}
+
+
+/**********   Shoping Page functions ***/
+
+function loadShopping() {
+    $("#categories").empty();
+    $("#categories").append(loading);
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: config.api_url + "module=cat&action=list",
+        cache: false,
+        success: function (data) {
+            $("#categories").empty();
+            $.each(data.data, function (k, v) {
+                $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
+            });
+        },
+        error: function (request, status, error) {
+            $("#categories").empty();
+            $("#categories").append('Error in loading data');
+        }
+    });
+}
+
+
+/**********   Shoping Items Page functions ***/
+
+function loadShoppingItems(cat) {
+    $("#menus").empty();
+    $("#menus").append(loading);
+    var heading = "";
+    var cat_name = "";
+    if (cat !== "") {
+        $.ajax({
+            type: "GET",
+            url: config.api_url + "module=menu&action=list&id=" + cat,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                $("#menus").empty();
+                $("#cat_name").empty();
+                $.each(data.data, function (k, v) {
+                    $("#menus").loadTemplate($('#menus_list_tpl'), v, {append: true});
+                    cat_name = v.cat_name;
+                });
+                heading = heading + '<h1 class="ui-title" role="heading">' + cat_name + '</h1>';
+                $("#cat_name").append(heading);
+            },
+            error: function (request, status, error) {
+                $("#menus").empty();
+                $("#menus").append('Error in loading data');
+            }
+        });
+    }
+}
 
 function addToCart(id) {
     var qty = $("#item_qty_" + id).val();
