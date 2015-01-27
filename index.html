@@ -29,11 +29,8 @@
         <div data-role="page" id="intro" data-title="E-Gas Cylinders">
             <div role="main" class="ui-content">
                 <h3 class="align-center">Instant cooking gas connection</h3>
-                <div class="align-center">
-                    <img src="img/logo.jpg" alt="egas" class="homeimg"/>
-                </div>
                 <div class="ui-grid-solo">
-                    <div class=" align-center ui-block-a"><a class="ui-btn" href="#home">Get started</a></div>
+                    <div class="align-center ui-block-a"><a class="ui-btn ui-btn-corner-all" data-rel="popup" data-transition="pop" href="#intropopup">Get started</a></div>
                 </div>
                 <div class="ui-content">
                     <ul class="check">
@@ -47,43 +44,35 @@
                     </ul>
                 </div>
             </div>
-        </div> <!-- introduction page-->
-
-        <div data-role="page" id="home" data-title="E-Gas Cylinders">
-            <div role="main" class="ui-content">
-                <div class="align-center">
-                    <img src="img/logo.jpg" alt="sho sho" class="homeimg"/>
+            <div data-role="popup" id="intropopup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Information</h1>
                 </div>
-                <fieldset class="ui-grid-a">
-                    <div class="ui-block-a"><a href="#shopping" class="ui-btn ui-btn-corner-all"><i class="fa fa-briefcase"></i><br/>Shop</a></div>
-                    <div class="ui-block-b"><a href="#orders" class="ui-btn ui-btn-corner-all"><i class="fa fa-paper-plane"></i><br/>Orders</a></div>
-                    <div class="ui-block-a"><a href="#me" class="ui-btn ui-btn-corner-all"><i class="fa fa-user"></i><br/>Me</a></div>
-                    <div class="ui-block-b"><a href="#more" class="ui-btn ui-btn-corner-all"><i class="fa fa-bars"></i><br/>More</a></div>
-                </fieldset>
+                <div role="main" class="ui-content">
+                    <p>This is beta version and currently we deliver in selected parts of Chennai</p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" onclick="goCategory();">Ok</a>
+                    </div>
+                </div>
             </div>
-        </div> <!-- home -->
+        </div> <!-- introduction page-->
 
         <div data-role="page" id="shopping" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">Category</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
-                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
+                <a class="ui-btn-left ui-btn ui-btn-a ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-right ui-btn ui-btn-a ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
-                <div id="categories">
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=1"> <img src="img/gas.jpg" alt="residential" /><span>Residential</span></a>
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=2"> <img src="img/gas.jpg" alt="commercial" /><span>Commercial</span></a>
-                    <a class="ui-btn ui-btn-b category" href="#shoppingitems?cat=3"> <img src="img/gas.jpg" alt="accessories" /><span>Accessories</span></a>
-                </div>
+                <div id="categories"></div>
             </div>
 
-            <!-- <script type="text/html" id="category_list_tpl">
+            <script type="text/html" id="category_list_tpl">
                 <a class="ui-btn ui-btn-b category" data-template-bind='[
                    {"attribute": "href", "value": "id", "formatter": "menuHref"}]'>
-                    <img data-src="image" />
                     <span data-content="name"></span>
                 </a>
-            </script> -->
+            </script>
         </div> <!-- shopping -->
 
         <div data-role="page" id="shoppingitems" data-title="E-Gas Cylinders">
@@ -93,77 +82,25 @@
                 <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="cart_items"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
-                <div id="menus">
-                    <div class="menu-items" id="menu_item_1"> 
-                        <a class="remove-item" onclick="removeFromCart(1)">X</a>
-                        <div class="item-info">
-                            <h3 id="item_name_1">Item one</h3><h3 class="item-decs">Short description about the item...</h3>
-                            <div>
-                                <span id="item_price_1">Rs. 100</span>
-                                <div class="item-qty">
-                                    <div class="select-qty"><a onclick="decreaseQty(1)">-</a> 
-                                        <input data-role="none" name="qty" type="text" readonly="true" id="item_qty_1" value="1"> 
-                                        <a onclick="increaseQty(1)">+</a>
-                                    </div>
-                                    <a class="add-btn" onclick="addToCart(1)">Add</a>
-                                </div>
-                                <input type="hidden" id="item_tax_1" value="3"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-items" id="menu_item_2"> 
-                        <a class="remove-item" onclick="removeFromCart(2)">X</a>
-                        <div class="item-info">
-                            <h3 id="item_name_2">Item two</h3><h3 class="item-decs">Short description about the item...</h3>
-                            <div>
-                                <span id="item_price_2">Rs. 150</span>
-                                <div class="item-qty">
-                                    <div class="select-qty"><a onclick="decreaseQty(2)">-</a> 
-                                        <input data-role="none" name="qty" type="text" readonly="true" id="item_qty_2" value="1"> 
-                                        <a onclick="increaseQty(2)">+</a>
-                                    </div>
-                                    <a class="add-btn" onclick="addToCart(2)">Add</a>
-                                </div>
-                                <input type="hidden" id="item_tax_2" value="4"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-items" id="menu_item_3"> 
-                        <a class="remove-item" onclick="removeFromCart(3)">X</a>
-                        <div class="item-info">
-                            <h3 id="item_name_3">Item two</h3><h3 class="item-decs">Short description about the item...</h3>
-                            <div>
-                                <span id="item_price_3">Rs. 200</span>
-                                <div class="item-qty">
-                                    <div class="select-qty"><a onclick="decreaseQty(3)">-</a> 
-                                        <input data-role="none" name="qty" type="text" readonly="true" id="item_qty_3" value="1"> 
-                                        <a onclick="increaseQty(3)">+</a>
-                                    </div>
-                                    <a class="add-btn" onclick="addToCart(3)">Add</a>
-                                </div>
-                                <input type="hidden" id="item_tax_3" value="6"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div id="menus"></div>
             </div>
-
             <div data-role="popup" id="popupDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
                     <h1>Confirm Item</h1>
                 </div>
                 <div role="main" class="ui-content">
                     <p id="confirm_text"></p>
-                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" onclick="addConfirmed();">Confirm</a>
-                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancel</a>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-2" id="request_process" onclick="">Confirm</a>
+                        <a href="#" class="ui-btn-2" data-rel="back">Cancel</a>
+                    </div>
                 </div>
             </div>
-
-            <!-- <script type="text/html" id="menus_list_tpl">
+            <script type="text/html" id="menus_list_tpl">
                 <div data-template-bind='[
                      {"attribute": "class", "value": "id", "formatter": "menuItemClass"},
                      {"attribute": "id", "value": "id", "formatter": "menuItemId"}]'> 
-                    <a class="remove-item" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemRemoveclick"}]'>X</a>
+                    <a class="remove-item" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemRemoveclick"}]'>&#10008;</a>
                     <div class="item-info">
                         <h3 data-content="name" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemNameId"}]'></h3><h3 class="item-decs" data-content="short_description"></h3>
                         <div>
@@ -172,28 +109,40 @@
                             <span data-content="rate" data-template-bind='[
                                   {"attribute": "id", "value": "id", "formatter": "itemPriceId"}]'></span>
                             <div class="item-qty">
-                                <div class="select-qty"><a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'>-</a> 
+                                <div class="select-qty"><a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'>&ndash;</a> 
                                     <input data-role="none" name="qty" type="text" readonly="true" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"},
                                            {"attribute": "value", "value": "id", "formatter": "itemQtyVal"}]'> 
                                     <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyIncreaseOnclick"}]'>+</a>
                                 </div>
-                                <a class="add-btn" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemOnclick"}]'>Add</a>
+                                <a class="add-btn" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemOnclick"}]'>&#10004;</a>
                             </div>
                             <input type="hidden" data-value="tax" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemTaxId"}]' />
                         </div>
                     </div>
                 </div>
-            </script> -->
+            </script>
         </div> <!-- shopping items-->
 
         <div data-role="page" id="cart" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">My Cart</h1>
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
-                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="cart_items_total"> 0</span></a>
+                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="cart_items_total"> 0.00</span></a>
             </div>
             <div role="main" class="ui-content">
                 <div id="my_cart_items"></div>
+            </div>
+            <div data-role="popup" id="cart_manipulation" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1 id="cart_confirm_title"></h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="cart_confirm_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-2" id="cart_request_process" onclick="">Confirm</a>
+                        <a href="#" class="ui-btn-2" data-rel="back">Cancel</a>
+                    </div>
+                </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div class="ui-grid-solo">
@@ -204,9 +153,9 @@
             </div>
         </div> <!-- cart -->
 
-        <div data-role="page" id="payment" data-title="Sho Sho Restaurant">
+        <div data-role="page" id="payment" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
-                <h1 class="ui-title" role="heading">Delivery Mode</h1>
+                <h1 class="ui-title" role="heading">Payment Mode</h1>
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
                 <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="payment_items_total"> 0</span></a>
             </div>
@@ -221,19 +170,21 @@
                 </div>
                 <div role="main" class="ui-content">
                     <p id="order_success_text"></p>
-                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Ok</a>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div class="ui-grid-solo">
                     <div class="ui-block-a">
-                        <a href="#" class="ui-btn ui-btn-corner-all">Confirm Order</a>
+                        <a href="#" class="ui-btn ui-btn-corner-all" onclick="processOrder();">Confirm Order</a>
                     </div>
                 </div>
             </div>
         </div> <!-- payment mode -->
 
-        <div data-role="page" id="me" data-title="Sho Sho Restaurant">
+        <div data-role="page" id="me" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">User Profile</h1>
                 <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
@@ -255,7 +206,6 @@ Tamilnadu,India.
         <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
             <ul class="ui-content" data-role="listview">
-                <li><a href="#home"><i class="fa fa-home"></i> Home</a></li>
                 <li><a href="#shopping"><i class="fa fa-briefcase"></i> Shop</a></li>
                 <li><a href="#orders"><i class="fa fa-paper-plane"></i> Orders</a></li>
                 <li><a href="#me"><i class="fa fa-user"></i> Me</a></li>

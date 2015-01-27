@@ -5,20 +5,20 @@ config = function () {
     'use strict';
     return {
         showlog: 3, // 0: "Disabled", 1: "Error", 2: "Warning", 3: "Info"
-        api_url: "http://jayam.co.uk/shosho/api.php?",
-        user_name: "sho_sho_user_name",
-        user_mobile: "sho_sho_user_mobile",
-        user_email: "sho_sho_user_email",
-        user_password: "sho_sho_user_password",
-        user_address1: "sho_sho_user_address1",
-        user_address2: "sho_sho_user_address2",
-        user_area: "sho_sho_user_area",
-        user_pincode: "sho_sho_user_pincode",
-        user_city: "sho_sho_user_city",
-        user_image: "sho_sho_user_image",
-        user_id: "sho_sho_userid",
-        user_alternet_number: "sho_sho_user_alternet_number",
-        device_token: "sho_sho_device_token"
+        api_url: "http://jayam.co.uk/gas/api.php?",
+        user_name: "e-gas_user_name",
+        user_mobile: "e-gas_user_mobile",
+        user_email: "e-gas_user_email",
+        user_password: "e-gas_user_password",
+        user_address1: "e-gas_user_address1",
+        user_address2: "e-gas_user_address2",
+        user_area: "e-gas_user_area",
+        user_pincode: "e-gas_user_pincode",
+        user_city: "e-gas_user_city",
+        user_image: "e-gas_user_image",
+        user_id: "e-gas_userid",
+        user_alternet_number: "e-gas_user_alternet_number",
+        device_token: "e-gas_device_token"
     };
 }();
 
