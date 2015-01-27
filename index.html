@@ -51,11 +51,63 @@
                 <div role="main" class="ui-content">
                     <p>This is beta version and currently we deliver in selected parts of Chennai</p>
                     <div class="request_btns">
-                        <a href="#" class="ui-btn-1" onclick="goCategory();">Ok</a>
+                        <a href="#" class="ui-btn-1" onclick="getStart();">Ok</a>
                     </div>
                 </div>
             </div>
         </div> <!-- introduction page-->
+
+        <div data-role="page" id="register" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Registration</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" name="name" value="" id="name" placeholder="Your Name" />
+                <input type="text" name="mobile" id="mobile" value="" placeholder="Your Mobile Number" />
+                <input type="text" name="email" id="email" value="" placeholder="Your Email id" />
+                <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="createCode();">Submit</a>
+            </div>
+            <div id="err_msg"></div>
+            <div data-role="popup" id="reg_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="reg_err_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- register -->
+
+        <div data-role="page" id="verify" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Registration</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" name="code" value="" id="code" placeholder="Your Verification Code" />
+                <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="verifyCode();">Verify</a>
+                <div id="timer"></div><div id="resend"></div>
+            </div>
+            <div data-role="popup" id="verify_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="verify_err_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- verify -->
 
         <div data-role="page" id="shopping" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
@@ -123,6 +175,24 @@
             </script>
         </div> <!-- shopping items-->
 
+        <div data-role="page" id="me" data-title="Sho Sho Restaurant">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">User Profile</h1>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="me_cart"> 0</span></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" value="" placeholder="Your name" id="me_name"/>
+                <input type="text" readonly="true" value="" placeholder="Your mobile" id="me_mobile"/>
+                <input type="text" value="" placeholder="Your email" id="me_email"/>
+                <a href="#" onclick="updateUser();" class="ui-btn ui-btn-corner-all ui-btn-a">Update Details</a>
+            </div>
+            <div id="update_success"></div>
+        </div> <!-- me -->
+
         <div data-role="page" id="cart" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">My Cart</h1>
@@ -161,7 +231,6 @@
             </div>
             <div role="main" class="ui-content">
                 <div class="ui-content"><label><input data-role="none" type="radio" name="cash_pay" id="cash_pay" value="Cash">Cash on Delivery</label></div>
-                <div class="ui-content"><label><input data-role="none" type="radio" name="cash_pay" id="online_pay" value="Cash">Online Payment</label></div>
                 <div id="success_msg"></div>
             </div>
             <div data-role="popup" id="order_success" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
@@ -183,25 +252,6 @@
                 </div>
             </div>
         </div> <!-- payment mode -->
-
-        <div data-role="page" id="me" data-title="E-Gas Cylinders">
-            <div data-role="header" data-position="fixed">
-                <h1 class="ui-title" role="heading">User Profile</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
-                <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="me_cart"> 0</span></a>
-            </div>
-            <div role="main" class="ui-content">
-                <input type="text" value="Jadian Technologies" placeholder="Your name"/>
-                <input type="text" value="2855 2042" placeholder="Your mobile"/>
-                <textarea placeholder="Your name">
-#10/2, Lal Mohammed Cross Street,
-Chepauk,
-Chennai - 600 005
-Tamilnadu,India.
-                </textarea>
-                <input type="text" value="info@jadian.in" placeholder="Your email"/>
-            </div>
-        </div> <!-- me -->
 
         <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 

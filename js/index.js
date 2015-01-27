@@ -15,6 +15,8 @@ function onDeviceReady() {
 }
 
 var router = new $.mobile.Router([{
+        "#register": {handler: "registerPage", events: "bs"},
+        "#verify": {handler: "verifyPage", events: "bs"},
         "#shopping": {handler: "shoppingPage", events: "bs"},
         "#shoppingitems(?:[?/](.*))?": {handler: "shoppingitemsPage", events: "bs"},
         "#cart": {handler: "cartPage", events: "bs"},
@@ -22,10 +24,17 @@ var router = new $.mobile.Router([{
         "#me": {handler: "mePage", events: "bs"},
         "#orders": {handler: "ordersPage", events: "bs"},
         "#more": {handler: "morePage", events: "bs"},
-        "#verify": {handler: "verifyPage", events: "bs"},
         "#details": {handler: "detailsPage", events: "bs"}
     }],
         {
+            registerPage: function (type, match, ui) {
+                log("Register Page", 3)
+                refreshRegister();
+            },
+            verifyPage: function (type, match, ui) {
+                log("Verification Page", 3);
+                startTimer();
+            },
             shoppingPage: function (type, match, ui) {
                 log("Catalog Page", 3)
                 loadShopping();
@@ -46,6 +55,11 @@ var router = new $.mobile.Router([{
                 log("Payment Items page", 3);
                 $("#cash_pay").attr("checked", true);
                 $("#payment_items_total").html(grand_total);
+            },
+            mePage: function (type, match, ui) {
+                log("Me Page", 3);
+                showMe();
+                calcCart();
             },
             morePage: function (type, match, ui) {
                 log("More page", 3);
@@ -137,7 +151,7 @@ function log(msg, level) {
 var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" width="60" /></div>';
 var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
-
+var after_reg = "";
 function calcCart() {
     var cart_qty = 0;
     $.each(cart.items, function (index, row) {
@@ -150,11 +164,225 @@ function calcCart() {
     $("#me_cart").html(cart_qty);
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 
 /********  Intro Page Functions **/
 
-function goCategory() {
+function getStart() {
+    $(":mobile-pagecontainer").pagecontainer("change", "#register");
+}
+
+
+/**********   Register Page functions ***/
+
+function validRegister() {
+    $("#reg_err .ui-content a").attr("data-rel", "back");
+    $("#reg_err .ui-content a").removeAttr("onclick");
+    if ($.trim($("#name").val()).length < 3) {
+        $("#reg_err_text").html("<b>Name should be 3 char</b>");
+        $("#reg_err").popup("open");
+        return false;
+    }
+    if (!validateEmail($.trim(jQuery("#email").val()))) {
+        $("#reg_err_text").html("<b>Please enter valid email</b>");
+        $("#reg_err").popup("open");
+        return false;
+    }
+    if ($.trim($("#mobile").val()).length < 10) {
+        $("#reg_err_text").html("<b>Enter your 10 digit mobile number</b>");
+        $("#reg_err").popup("open");
+        return false;
+    }
+    return true;
+}
+
+function refreshRegister() {
+    $("#err_msg").empty();
+    $("#name").val("");
+    $("#mobile").val("");
+    $("#email").val("");
+}
+
+function createCode() {
+    if (validRegister()) {
+        $("#err_msg").empty();
+        $("#err_msg").append(loading);
+        var name = $.trim($('#name').val());
+        var mobile = $.trim($('#mobile').val());
+        var email = $.trim($('#email').val());
+        var details = {
+            name: name,
+            mobile: mobile,
+            email: email,
+            device_token: getVal(config.device_token)
+        };
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=create",
+            data: details,
+            cache: false,
+            success: function (html) {
+                $("#err_msg").empty();
+                if (html.error == false) {
+                    $("#reg_err .ui-content a").removeAttr("data-rel");
+                    $("#reg_err .ui-content a").attr("onclick", "redirectToVerify()");
+                    setVal(config.user_name, name);
+                    setVal(config.user_mobile, mobile);
+                    setVal(config.user_email, email);
+                    setVal(config.user_id, html.id);
+                    setVal(config.user_status, html.status);
+                    after_reg = "verify";
+                    $("#reg_err_text").html("<b>" + html.message + "</b>");
+                    $("#reg_err").popup("open");
+                } else {
+                    $("#reg_err .ui-content a").removeAttr("data-rel");
+                    $("#reg_err .ui-content a").attr("onclick", "redirectToVerify()");
+                    setVal(config.user_name, name);
+                    setVal(config.user_mobile, mobile);
+                    setVal(config.user_email, email);
+                    setVal(config.user_id, html.id);
+                    after_reg = "verify";
+                    $("#reg_err_text").html("<b>" + html.message + "</b>");
+                    $("#reg_err").popup("open");
+                }
+            },
+            error: function (request, status, error) {
+                $("#err_msg").empty();
+                $("#err_msg").append("Process fail please try again......");
+            }
+        });
+    }
+}
+
+function redirectToVerify() {
+    $(":mobile-pagecontainer").pagecontainer("change", "#verify");
+}
+
+
+/**********   Verify Page functions ***/
+
+function startTimer() {
+    clearInterval();
+    $("#resend").empty();
+    var resend = '<a href="#" class="ui-btn ui-btn-corner-all" onclick="resend();"> Resend Code</a>';
+    var sec = 90;
+    var timer = setInterval(function () {
+        $("#timer").text(sec--);
+        if (sec == -1) {
+            clearInterval(timer);
+            $("#timer").empty();
+            $("#resend").append(resend);
+        }
+    }, 1000);
+}
+
+function verifyCode() {
+    var code = $("#code").val();
+    if (code != "") {
+        var details = {
+            user: getVal(config.user_id),
+            code: code
+        };
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=verify",
+            data: details,
+            cache: false,
+            success: function (html) {
+                if (html.error == false) {
+                    $("#verify_err .ui-content a").removeAttr("data-rel");
+                    $("#verify_err .ui-content a").attr("onclick", "redirectToShopping()");
+                    setVal(config.user_status, html.status);
+                    if (getVal(config.user_status) != 0) {
+
+                        $("#verify_err_text").html("<b>" + html.message + "</b>");
+                    }
+                    $("#verify_err").popup("open");
+                } else {
+                    $("#verify_err_text").html("<b>" + html.message + "</b>");
+                    $("#verify_err").popup("open");
+                }
+            },
+            error: function (request, status, error) {
+                $("#err_msg").empty();
+                $("#err_msg").append("Process fail please try again......");
+            }
+        });
+    }
+}
+
+function redirectToShopping() {
     $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
+}
+
+
+/**********   Me Page functions ***/
+
+function showMe() {
+    $("#my_details").empty();
+    $("#update_success").empty();
+    var id = getVal(config.user_id);
+    var name = getVal(config.user_name);
+    var mobile = getVal(config.user_mobile);
+    var email = getVal(config.user_email);
+    if (id != null) {
+        $("#me_name").val(name);
+        $("#me_mobile").val(mobile);
+        $("#me_email").val(email);
+    }
+}
+
+function validateUpdation() {
+    if ($.trim($("#me_name").val()).length < 3) {
+        $("#update_success").empty();
+        $("#update_success").append("<b>Name should be 3 char</b>");
+        return false;
+    }
+    if (!validateEmail($.trim(jQuery("#me_email").val()))) {
+        $("#update_success").empty();
+        $("#update_success").append("<b>Please enter valid email</b>");
+        return false;
+    }
+    return true;
+}
+
+function updateUser() {
+    $("#update_success").empty();
+    $("#update_success").append(loading);
+    if (validateUpdation()) {
+        var name = $("#me_name").val();
+        var email = $("#me_email").val();
+        var data = {
+            name: name,
+            email: email,
+            id: getVal(config.user_id)
+        };
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=update",
+            data: data,
+            cache: false,
+            success: function (html) {
+                if (html.error == false) {
+                    setVal(config.user_name, name);
+                    setVal(config.user_email, email);
+                    $("#update_success").empty();
+                    $("#update_success").append(html.message);
+                } else {
+                    $("#update_success").empty();
+                    $("#update_success").append(html.message);
+                }
+            },
+            error: function (request, status, error) {
+                $("#update_success").empty();
+                $("#update_success").append("Process failed please try again after some times.....");
+            }
+        });
+    }
 }
 
 
@@ -301,7 +529,7 @@ function removeConfirmed(id) {
 }
 
 
-/**********   Cart functions ***/
+/**********   Cart page functions ***/
 
 function showMyCart() {
     calcCart();
