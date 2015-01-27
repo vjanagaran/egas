@@ -25,6 +25,12 @@ div[data-role="header"]{
     border: 0;
 }
 
+.ui-header .ui-btn {
+    background: none!important;
+    border: none!important;
+    box-shadow: none!important;
+}
+
 .ui-block-a a.ui-btn, .ui-block-b a.ui-btn, .ui-block-c a.ui-btn, .ui-block-d a.ui-btn{
     border: 0!important;
 }
@@ -37,10 +43,16 @@ body, input, select, textarea, button, .ui-btn {
     font-family: futurastd_book;
 }
 
+div[data-role="header"] .ui-title{
+    text-align: left;
+    margin: 0 10%;
+    padding: 0.7em 0;
+}
+
 .ui-header .ui-btn {
-    background: none;
-    border: none;
-    box-shadow: none;
+    background: none!important;
+    border: none!important;
+    box-shadow: none!important;
 }
 
 .ui-title img {
@@ -85,8 +97,7 @@ body, input, select, textarea, button, .ui-btn {
 }
 
 #shopping .category > span{
-    margin: auto 0 auto 10px;
-    line-height: 55px;
+    margin: 5px;
     float: left;
     font-size: 1.25em;
 }
@@ -195,7 +206,7 @@ body, input, select, textarea, button, .ui-btn {
 }
 
 .item-qty{
-    margin-right: 10px;
+    margin-right: 5px;
     float: right;
 }
 
