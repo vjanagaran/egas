@@ -20,11 +20,13 @@ var router = new $.mobile.Router([{
         "#shopping": {handler: "shoppingPage", events: "bs"},
         "#shoppingitems(?:[?/](.*))?": {handler: "shoppingitemsPage", events: "bs"},
         "#cart": {handler: "cartPage", events: "bs"},
+        "#delivery": {handler: "deliveryPage", events: "bs"},
         "#payment": {handler: "paymentPage", events: "bs"},
         "#me": {handler: "mePage", events: "bs"},
         "#orders": {handler: "ordersPage", events: "bs"},
+        "#view_ordered_items(?:[?/](.*))?": {handler: "viewordereditemsPage", events: "bs"},
         "#more": {handler: "morePage", events: "bs"},
-        "#details": {handler: "detailsPage", events: "bs"}
+        "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
             registerPage: function (type, match, ui) {
@@ -51,6 +53,11 @@ var router = new $.mobile.Router([{
                 $("#cart_items_total").html(grand_total);
                 $("#success_msg").empty();
             },
+            deliveryPage: function (type, match, ui) {
+                log("Delivery page", 3);
+                $("#delivery_items_total").html(grand_total);
+                setDetails();
+            },
             paymentPage: function (type, match, ui) {
                 log("Payment Items page", 3);
                 $("#cash_pay").attr("checked", true);
@@ -61,9 +68,23 @@ var router = new $.mobile.Router([{
                 showMe();
                 calcCart();
             },
+            ordersPage: function (type, match, ui) {
+                log("Orders page", 3);
+                showOrders();
+                calcCart();
+            },
+            viewordereditemsPage: function (type, match, ui) {
+                log("View Ordered Items page", 3);
+                var params = router.getParams(match[1]);
+                loadOrderedItems(params.cat);
+            },
             morePage: function (type, match, ui) {
                 log("More page", 3);
                 calcCart();
+            },
+            feedbackPage: function (type, match, ui) {
+                log("Feedback Page", 3);
+                showFeedbackForm();
             }
         }, {
     ajaxApp: true,
@@ -152,6 +173,7 @@ var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" wi
 var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
 var after_reg = "";
+
 function calcCart() {
     var cart_qty = 0;
     $.each(cart.items, function (index, row) {
@@ -173,7 +195,11 @@ function validateEmail(email) {
 /********  Intro Page Functions **/
 
 function getStart() {
-    $(":mobile-pagecontainer").pagecontainer("change", "#register");
+    if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
+        $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
+    } else {
+        $(":mobile-pagecontainer").pagecontainer("change", "#register");
+    }
 }
 
 
@@ -244,6 +270,7 @@ function createCode() {
                     setVal(config.user_name, name);
                     setVal(config.user_mobile, mobile);
                     setVal(config.user_email, email);
+                    setVal(config.user_status, html.status);
                     setVal(config.user_id, html.id);
                     after_reg = "verify";
                     $("#reg_err_text").html("<b>" + html.message + "</b>");
@@ -297,10 +324,7 @@ function verifyCode() {
                     $("#verify_err .ui-content a").removeAttr("data-rel");
                     $("#verify_err .ui-content a").attr("onclick", "redirectToShopping()");
                     setVal(config.user_status, html.status);
-                    if (getVal(config.user_status) != 0) {
-
-                        $("#verify_err_text").html("<b>" + html.message + "</b>");
-                    }
+                    $("#verify_err_text").html("<b>" + html.message + "</b>");
                     $("#verify_err").popup("open");
                 } else {
                     $("#verify_err_text").html("<b>" + html.message + "</b>");
@@ -647,7 +671,72 @@ function removeItemConfirmed(id) {
 function processStep1() {
     var decs = $("#orderdecs").val();
     cart.decs = decs;
-    $(":mobile-pagecontainer").pagecontainer("change", "#payment");
+    $(":mobile-pagecontainer").pagecontainer("change", "#delivery");
+}
+
+
+/****** Delivery page functions  ***/
+
+function setDetails() {
+    $("#takeaway").attr("checked", true)
+    $("#delivery_err").empty();
+    var che = $("input[type='radio']:checked");
+    var obj = che.val();
+    if (obj == 0) {
+        $("#shosho_address").removeClass("remove_form");
+        $("#address_form").addClass("remove_form");
+    } else {
+        $("#address_form").removeClass("remove_form");
+        $("#shosho_address").addClass("remove_form");
+        $("#address1").val(getVal(config.user_address1));
+        $("#address2").val(getVal(config.user_address2));
+        $("#city").val(getVal(config.user_city));
+        $("#area").val(getVal(config.user_area));
+        $("#pincode").val(getVal(config.user_pincode));
+        $("#alt_num").val(getVal(config.user_alternet_number));
+    }
+}
+
+function showDetails() {
+    $("#delivery_err").empty();
+    var che = $("input[type='radio']:checked");
+    var obj = che.val();
+    if (obj == 0) {
+        $("#shosho_address").removeClass("remove_form");
+        $("#address_form").addClass("remove_form");
+    } else {
+        $("#address_form").removeClass("remove_form");
+        $("#shosho_address").addClass("remove_form");
+    }
+}
+
+function processStep2() {
+    $("#delivery_err").empty();
+    if ((getVal(config.user_id) != null)) {
+        var address1 = $("#address1").val();
+        var che = $("input[name='delivery']:checked");
+        var obj = che.val();
+        if (obj == 1 && address1 < 3) {
+            $("#delivery_err").append("<b>Address line 1 mandatory</b>");
+            $("#address1").focus();
+        } else {
+            cart.delivery = obj;
+            var address2 = $("#address2").val();
+            var city = $("#city").val();
+            var area = $("#area").val();
+            var pincode = $("#pincode").val();
+            var alternet = $("#alt_num").val();
+            setVal(config.user_address1, address1);
+            setVal(config.user_address2, address2);
+            setVal(config.user_city, city);
+            setVal(config.user_area, area);
+            setVal(config.user_pincode, pincode);
+            setVal(config.user_alternet_number, alternet);
+            $(":mobile-pagecontainer").pagecontainer("change", "#payment");
+        }
+    } else {
+        $("#delivery_err").append("<b>Please select a delivery type..</b>");
+    }
 }
 
 
@@ -712,4 +801,225 @@ function processOrder() {
 
 function redirectOrdersPage() {
     $(":mobile-pagecontainer").pagecontainer("change", "#orders");
+}
+
+
+/****** Orders page functions  ***/
+
+function showOrders() {
+    var id = getVal(config.user_id);
+    if (id != null) {
+        $("#ordered_items").empty();
+        $("#ordered_items").append(loading);
+        var out = "";
+        out = out + '<div><ul data-role="listview" data-inset="true" data-theme="b">';
+        $.ajax({
+            type: "GET",
+            url: config.api_url + "module=order&action=list&id=" + id,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                if (data.error == true) {
+                    $("#ordered_items").empty();
+                    $("#ordered_items").append("No items found");
+                } else {
+                    $("#ordered_items").empty();
+                    $.each(data.data, function (index, row) {
+                        out = out + '<li><a href="#view_ordered_items?cat=' + row.id + '">#' + row.id + '. on ' + $.format.date(row.date, "dd-MMM-yy") + ' Rs. ' + parseFloat(row.amount).toFixed(2) + ' (' + row.status + ')</a></li>';
+                    });
+                    out = out + '</ul></div>';
+                    $(out).appendTo("#ordered_items").enhanceWithin();
+                }
+            },
+            error: function (request, status, error) {
+                $("#ordered_items").empty();
+                $("#ordered_items").append("Loading failed please retry......");
+            }
+        });
+    } else {
+        $("#ordered_items").empty();
+        $("#ordered_items").html("<p>Your information is not found...</p>");
+    }
+}
+
+
+/****** View Ordered Items page functions  ***/
+
+function loadOrderedItems(oid) {
+    var out = "";
+    var items = {};
+    var ordered_tax = {};
+    var total = 0;
+    var tax_row = "";
+    var g_total = 0;
+    $("#ordered_items_list").empty();
+    $("#ordered_items_list").append(loading);
+    $.ajax({
+        type: "GET",
+        url: config.api_url + "module=order&action=orderlist&id=" + oid,
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+            if (data.error == false) {
+                out = out + '<table><thead><tr><th class="align-left">Items</th><th class="align-right">Qty</th><th class="align-right">Amount</th></tr></thead><tbody>';
+                $.each(data.item, function (index, row) {
+                    out = out + '<tr><td class="align-left">' + row.name + '</td><td class="align-right">' + row.quantity + '</td><td class="align-right">' + row.rate + '</td></tr>';
+                    total = total + parseFloat(row.rate) * parseInt(row.quantity);
+                    if (isNaN(ordered_tax[row.tax])) {
+                        ordered_tax[row.tax] = 0;
+                    }
+                    ordered_tax[row.tax] = parseFloat(ordered_tax[row.tax]) + (parseFloat(row.rate) * parseInt(row.quantity) * parseFloat(row.tax) / 100);
+                    /* items = {
+                     id: row.id,
+                     name: row.name,
+                     qty: row.quantity,
+                     rate: row.curr_rate,
+                     tax: row.curr_tax
+                     };
+                     reorder.push(items);*/
+                });
+                g_total = g_total + total;
+                $.each(ordered_tax, function (index, val) {
+                    tax_row = tax_row + '<tr><td class="align-left" colspan="2">TAX ' + index + '%</td><td class="align-right">' + val.toFixed(2) + '</td></tr>';
+                    g_total = g_total + val;
+                });
+                out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
+                out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">' + total.toFixed(2) + '</td></tr>';
+                out = out + tax_row;
+                out = out + '<tr><td class="align-left" colspan="2">Grand Total</td><td class="align-right">' + g_total.toFixed(2) + '</td></tr>';
+                out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
+                out = out + '<tr><td colspan="2">Delivery Type</td><td>' + data.delivery_type + '</td></tr>'
+                out = out + '<tr><td colspan="2">Order Status</td><td>' + data.status + '</td></tr>'
+                out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data.date, "dd-MMM-yy hh:mm") + '</td></tr></tbody></table>';
+                $("#ordered_items_list").empty();
+                $("#ordered_items_list").append(out);
+            } else {
+                $("#ordered_items_list").empty();
+                $("#ordered_items_list").append(data.message);
+            }
+        },
+        error: function (request, status, error) {
+            $("#ordered_items_list").empty();
+            $("#ordered_items_list").append("Loading failed please retry......");
+        }
+    });
+}
+
+
+/****** Share page functions  ***/
+
+function gplusShare() {
+    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
+     var fullurl = "https://plus.google.com/share?url=" + url;
+     window.open(fullurl, '', "toolbar=0,location=0,height=450,width=550");*/
+}
+
+function fbShare() {
+    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
+     var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
+     window.open(fullurl, '', "toolbar=0,location=0,height=450,width=650");*/
+}
+
+function twitterShare() {
+    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
+     var ttl = "Dedicated mobile app about Sho Sho Restaurant. Download now for free!";
+     var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
+     window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");*/
+}
+
+function rateUs() {
+    /*var fullurl = "https://play.google.com/store/apps/details?id=com.coolappz.periyava";
+     window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");*/
+}
+
+
+/****** Feedback page functions  ***/
+
+function showFeedbackForm() {
+    var name = getVal(config.user_name);
+    var email = getVal(config.user_email);
+    var mobile = getVal(config.user_mobile);
+    if (name != null && email != null && mobile != null) {
+        $("#contact_submit").addClass("remove_form");
+    } else {
+        $("#contact_submit").removeClass("remove_form");
+    }
+}
+
+function receiveForm() {
+    var message = $("#contact_message").val();
+    var data = {};
+    var name = getVal(config.user_name);
+    var email = getVal(config.user_email);
+    var mobile = getVal(config.user_mobile);
+    if (message != "") {
+        if (name != null && email != null && mobile != null) {
+            data = {
+                name: name,
+                email: email,
+                phone: mobile,
+                message: message
+            };
+        } else {
+            if (validForm()) {
+                name = $("#contact_name").val();
+                email = $("#contact_email").val();
+                mobile = $("#contact_num").val();
+                data = {
+                    name: name,
+                    email: email,
+                    phone: mobile,
+                    message: message
+                };
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=feedback",
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data.error == false) {
+                    $("#feedback_err_text").html("<b>" + data.message + "</b>");
+                    $("#feedback_err").popup("open");
+                } else {
+                    $("#feedback_err_text").html("<b>" + data.message + "</b>");
+                    $("#feedback_err").popup("open");
+                }
+            }
+        });
+    }
+    return false;
+}
+
+
+/****** Refer page functions  ***/
+
+function referFriend() {
+    var email = $("#friend_email").val();
+    var msg = $("#friend_message").val();
+    var data = {
+        email: email,
+        message: msg
+    };
+    if (!validateEmail($.trim(email))) {
+        $("#refer_err_text").html("<b>Please enter valid email</b>");
+        $("#refer_err").popup("open");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=invitefriend",
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data.error == false) {
+                    $("#refer_err_text").html("<b>" + data.message + "</b>");
+                    $("#refer_err").popup("open");
+                } else {
+                    $("#refer_err_text").html("<b>" + data.message + "</b>");
+                    $("#refer_err").popup("open");
+                }
+            }
+        });
+    }
 }

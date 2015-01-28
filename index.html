@@ -223,6 +223,51 @@
             </div>
         </div> <!-- cart -->
 
+        <div data-role="page" id="delivery" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
+                <h1 class="ui-title" role="heading">Delivery Mode</h1>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#"><span id="delivery_items_total"> 0.00</span></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="takeaway" value="0">Take Away</label></div>
+                <div id="shosho_address">
+                    <p><b>E-Gas Cylinders</b><br/>
+                        No. 2 Dargah Road,<br/>
+                        Pallavaram Chennai,<br/>
+                        Tamil Nadu 600043.</p>
+                </div>
+                <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="home_delivery" value="1">Home Delivery</label></div>
+                <div id="delivery_err"></div>
+                <div id="address_form">
+                    <select id="area" data-theme="c">
+                        <option value="Palavakkam">Palavakkam</option>
+                        <option value="Kottivakkam">Kottivakkam</option>
+                        <option value="Neelankari">Neelankari</option>
+                        <option value="Kandancavadi">Kandancavadi</option>
+                        <option value="Perungudi">Perungudi</option>
+                        <option value="Thiruvanmiyur">Thiruvanmiyur</option>
+                    </select>
+                    <p>Home delivery is not done outside of the drop down listed area.</p>
+                    <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
+                    <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
+                    <input readonly="true" type="text" name="city" id="city" value="Chennai" placeholder="Your city" />
+                    <input type="text" name="pincode" id="pincode" value="" placeholder="Your area pincode" />
+                    <input type="text" name="alt_num" id="alt_num" value="" placeholder="Alternet phone number" />
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">
+                        <a href="#" onclick="processStep2();" class="ui-btn ui-btn-corner-all">Step 3: Payment Mode</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- delivery -->
+
         <div data-role="page" id="payment" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">Payment Mode</h1>
@@ -252,6 +297,211 @@
                 </div>
             </div>
         </div> <!-- payment mode -->
+
+        <div data-role="page" id="orders" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">My Orders</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
+                </div>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="ordered_items"></div>
+            </div>
+
+        </div> <!-- orders -->
+
+        <div data-role="page" id="view_ordered_items" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <h1 class="ui-title" role="heading">Ordered Items</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="ordered_items_list"></div>
+            </div>
+            <div data-role="popup" data-dismissible="false" id="re-order_success" data-overlay-theme="a" data-theme="a" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p>By clicking continue your existing cart items will be removed(if you have)</p>
+                    <div class="request_btns">
+                        <a href="#" onclick="processReorder();" class="ui-btn-2">Continue</a>
+                        <a href="#" class="ui-btn-2" data-rel="back">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- view ordered items -->
+
+        <div data-role="page" id="more" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">More Options</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="more_cart"> 0</span></a>
+                </div>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+            </div>
+            <div role="main" class="ui-content">
+                <ul data-role="listview" data-inset="true" data-theme='b'>
+                    <li><a href="#policy">Policy</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ's</a></li>
+                    <li><a href="#share">Share this app</a></li>
+                    <li><a href="#feedback">Feedback Form</a></li>
+                    <li><a href="#refer">Refer Friend</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </div> <!-- more -->
+
+        <div data-role="page" id="policy" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Policy</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <p>Your policy and privacy will come here.</p>
+            </div>
+        </div> <!-- policy -->
+
+        <div data-role="page" id="contact" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Contact</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <div class="align-center">
+                    <img src="img/map.jpg" alt="e-gas map" class="mapimg" />
+                    <p>E-Gas Cylinders<br/>No. 2<br/>Dargah Road,<br/>Pallavaram Chennai,<br/> Tamil Nadu 600043.</p>
+                </div>
+            </div>
+        </div> <!-- contact -->
+
+        <div data-role="page" id="faq" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Frequently Asked Questions</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 1</h2>
+                        <h3>Answer 1</h3>
+                    </div>
+                </div>
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 2</h2>
+                        <h3>Answer 2</h3>
+                    </div>
+                </div>
+                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
+                    <div data-role="collapsible"><h2>Question 3</h2>
+                        <h3>Answer 3</h3>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- faq -->
+
+        <div data-role="page" id="share" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Share this app</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <ul data-role="listview">
+                    <li><a href="#" onclick="gplusShare()"><i class="fa fa-google-plus-square"></i> Share with google+</a></li>
+                    <li><a href="#" onclick="fbShare()"><i class="fa fa-facebook-square"></i> Share with facebook</a></li>
+                    <li><a href="#" onclick="twitterShare()"><i class="fa fa-twitter-square"></i> Share with twitter</a></li>
+                    <li><a href="#" onclick="rateUs()"><i class="fa fa-star"></i> Rate and Review</a></li>
+                </ul>
+            </div>
+        </div> <!-- share -->
+
+        <div data-role="page" id="feedback" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Feedback Form</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="contact_submit">
+                    <div><input value="" type="text" id="contact_name" name="name" placeholder="Your Name" autofocus></div>
+                    <div><input type="text" value="" id="contact_email" name="email" placeholder="Your Email"></div>
+                    <div><input type="text" name="phone" id="contact_num" placeholder="Your Mobile No"><span id="num_msg"></span></div>
+                </div>
+                <div><textarea id="contact_message" name="message" placeholder="Your Feedback"></textarea></div>
+                <div><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" onclick="return receiveForm();">Submit</a></div>
+            </div>
+            <div data-role="popup" id="feedback_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="feedback_err_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- feedback -->
+
+        <div data-role="page" id="refer" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Refer Friend</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="email" placeholder="Your friend's email id" value="" name="friend_email" id="friend_email"/>
+                <textarea name="friend_message" id="friend_message" placeholder="Your message for friend"></textarea>
+                <a href="#" class="ui-btn ui-btn-corner-all" onclick="referFriend();">Refer</a>
+            </div>
+            <div data-role="popup" id="refer_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="refer_err_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- refer -->
+
+        <div data-role="page" id="about" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">About App</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+            </div>
+            <div role="main" class="ui-content">
+                <p>About app will come here..</p>
+            </div>
+        </div> <!-- about -->
 
         <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
