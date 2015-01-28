@@ -195,7 +195,7 @@ function validateEmail(email) {
 /********  Intro Page Functions **/
 
 function getStart() {
-    if (getVal(config.user_id) != null) {
+    if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
         $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
     } else {
         $(":mobile-pagecontainer").pagecontainer("change", "#register");
@@ -270,6 +270,7 @@ function createCode() {
                     setVal(config.user_name, name);
                     setVal(config.user_mobile, mobile);
                     setVal(config.user_email, email);
+                    setVal(config.user_status, html.status);
                     setVal(config.user_id, html.id);
                     after_reg = "verify";
                     $("#reg_err_text").html("<b>" + html.message + "</b>");
@@ -323,10 +324,7 @@ function verifyCode() {
                     $("#verify_err .ui-content a").removeAttr("data-rel");
                     $("#verify_err .ui-content a").attr("onclick", "redirectToShopping()");
                     setVal(config.user_status, html.status);
-                    if (getVal(config.user_status) != 0) {
-
-                        $("#verify_err_text").html("<b>" + html.message + "</b>");
-                    }
+                    $("#verify_err_text").html("<b>" + html.message + "</b>");
                     $("#verify_err").popup("open");
                 } else {
                     $("#verify_err_text").html("<b>" + html.message + "</b>");
