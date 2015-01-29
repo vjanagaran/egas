@@ -29,19 +29,11 @@
         <div data-role="page" id="intro" data-title="E-Gas Cylinders">
             <div role="main" class="ui-content">
                 <h3 class="align-center">Instant cooking gas connection</h3>
+                <div class="align-center">
+                    <iframe src="https://www.youtube.com/embed/U-AAL_3r9Vg?feature=player_detailpage" class="homevideo" frameborder=0 allowfullscreen></iframe>
+                </div>
                 <div class="ui-grid-solo">
                     <div class="align-center ui-block-a"><a class="ui-btn ui-btn-corner-all" data-rel="popup" data-transition="pop" href="#intropopup">Get started</a></div>
-                </div>
-                <div class="ui-content">
-                    <ul class="check">
-                        <li><i class="fa fa-check"></i> Fully Refundable Deposit</li>
-                        <li><i class="fa fa-check"></i> Online bills</li>
-                        <li><i class="fa fa-check"></i> Exclusive offers for you</li>
-                        <li><i class="fa fa-check"></i> Quality & Quantity Assured</li>
-                        <li><i class="fa fa-check"></i> Quick & Timely delivery</li>
-                        <li><i class="fa fa-check"></i> Hassle free services</li>
-                        <li><i class="fa fa-check"></i> Easy documentation</li>
-                    </ul>
                 </div>
             </div>
             <div data-role="popup" id="intropopup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
@@ -49,7 +41,7 @@
                     <h1>Information</h1>
                 </div>
                 <div role="main" class="ui-content">
-                    <p>This is beta version and currently we deliver in selected parts of Chennai</p>
+                    <p>Thanks for using our Beta version. Currently, we support only Super gas connections and deliveries in selected parts of Chennai</p>
                     <div class="request_btns">
                         <a href="#" class="ui-btn-1" onclick="getStart();">Ok</a>
                     </div>
@@ -84,7 +76,7 @@
             </div>
         </div> <!-- register -->
 
-        <div data-role="page" id="verify" data-title="Sho Sho Restaurant">
+        <div data-role="page" id="verify" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">Registration</h1>
                 <div class="ui-btn-right">
@@ -156,10 +148,13 @@
                     <div class="item-info">
                         <h3 data-content="name" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemNameId"}]'></h3><h3 class="item-decs" data-content="short_description"></h3>
                         <div>
+                            <span data-template-bind='[
+                                  {"attribute": "class", "value": "is_spl", "formatter": "itemPriceSpl"}]'>&#8377;</span>
                             <span data-content="original" data-template-bind='[
                                   {"attribute": "class", "value": "is_spl", "formatter": "itemPriceSpl"}]'></span>
+                            <span>&#8377;</span>
                             <span data-content="rate" data-template-bind='[
-                                  {"attribute": "id", "value": "id", "formatter": "itemPriceId"}]'></span>
+                                  {"attribute": "id", "value": "id", "formatter": "itemPriceId"}]'>&#8377;</span>
                             <div class="item-qty">
                                 <div class="select-qty"><a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'>&ndash;</a> 
                                     <input data-role="none" name="qty" type="text" readonly="true" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"},
@@ -175,7 +170,7 @@
             </script>
         </div> <!-- shopping items-->
 
-        <div data-role="page" id="me" data-title="Sho Sho Restaurant">
+        <div data-role="page" id="me" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">User Profile</h1>
                 <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
@@ -236,24 +231,20 @@
                 <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="takeaway" value="0">Take Away</label></div>
                 <div id="shosho_address">
                     <p><b>E-Gas Cylinders</b><br/>
-                        No. 2 Dargah Road,<br/>
-                        Pallavaram Chennai,<br/>
-                        Tamil Nadu 600043.</p>
+                        No. 73/95,<br/> 
+                        Kutty Gramini Street,<br/> 
+                        Kamaraj Nagar,<br/> 
+                        Raja Annamalai Puram,<br/> 
+                        Chennai,<br/> 
+                        Tamil Nadu 600028,<br/> 
+                        India.</p>
                 </div>
                 <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="home_delivery" value="1">Home Delivery</label></div>
                 <div id="delivery_err"></div>
                 <div id="address_form">
-                    <select id="area" data-theme="c">
-                        <option value="Palavakkam">Palavakkam</option>
-                        <option value="Kottivakkam">Kottivakkam</option>
-                        <option value="Neelankari">Neelankari</option>
-                        <option value="Kandancavadi">Kandancavadi</option>
-                        <option value="Perungudi">Perungudi</option>
-                        <option value="Thiruvanmiyur">Thiruvanmiyur</option>
-                    </select>
-                    <p>Home delivery is not done outside of the drop down listed area.</p>
                     <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
                     <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
+                    <input type="text" name="area" id="area" value="" placeholder="Your area" />
                     <input readonly="true" type="text" name="city" id="city" value="Chennai" placeholder="Your city" />
                     <input type="text" name="pincode" id="pincode" value="" placeholder="Your area pincode" />
                     <input type="text" name="alt_num" id="alt_num" value="" placeholder="Alternet phone number" />
@@ -349,9 +340,7 @@
             </div>
             <div role="main" class="ui-content">
                 <ul data-role="listview" data-inset="true" data-theme='b'>
-                    <li><a href="#policy">Policy</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li><a href="#faq">FAQ's</a></li>
                     <li><a href="#share">Share this app</a></li>
                     <li><a href="#feedback">Feedback Form</a></li>
                     <li><a href="#refer">Refer Friend</a></li>
@@ -383,8 +372,15 @@
             </div>
             <div role="main" class="ui-content">
                 <div class="align-center">
-                    <img src="img/map.jpg" alt="e-gas map" class="mapimg" />
-                    <p>E-Gas Cylinders<br/>No. 2<br/>Dargah Road,<br/>Pallavaram Chennai,<br/> Tamil Nadu 600043.</p>
+                    <img src="img/map.png" alt="e-gas map" class="mapimg" />
+                    <p><b>E-Gas Cylinders</b><br/>
+                        No. 73/95,<br/> 
+                        Kutty Gramini Street,<br/> 
+                        Kamaraj Nagar,<br/> 
+                        Raja Annamalai Puram,<br/> 
+                        Chennai,<br/> 
+                        Tamil Nadu 600028,<br/> 
+                        India.</p>
                 </div>
             </div>
         </div> <!-- contact -->
@@ -425,7 +421,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <ul data-role="listview">
+                <ul data-role="listview" data-theme="b">
                     <li><a href="#" onclick="gplusShare()"><i class="fa fa-google-plus-square"></i> Share with google+</a></li>
                     <li><a href="#" onclick="fbShare()"><i class="fa fa-facebook-square"></i> Share with facebook</a></li>
                     <li><a href="#" onclick="twitterShare()"><i class="fa fa-twitter-square"></i> Share with twitter</a></li>
@@ -503,7 +499,7 @@
             </div>
         </div> <!-- about -->
 
-        <div data-role="panel" id="mypannel" data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
+        <div data-role="panel" id="mypannel" data-dismissible=”true” data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
             <ul class="ui-content" data-role="listview">
                 <li><a href="#shopping"><i class="fa fa-briefcase"></i> Shop</a></li>
@@ -511,6 +507,7 @@
                 <li><a href="#me"><i class="fa fa-user"></i> Me</a></li>
                 <li><a href="#more"><i class="fa fa-bars"></i> More</a></li>
             </ul>
+            <div class="jayam">Powered by  <a onclick="openJayam();" href="#">Jayam Ltd</a></div>
         </div>
     </body>
 </html>

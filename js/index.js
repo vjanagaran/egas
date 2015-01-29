@@ -50,18 +50,18 @@ var router = new $.mobile.Router([{
             cartPage: function (type, match, ui) {
                 log("Cart Items page", 3);
                 showMyCart();
-                $("#cart_items_total").html(grand_total);
+                $("#cart_items_total").html("&#8377;" + grand_total);
                 $("#success_msg").empty();
             },
             deliveryPage: function (type, match, ui) {
                 log("Delivery page", 3);
-                $("#delivery_items_total").html(grand_total);
+                $("#delivery_items_total").html("&#8377;" + grand_total);
                 setDetails();
             },
             paymentPage: function (type, match, ui) {
                 log("Payment Items page", 3);
                 $("#cash_pay").attr("checked", true);
-                $("#payment_items_total").html(grand_total);
+                $("#payment_items_total").html("&#8377;" + grand_total);
             },
             mePage: function (type, match, ui) {
                 log("Me Page", 3);
@@ -80,6 +80,7 @@ var router = new $.mobile.Router([{
             },
             morePage: function (type, match, ui) {
                 log("More page", 3);
+                $("#mypannel").panel("close");
                 calcCart();
             },
             feedbackPage: function (type, match, ui) {
@@ -513,7 +514,7 @@ function removeItem(id) {
     });
     $("#menu_item_" + id).removeClass("selected");
     showMyCart();
-    $("#cart_items_total").html(grand_total);
+    $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
 function increaseQty(id) {
@@ -566,11 +567,11 @@ function showMyCart() {
     var g_total = 0;
     if (cart.items.length > 0) {
         $("#cart div[data-role=footer]").removeClass("remove-item");
-        out = out + '<table data-role="table" data-mode="none"><thead><tr><th class="align-left">Your Order</th><th class="align-right">Qty</th><th class="align-right">Amount</th><th>Manipulate</th></tr></thead><tbody>';
+        out = out + '<table data-role="table" data-mode="none"><tbody>';
         $.each(cart.items, function (index, row) {
             out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id +
                     ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id
-                    + ')">+</a></div></td><td class="align-right">' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td class="align-center"><a class="symbol" onclick="updateCart(' + row.id +
+                    + ')">+</a></div></td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td class="align-center"><a class="symbol" onclick="updateCart(' + row.id +
                     ')">&#10004;</a> <a class="symbol" onclick="removeItem(' + row.id + ');">&#10008;</a></td></tr>';
             total = total + parseFloat(row.rate) * parseInt(row.qty);
             if (isNaN(cart_tax[row.tax])) {
@@ -580,14 +581,14 @@ function showMyCart() {
         });
         g_total = total;
         $.each(cart_tax, function (index, val) {
-            tax_row = tax_row + '<tr><td colspan="2" class="align-left">TAX ' + index + '%</td><td class="align-right">' + val.toFixed(2) +
+            tax_row = tax_row + '<tr><td colspan="2" class="align-left">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) +
                     '</td><td>&nbsp;</td></tr>';
             g_total = g_total + val;
         });
         out = out + '<tr><td colspan="4">&nbsp;</td></tr>';
-        out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">' + total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
+        out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
         out = out + tax_row;
-        out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">' + g_total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
+        out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
         out = out + '<tr><td colspan="4"><textarea name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
     } else {
         out = "<p>No items found in your cart</p>";
@@ -639,7 +640,7 @@ function updateCartConfirmed(id) {
     });
     showMyCart();
     calcCart();
-    $("#cart_items_total").html(grand_total);
+    $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
 function removeItem(id) {
@@ -665,7 +666,7 @@ function removeItemConfirmed(id) {
     });
     $("#menu_item_" + id).removeClass("selected");
     showMyCart();
-    $("#cart_items_total").html(grand_total);
+    $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
 function processStep1() {
@@ -825,7 +826,7 @@ function showOrders() {
                 } else {
                     $("#ordered_items").empty();
                     $.each(data.data, function (index, row) {
-                        out = out + '<li><a href="#view_ordered_items?cat=' + row.id + '">#' + row.id + '. on ' + $.format.date(row.date, "dd-MMM-yy") + ' Rs. ' + parseFloat(row.amount).toFixed(2) + ' (' + row.status + ')</a></li>';
+                        out = out + '<li><a href="#view_ordered_items?cat=' + row.id + '">#' + row.id + '. on ' + $.format.date(row.date, "dd-MMM-yy") + ' &#8377; ' + parseFloat(row.amount).toFixed(2) + ' (' + row.status + ')</a></li>';
                     });
                     out = out + '</ul></div>';
                     $(out).appendTo("#ordered_items").enhanceWithin();
@@ -863,7 +864,7 @@ function loadOrderedItems(oid) {
             if (data.error == false) {
                 out = out + '<table><thead><tr><th class="align-left">Items</th><th class="align-right">Qty</th><th class="align-right">Amount</th></tr></thead><tbody>';
                 $.each(data.item, function (index, row) {
-                    out = out + '<tr><td class="align-left">' + row.name + '</td><td class="align-right">' + row.quantity + '</td><td class="align-right">' + row.rate + '</td></tr>';
+                    out = out + '<tr><td class="align-left">' + row.name + '</td><td class="align-right">' + row.quantity + '</td><td class="align-right">&#8377;' + row.rate + '</td></tr>';
                     total = total + parseFloat(row.rate) * parseInt(row.quantity);
                     if (isNaN(ordered_tax[row.tax])) {
                         ordered_tax[row.tax] = 0;
@@ -880,13 +881,13 @@ function loadOrderedItems(oid) {
                 });
                 g_total = g_total + total;
                 $.each(ordered_tax, function (index, val) {
-                    tax_row = tax_row + '<tr><td class="align-left" colspan="2">TAX ' + index + '%</td><td class="align-right">' + val.toFixed(2) + '</td></tr>';
+                    tax_row = tax_row + '<tr><td class="align-left" colspan="2">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) + '</td></tr>';
                     g_total = g_total + val;
                 });
                 out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
-                out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">' + total.toFixed(2) + '</td></tr>';
+                out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td></tr>';
                 out = out + tax_row;
-                out = out + '<tr><td class="align-left" colspan="2">Grand Total</td><td class="align-right">' + g_total.toFixed(2) + '</td></tr>';
+                out = out + '<tr><td class="align-left" colspan="2">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
                 out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
                 out = out + '<tr><td colspan="2">Delivery Type</td><td>' + data.delivery_type + '</td></tr>'
                 out = out + '<tr><td colspan="2">Order Status</td><td>' + data.status + '</td></tr>'
@@ -909,27 +910,27 @@ function loadOrderedItems(oid) {
 /****** Share page functions  ***/
 
 function gplusShare() {
-    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
-     var fullurl = "https://plus.google.com/share?url=" + url;
-     window.open(fullurl, '', "toolbar=0,location=0,height=450,width=550");*/
+    var url = "http://youtu.be/U-AAL_3r9Vg";
+    var fullurl = "https://plus.google.com/share?url=" + url;
+    window.open(fullurl, '', "toolbar=0,location=0,height=450,width=550");
 }
 
 function fbShare() {
-    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
-     var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
-     window.open(fullurl, '', "toolbar=0,location=0,height=450,width=650");*/
+    var url = "http://youtu.be/U-AAL_3r9Vg";
+    var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
+    window.open(fullurl, '', "toolbar=0,location=0,height=450,width=650");
 }
 
 function twitterShare() {
-    /*var url = "https://play.google.com/store/apps/details?id=com.jayam.shosho";
-     var ttl = "Dedicated mobile app about Sho Sho Restaurant. Download now for free!";
-     var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
-     window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");*/
+    var url = "http://youtu.be/U-AAL_3r9Vg";
+    var ttl = "Dedicated mobile app about E-Gas Cylinder. Download now for free!";
+    var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
+    window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");
 }
 
 function rateUs() {
-    /*var fullurl = "https://play.google.com/store/apps/details?id=com.coolappz.periyava";
-     window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");*/
+    var fullurl = "http://youtu.be/U-AAL_3r9Vg";
+    window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");
 }
 
 
@@ -990,6 +991,13 @@ function receiveForm() {
         });
     }
     return false;
+}
+
+
+/****** Menu Pannel functions  ***/
+
+function openJayam() {
+    window.open('http://www.jayam.co.uk', '', 'toolbar=0,location=0,height=200,width=400');
 }
 
 
