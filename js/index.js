@@ -997,7 +997,7 @@ function receiveForm() {
 /****** Menu Pannel functions  ***/
 
 function openJayam() {
-    window.open('http://www.jayam.co.uk', '', 'toolbar=0,location=0,height=200,width=400');
+    window.open('http://www.jayam.co.uk', '_system', 'toolbar=0,location=0,height=200,width=400');
 }
 
 
