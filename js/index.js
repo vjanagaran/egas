@@ -389,6 +389,19 @@ function showMe() {
     }
 }
 
+function checkUpdation() {
+    var up_name = $.trim($("#me_name").val());
+    var up_email = $.trim(jQuery("#me_email").val());
+    var name = $.trim(getVal(config.user_name));
+    var email = $.trim(getVal(config.user_email));
+    if (up_name == name && up_email == email) {
+        $("#update_success").empty();
+        $("#update_success").append("<b>No informations found to update</b>");
+        return false;
+    }
+    return true;
+}
+
 function validateUpdation() {
     if ($.trim($("#me_name").val()).length < 3) {
         $("#update_success").empty();
@@ -406,7 +419,7 @@ function validateUpdation() {
 function updateUser() {
     $("#update_success").empty();
     $("#update_success").append(loading);
-    if (validateUpdation()) {
+    if (validateUpdation() && checkUpdation()) {
         var name = $("#me_name").val();
         var email = $("#me_email").val();
         var data = {
