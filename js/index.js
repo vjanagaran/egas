@@ -344,6 +344,34 @@ function redirectToShopping() {
     $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
 }
 
+function resend() {
+    var mobile = getVal(config.user_mobile);
+    var email = getVal(config.user_email);
+    var id = getVal(config.user_id);
+    var details = {
+        mobile: mobile,
+        email: email,
+        id: id,
+        device_token: getVal(config.device_token)
+    };
+    startTimer();
+    $.ajax({
+        type: "POST",
+        url: config.api_url + "module=user&action=resend",
+        data: details,
+        cache: false,
+        success: function (html) {
+            if (html.error == false) {
+                $("#verify_err_text").html("<b>" + html.message + "</b>");
+                $("#verify_err").popup("open");
+            }
+        },
+        error: function (request, status, error) {
+            $("#verify_err_text").html("<b>Process fail please try again......</b>");
+            $("#verify_err").popup("open");
+        }
+    });
+}
 
 /**********   Me Page functions ***/
 
@@ -912,25 +940,25 @@ function loadOrderedItems(oid) {
 function gplusShare() {
     var url = "http://youtu.be/U-AAL_3r9Vg";
     var fullurl = "https://plus.google.com/share?url=" + url;
-    window.open(fullurl, '', "toolbar=0,location=0,height=450,width=550");
+    window.open(fullurl, '_system', "toolbar=0,location=0,height=450,width=550");
 }
 
 function fbShare() {
-    var url = "http://youtu.be/U-AAL_3r9Vg";
+    var url = "http://youtu.be/GB_JRRm8hAQ";
     var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
-    window.open(fullurl, '', "toolbar=0,location=0,height=450,width=650");
+    window.open(fullurl, '_system', "toolbar=0,location=0,height=450,width=650");
 }
 
 function twitterShare() {
-    var url = "http://youtu.be/U-AAL_3r9Vg";
+    var url = "http://youtu.be/GB_JRRm8hAQ";
     var ttl = "Dedicated mobile app about E-Gas Cylinder. Download now for free!";
     var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
-    window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");
+    window.open(fullurl, '_system', "menubar=1,resizable=1,width=450,height=350");
 }
 
 function rateUs() {
-    var fullurl = "http://youtu.be/U-AAL_3r9Vg";
-    window.open(fullurl, '', "menubar=1,resizable=1,width=450,height=350");
+    var fullurl = "http://youtu.be/GB_JRRm8hAQ";
+    window.open(fullurl, '_system', "menubar=1,resizable=1,width=450,height=350");
 }
 
 
@@ -948,7 +976,7 @@ function showFeedbackForm() {
 }
 
 function receiveForm() {
-    var message = $("#contact_message").val();
+    var message = $.trim($("#contact_message").val());
     var data = {};
     var name = getVal(config.user_name);
     var email = getVal(config.user_email);
@@ -989,6 +1017,9 @@ function receiveForm() {
                 }
             }
         });
+    } else {
+        $("#feedback_err_text").html("<b>Your feedback can't be empty</b>");
+        $("#feedback_err").popup("open");
     }
     return false;
 }
@@ -1005,7 +1036,7 @@ function openJayam() {
 
 function referFriend() {
     var email = $("#friend_email").val();
-    var msg = $("#friend_message").val();
+    var msg = $.trim($("#friend_message").val());
     var data = {
         email: email,
         message: msg
@@ -1014,20 +1045,25 @@ function referFriend() {
         $("#refer_err_text").html("<b>Please enter valid email</b>");
         $("#refer_err").popup("open");
     } else {
-        $.ajax({
-            type: "POST",
-            url: config.api_url + "module=user&action=invitefriend",
-            data: data,
-            cache: false,
-            success: function (data) {
-                if (data.error == false) {
-                    $("#refer_err_text").html("<b>" + data.message + "</b>");
-                    $("#refer_err").popup("open");
-                } else {
-                    $("#refer_err_text").html("<b>" + data.message + "</b>");
-                    $("#refer_err").popup("open");
+        if (msg != "") {
+            $.ajax({
+                type: "POST",
+                url: config.api_url + "module=user&action=invitefriend",
+                data: data,
+                cache: false,
+                success: function (data) {
+                    if (data.error == false) {
+                        $("#refer_err_text").html("<b>" + data.message + "</b>");
+                        $("#refer_err").popup("open");
+                    } else {
+                        $("#refer_err_text").html("<b>" + data.message + "</b>");
+                        $("#refer_err").popup("open");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            $("#refer_err_text").html("<b>Message for your friend cant be empty</b>");
+            $("#refer_err").popup("open");
+        }
     }
 }
