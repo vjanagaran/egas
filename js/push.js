@@ -8,7 +8,6 @@ push.initPushwoosh = function () {
 
     if (device.platform === "Android") {
         registerPushwooshAndroid();
-        alert("Init push on android");
     }
     if (device.platform === "iPhone" || device.platform === "iOS") {
         registerPushwooshIOS();
@@ -40,11 +39,9 @@ function registerPushwooshAndroid() {
 }
 
 function onPushwooshAndroidInitialized(pushToken) {
-    alert(pushToken);
     push.pushNotification.getPushToken(
             function (token) {
                 setVal(config.device_token, token);
-                alert(token);
                 console.warn('push token: ' + token);
             });
 }

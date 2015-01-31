@@ -630,8 +630,8 @@ function showMyCart() {
         $("#cart div[data-role=footer]").removeClass("remove-item");
         out = out + '<table data-role="table" data-mode="none"><tbody>';
         $.each(cart.items, function (index, row) {
-            out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td><a class="ui-btn" onclick="showToggle(' + row.id + ')">Modify</a></td></tr>';
-            out = out + '<tr id="cart_toggle_' + row.id + '" class="remove_form"><td colspan="3"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id + ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id + ')">+</a></div> <a class="symbol" onclick="updateCart(' + row.id + ')">&#10004;</a> <a class="symbol" onclick="removeItem(' + row.id + ');">&#10008;</a></td></tr>';
+            out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td class="align-center"><a onclick="showToggle(' + row.id + ')"><i class="fa fa-crop"></i></a></td></tr>';
+            out = out + '<tr id="cart_toggle_' + row.id + '" class="remove_form"><td colspan="3"><div class="cart_toggle"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id + ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id + ')">+</a></div> <div class="con_del"><a onclick="updateCart(' + row.id + ')">&#10004;</a> <a onclick="removeItem(' + row.id + ');">&#10008;</a></div></div></td></tr>';
             total = total + parseFloat(row.rate) * parseInt(row.qty);
             if (isNaN(cart_tax[row.tax])) {
                 cart_tax[row.tax] = 0;

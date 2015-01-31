@@ -152,74 +152,100 @@ div[data-role="header"] .ui-title{
     width: 98%;
 }
 
-.menu-items{
-    color: #000000;
-    clear: both;
+.cart_toggle{
     overflow: hidden;
-    padding: 10px;
-    border-bottom: 1px solid #AAAAAA;
-    border-radius: 5px;
-    margin: 10px 0;
+    width: 95%;
+    clear: both;
+}
+
+.select-qty, .con_del{
+    display: inline-block;
+}
+
+.select-qty{
+    float: left;
+    border: 1px solid #E4E4E4;
+}
+
+.con_del{
+    float: right;
+}
+
+.con_del > a{
+    font-size: 25px;
+    margin: 0 10px;
+}
+
+.select-qty > a, .con_del > a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.select-qty > input, .select-qty > a{
+    float: left;
+    width: 50px;
+    text-align: center;
+}
+
+.menu-items{
+    width: 100%;
+    border-bottom: 1px solid #A6A0A0;
+    margin-top: 10px;
 }
 
 .item-info{
     overflow: hidden;
-    position: relative;
     clear: both;
-    width: 100%;
+    padding: 5px;
+}
+
+.item-info > p{
+    margin: 0;
+    padding: 0;
+}
+
+.item-info .rate > span{
+    font-size: 2em;
+    line-height: 30px;
+}
+
+.item-info > p, .item-info .rate > span{
+    display: inline-block;
 }
 
 .item-info .rate{
     float: right;
 }
 
-.item-info .rate span{
-    font-size: 2em;
-}
-
-.item-info p, .item-info .rate, .item-qty .select-item-qty, .item-qty .manipulate{
-    display: inline-block;
-    margin: 0;
-    padding: 0;
+#qty-toggle{
+    background-color: #DDDDDD;
     overflow: hidden;
-}
-
-.item-qty .select-item-qty, .item-qty .manipulate{
-    float: left;
-}
-
-.item-qty{
+    clear: both;
     position: relative;
-    overflow: hidden;
-    background: #DDDDDD;
-    width: 100%;
+    padding: 5px;
 }
 
-.select-qty, .select-item-qty{
-    margin: 0;
-    padding: 0;
-    display: inline-flex;
-    border: 1px solid #E4E4E4;
+#qty-toggle .select-item-qty, #qty-toggle .manipulate{
+    display: inline-block;
 }
 
-.select-qty > input, .select-qty > a{
-    width: 25px;
+.select-item-qty, .manipulate{
+    float: left;    
 }
 
-.select-qty > input, .select-qty > a, .select-item-qty > input, .select-item-qty > a{
-    text-align: center;
-    margin: 0;
-    float: left;
-    padding: 0;
+.select-item-qty{
+    border: 1px solid #ffffff;
 }
 
-.select-qty > a, .select-item-qty > a{
-    text-decoration: none;
-    cursor: pointer;
+.manipulate .add-btn{
+    margin-left: 50px;
+    font-size: 20px;
 }
 
 .select-item-qty > input, .select-item-qty > a{
-    width: 30%;
+    float: left;
+    width: 75px;
+    text-align: center;
 }
 
 #my_cart_items > table, #ordered_items > table, #ordered_items_list > table{
@@ -245,7 +271,7 @@ div[data-role="header"] .ui-title{
 }
 
 .selected_qty{
-    background-color: #8B8B8B;
+    background-color: #8B8B8B!important;
 }
 
 .item-decs{
@@ -260,20 +286,15 @@ div[data-role="header"] .ui-title{
 .selected_qty .remove-item {
     display: inline-block;
     background-color: tomato;
-    font-size: 12px;
+    font-size: 15px;
     color: #000000;
     cursor: pointer;
     position: absolute;
-    top: 2px;
-    right: 2px;
+    top: 7px;
+    right: 7px;
     background: #999999;
     padding: 3px 6px;
     border-radius: 50%;
-}
-
-.symbol{
-    cursor: pointer;
-    font-size: 20px;
 }
 
 .ui-listview > li{
