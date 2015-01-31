@@ -216,6 +216,8 @@ function validateEmail(email) {
 /********  Intro Page Functions **/
 
 function getStart() {
+    removeVal(config.user_id);
+    removeVal(config.user_status);
     if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
         $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
     } else {
@@ -628,10 +630,8 @@ function showMyCart() {
         $("#cart div[data-role=footer]").removeClass("remove-item");
         out = out + '<table data-role="table" data-mode="none"><tbody>';
         $.each(cart.items, function (index, row) {
-            out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id +
-                    ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id
-                    + ')">+</a></div></td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td class="align-center"><a class="symbol" onclick="updateCart(' + row.id +
-                    ')">&#10004;</a> <a class="symbol" onclick="removeItem(' + row.id + ');">&#10008;</a></td></tr>';
+            out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td><a class="ui-btn" onclick="showToggle(' + row.id + ')">Modify</a></td></tr>';
+            out = out + '<tr id="cart_toggle_' + row.id + '" class="remove_form"><td colspan="3"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id + ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id + ')">+</a></div> <a class="symbol" onclick="updateCart(' + row.id + ')">&#10004;</a> <a class="symbol" onclick="removeItem(' + row.id + ');">&#10008;</a></td></tr>';
             total = total + parseFloat(row.rate) * parseInt(row.qty);
             if (isNaN(cart_tax[row.tax])) {
                 cart_tax[row.tax] = 0;
@@ -641,20 +641,24 @@ function showMyCart() {
         g_total = total;
         $.each(cart_tax, function (index, val) {
             tax_row = tax_row + '<tr><td colspan="2" class="align-left">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) +
-                    '</td><td>&nbsp;</td></tr>';
+                    '</td></tr>';
             g_total = g_total + val;
         });
-        out = out + '<tr><td colspan="4">&nbsp;</td></tr>';
-        out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
+        out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
+        out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td></tr>';
         out = out + tax_row;
-        out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td><td>&nbsp;</td></tr>';
-        out = out + '<tr><td colspan="4"><textarea name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
+        out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
+        out = out + '<tr><td colspan="3"><textarea name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
     } else {
         out = "<p>No items found in your cart</p>";
         $("#cart div[data-role=footer]").addClass("remove-item");
     }
     grand_total = g_total.toFixed(2);
     $(out).appendTo("#my_cart_items").enhanceWithin();
+}
+
+function showToggle(id) {
+    $("#cart_toggle_" + id).toggleClass("remove_form");
 }
 
 function increaseCartQty(id) {
