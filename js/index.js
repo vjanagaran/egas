@@ -95,13 +95,16 @@ var router = new $.mobile.Router([{
     defaultHandlerEvents: "s",
     defaultArgsRe: true
 });
-
 $.addTemplateFormatter({
     menuHref: function (value, options) {
         return "#shoppingitems?cat=" + value;
     },
     menuItemClass: function (value, options) {
         var cls = "menu-items";
+        return cls;
+    },
+    itemInfoClass: function (value, options) {
+        var cls = "item-info";
         $.each(cart.items, function (index, item) {
             if (value == item.id) {
                 cls = cls + " selected";
@@ -109,8 +112,25 @@ $.addTemplateFormatter({
         });
         return cls;
     },
+    itemQtyClass: function (value, options) {
+        var cls = "item-qty";
+        var remove = true;
+        $.each(cart.items, function (index, item) {
+            if (value == item.id) {
+                cls = cls + " selected_qty";
+                remove = false;
+            }
+        });
+        if (remove != false) {
+            cls = cls + " remove_form";
+        }
+        return cls;
+    },
     menuItemId: function (value, options) {
         return "menu_item_" + value;
+    },
+    menuItemOnclick: function (value, options) {
+        return "toogleQtySection(" + value + ")";
     },
     itemQtyId: function (value, options) {
         return "item_qty_" + value;
@@ -134,6 +154,9 @@ $.addTemplateFormatter({
             return "rateNormal";
         }
     },
+    itemPriceSplContent: function (value, options) {
+        return "&#8377;" + value;
+    },
     itemNameId: function (value, options) {
         return "item_name_" + value;
     },
@@ -153,8 +176,6 @@ $.addTemplateFormatter({
         return "decreaseQty(" + value + ")";
     }
 });
-
-
 /**** Pre Defined Functions **/
 
 function log(msg, level) {
@@ -174,7 +195,6 @@ var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" wi
 var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
 var after_reg = "";
-
 function calcCart() {
     var cart_qty = 0;
     $.each(cart.items, function (index, row) {
@@ -507,6 +527,14 @@ function loadShoppingItems(cat) {
     }
 }
 
+function toogleQtySection(id) {
+    if ($("#menu_item_" + id + " .item-info").hasClass("selected")) {
+        $("#menu_item_" + id + " #qty-toggle").removeClass("remove_form");
+    } else {
+        $("#menu_item_" + id + " #qty-toggle").toggleClass("remove_form");
+    }
+}
+
 function addToCart(id) {
     $('#request_process').attr('onclick', 'addConfirmed(' + id + ')');
     var qty = $("#item_qty_" + id).val();
@@ -525,7 +553,7 @@ function addToCart(id) {
 function addConfirmed(id) {
     $("#popupDialog").popup("close");
     var qty = $("#item_qty_" + id).val();
-    var rate = $("#item_price_" + id).html();
+    var rate = $("#item_price_" + id).html().replace(/[^0-9]/g, '');
     var name = $("#item_name_" + id).html();
     var tax = $("#item_tax_" + id).val();
     var item = {
@@ -535,7 +563,8 @@ function addConfirmed(id) {
         rate: rate,
         tax: tax,
     };
-    $("#menu_item_" + id).addClass("selected");
+    $("#menu_item_" + id + " .item-info").addClass("selected");
+    $("#menu_item_" + id + " #qty-toggle").addClass("selected_qty");
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
             cart.items.splice(index, 1);
@@ -544,18 +573,6 @@ function addConfirmed(id) {
     });
     cart.items.push(item);
     calcCart();
-}
-
-function removeItem(id) {
-    $.each(cart.items, function (index, row) {
-        if (row.id == id) {
-            cart.items.splice(index, 1);
-            return false;
-        }
-    });
-    $("#menu_item_" + id).removeClass("selected");
-    showMyCart();
-    $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
 function increaseQty(id) {
@@ -590,7 +607,8 @@ function removeConfirmed(id) {
             return false;
         }
     });
-    $("#menu_item_" + id).removeClass("selected");
+    $("#menu_item_" + id + " .item-info").removeClass("selected");
+    $("#menu_item_" + id + " #qty-toggle").removeClass("selected_qty");
     calcCart();
 }
 
@@ -911,14 +929,6 @@ function loadOrderedItems(oid) {
                         ordered_tax[row.tax] = 0;
                     }
                     ordered_tax[row.tax] = parseFloat(ordered_tax[row.tax]) + (parseFloat(row.rate) * parseInt(row.quantity) * parseFloat(row.tax) / 100);
-                    /* items = {
-                     id: row.id,
-                     name: row.name,
-                     qty: row.quantity,
-                     rate: row.curr_rate,
-                     tax: row.curr_tax
-                     };
-                     reorder.push(items);*/
                 });
                 g_total = g_total + total;
                 $.each(ordered_tax, function (index, val) {

@@ -157,37 +157,45 @@ div[data-role="header"] .ui-title{
     clear: both;
     overflow: hidden;
     padding: 10px;
-    position: relative;
     border-bottom: 1px solid #AAAAAA;
     border-radius: 5px;
     margin: 10px 0;
 }
 
-#my_cart_items > table, #ordered_items > table, #ordered_items_list > table{
+.item-info{
+    overflow: hidden;
+    position: relative;
+    clear: both;
     width: 100%;
 }
 
-.menu-items > img{
-    float: left;
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
+.item-info .rate{
+    float: right;
 }
 
-.menu-items .item-info{
+.item-info .rate span{
+    font-size: 2em;
+}
+
+.item-info p, .item-info .rate, .item-qty .select-item-qty, .item-qty .manipulate{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.item-qty .select-item-qty, .item-qty .manipulate{
     float: left;
+}
+
+.item-qty{
+    position: relative;
+    overflow: hidden;
+    background: #DDDDDD;
     width: 100%;
-    margin: 0;
-    padding: 0;
 }
 
-.item-info h3{
-    margin: 0;
-    padding: 0;
-    margin-bottom: 5px;
-}
-
-.select-qty{
+.select-qty, .select-item-qty{
     margin: 0;
     padding: 0;
     display: inline-flex;
@@ -196,15 +204,26 @@ div[data-role="header"] .ui-title{
 
 .select-qty > input, .select-qty > a{
     width: 25px;
+}
+
+.select-qty > input, .select-qty > a, .select-item-qty > input, .select-item-qty > a{
     text-align: center;
     margin: 0;
     float: left;
     padding: 0;
 }
 
-.select-qty > a{
+.select-qty > a, .select-item-qty > a{
     text-decoration: none;
     cursor: pointer;
+}
+
+.select-item-qty > input, .select-item-qty > a{
+    width: 30%;
+}
+
+#my_cart_items > table, #ordered_items > table, #ordered_items_list > table{
+    width: 100%;
 }
 
 .remove_form{
@@ -218,10 +237,15 @@ div[data-role="header"] .ui-title{
 .rateSpl{
     text-decoration: line-through;
     color: #999999;
+    font-size: 16px!important;
 }
 
 .selected{
-    background-color: #8AC500;
+    background-color: #DDDDDD;
+}
+
+.selected_qty{
+    background-color: #8B8B8B;
 }
 
 .item-decs{
@@ -229,16 +253,11 @@ div[data-role="header"] .ui-title{
     color: #555555;
 }
 
-.item-qty{
-    margin-right: 5px;
-    float: right;
-}
-
 .remove-item {
     display: none;
 }
 
-.selected .remove-item {
+.selected_qty .remove-item {
     display: inline-block;
     background-color: tomato;
     font-size: 12px;
@@ -255,14 +274,6 @@ div[data-role="header"] .ui-title{
 .symbol{
     cursor: pointer;
     font-size: 20px;
-}
-
-.add-btn{
-    padding: 0;
-    margin-left: 10px;
-    text-decoration: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .ui-listview > li{
