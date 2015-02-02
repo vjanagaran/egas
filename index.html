@@ -23,6 +23,14 @@
                 $("body>[data-role='panel']").panel();
                 $("[data-role=panel]").panel().enhanceWithin();
             });
+
+            $(document).on("pageinit", function () {
+                $("[data-role=panel] a").on("click", function () {
+                    if ($(this).attr("href") == "#" + $.mobile.activePage[0].id) {
+                        $("[data-role=panel]").panel("close");
+                    }
+                });
+            });
         </script>
     </head>
     <body>
