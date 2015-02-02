@@ -225,6 +225,7 @@ div[data-role="header"] .ui-title{
 }
 
 .item-qty{
+    border-top: 1px solid #DDDDDD;
     overflow: hidden;
     margin: 0;
     padding: 5px;

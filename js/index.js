@@ -29,6 +29,7 @@ var router = new $.mobile.Router([{
         "#orders": {handler: "ordersPage", events: "bs"},
         "#view_ordered_items(?:[?/](.*))?": {handler: "viewordereditemsPage", events: "bs"},
         "#more": {handler: "morePage", events: "bs"},
+        "#contact": {handler: "contactPage", events: "bs"},
         "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
@@ -87,6 +88,11 @@ var router = new $.mobile.Router([{
             },
             morePage: function (type, match, ui) {
                 log("More page", 3);
+                $("#mypannel").panel("close");
+                calcCart();
+            },
+            contactPage: function (type, match, ui) {
+                log("Contact page", 3);
                 $("#mypannel").panel("close");
                 calcCart();
             },
