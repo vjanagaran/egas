@@ -38,7 +38,7 @@
             <div role="main" class="ui-content">
                 <h3 class="align-center">Instant cooking gas connection</h3>
                 <div class="align-center">
-                    <iframe src="https://www.youtube.com/embed/GB_JRRm8hAQ?rel=0&amp;showinfo=0" class="homevideo" frameborder=0 allowfullscreen></iframe>
+                    <iframe id="promo-video" class="homevideo" frameborder=0 allowfullscreen></iframe>
                 </div>
                 <div class="ui-grid-solo">
                     <div class="align-center ui-block-a"><a class="ui-btn ui-btn-corner-all" data-rel="popup" data-transition="pop" href="#intropopup">Get started</a></div>
@@ -121,8 +121,8 @@
 
             <script type="text/html" id="category_list_tpl">
                 <a class="ui-btn ui-btn-b category" data-template-bind='[
-                   {"attribute": "href", "value": "id", "formatter": "menuHref"}]'>
-                    <span data-content="name"></span>
+                   {"attribute": "href", "value": "cat_id", "formatter": "menuHref"}]'>
+                    <span data-content="cat_name"></span>
                 </a>
             </script>
         </div> <!-- shopping -->

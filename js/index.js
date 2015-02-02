@@ -12,9 +12,12 @@ function onDeviceReady() {
     if (is_mobile) {
         push.initPushwoosh();
     }
+    getAppConfig();
+    getAllItems();
 }
 
 var router = new $.mobile.Router([{
+        "#intro": {handler: "introPage", events: "bs"},
         "#register": {handler: "registerPage", events: "bs"},
         "#verify": {handler: "verifyPage", events: "bs"},
         "#shopping": {handler: "shoppingPage", events: "bs"},
@@ -29,6 +32,10 @@ var router = new $.mobile.Router([{
         "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
+            introPage: function (type, match, ui) {
+                log("Intro Page", 3)
+                getPromoVideo();
+            },
             registerPage: function (type, match, ui) {
                 log("Register Page", 3)
                 refreshRegister();
@@ -97,6 +104,12 @@ var router = new $.mobile.Router([{
 });
 $.addTemplateFormatter({
     menuHref: function (value, options) {
+        /*var rs = $.parseJSON(getVal(config.product_list));
+         var name = $("a span").html();
+         console.log(name);
+         $.each(rs, function (k, v) {
+         $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
+         });*/
         return "#shoppingitems?cat=" + value;
     },
     menuItemClass: function (value, options) {
@@ -212,8 +225,39 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+function getAppConfig() {
+    $.ajax({
+        type: "GET",
+        url: config.api_url + "module=config&action=list",
+        cache: false,
+        success: function (rs) {
+            if (rs.error == false) {
+                setVal(config.app_config, JSON.stringify(rs.data));
+            }
+        }
+    });
+}
+
+function getAllItems() {
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: config.api_url + "module=menu&action=all",
+        cache: false,
+        success: function (rs) {
+            if (rs.error == false) {
+                setVal(config.product_list, JSON.stringify(rs.data));
+            }
+        }
+    });
+}
 
 /********  Intro Page Functions **/
+
+function getPromoVideo() {
+    var rs = $.parseJSON(getVal(config.app_config));
+    $("#promo-video").attr("src", rs["promo_url"] + "?rel=0&amp;showinfo=0");
+}
 
 function getStart() {
     if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
@@ -482,23 +526,15 @@ function updateUser() {
 
 function loadShopping() {
     $("#categories").empty();
-    $("#categories").append(loading);
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: config.api_url + "module=cat&action=list",
-        cache: false,
-        success: function (data) {
-            $("#categories").empty();
-            $.each(data.data, function (k, v) {
-                $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
-            });
-        },
-        error: function (request, status, error) {
-            $("#categories").empty();
-            $("#categories").append('Error in loading data');
-        }
-    });
+    var rs = $.parseJSON(getVal(config.product_list));
+    if (rs == null) {
+        $("#categories").empty();
+        $("#categories").append('Error in loading data');
+    } else {
+        $.each(rs, function (k, v) {
+            $("#categories").loadTemplate($('#category_list_tpl'), v, {append: true});
+        });
+    }
 }
 
 
@@ -506,30 +542,15 @@ function loadShopping() {
 
 function loadShoppingItems(cat) {
     $("#menus").empty();
-    $("#menus").append(loading);
     var heading = "";
-    var cat_name = "";
+    var rs = $.parseJSON(getVal(config.product_list));
     if (cat !== "") {
-        $.ajax({
-            type: "GET",
-            url: config.api_url + "module=menu&action=list&id=" + cat,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                $("#menus").empty();
-                $("#cat_name").empty();
-                $.each(data.data, function (k, v) {
-                    $("#menus").loadTemplate($('#menus_list_tpl'), v, {append: true});
-                    cat_name = v.cat_name;
-                });
-                heading = heading + '<h1 class="ui-title" role="heading">' + cat_name + '</h1>';
-                $("#cat_name").append(heading);
-            },
-            error: function (request, status, error) {
-                $("#menus").empty();
-                $("#menus").append('Error in loading data');
-            }
+        $("#cat_name").empty();
+        $.each(rs[cat]["items"], function (k, v) {
+            $("#menus").loadTemplate($('#menus_list_tpl'), v, {append: true});
         });
+        heading = heading + '<h1 class="ui-title" role="heading">' + rs[cat]["cat_name"] + '</h1>';
+        $("#cat_name").append(heading);
     }
 }
 

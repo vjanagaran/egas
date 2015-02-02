@@ -19,7 +19,9 @@ config = function () {
         user_id: "e-gas_userid",
         user_status: "e-gas_user_status",
         user_alternet_number: "e-gas_user_alternet_number",
-        device_token: "e-gas_device_token"
+        device_token: "e-gas_device_token",
+        app_config: "e-gas_app_config",
+        product_list: "e-gas_product_list"
     };
 }();
 
