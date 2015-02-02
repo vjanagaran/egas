@@ -112,25 +112,19 @@ $.addTemplateFormatter({
     },
     itemInfoClass: function (value, options) {
         var cls = "item-info";
-        $.each(cart.items, function (index, item) {
-            if (value == item.id) {
-                cls = cls + " selected";
-            }
-        });
         return cls;
     },
     itemQtyClass: function (value, options) {
         var cls = "item-qty";
-//        var remove = true;
-//        $.each(cart.items, function (index, item) {
-//            if (value == item.id) {
-//                cls = cls + " selected_qty";
-//                remove = false;
-//            }
-//        });
-//        if (remove != false) {
-        cls = cls + " remove_form";
-//        }
+        var remove = true;
+        $.each(cart.items, function (index, item) {
+            if (value == item.id) {
+                remove = false;
+            }
+        });
+        if (remove != false) {
+            cls = cls + " remove_form";
+        }
         return cls;
     },
     menuItemId: function (value, options) {
@@ -142,8 +136,17 @@ $.addTemplateFormatter({
     itemQtyId: function (value, options) {
         return "item_qty_" + value;
     },
+    itemTotal: function (value, options) {
+        var val = 0;
+        $.each(cart.items, function (index, item) {
+            if (value == item.id) {
+                val = parseFloat(item.qty) * parseFloat(item.rate);
+            }
+        });
+        return val.toFixed(2);
+    },
     itemQtyVal: function (value, options) {
-        var val = 1;
+        var val = 0;
         $.each(cart.items, function (index, item) {
             if (value == item.id) {
                 val = item.qty;
@@ -548,35 +551,16 @@ function loadShoppingItems(cat) {
     }
 }
 
-function toogleQtySection(id) {
-    if ($("#menu_item_" + id + " .item-info").hasClass("selected")) {
-        $("#menu_item_" + id + " #qty-toggle").removeClass("remove_form");
-    } else {
-        $("#menu_item_" + id + " #qty-toggle").toggleClass("remove_form");
-    }
-}
-
-function addToCart(id) {
-    $('#request_process').attr('onclick', 'addConfirmed(' + id + ')');
-    var qty = $("#item_qty_" + id).val();
-    var name = $("#item_name_" + id).html();
-    var act = "adding";
-    var title = "Add";
-    if ($("#menu_item_" + id).hasClass("selected")) {
-        act = "updating";
-        title = "Update";
-    }
-    $("#confirm_title").html(title + " Item");
-    $("#confirm_text").html("You're " + act + " <b>" + name + "</b> into cart <b>" + qty + " nos.</b>");
-    $("#popupDialog").popup("open");
-}
-
-function addConfirmed(id) {
-    $("#popupDialog").popup("close");
-    var qty = $("#item_qty_" + id).val();
+function increaseQty(id) {
+    $("#menu_item_" + id + " #qty-toggle").removeClass("remove_form");
     var rate = $("#item_price_" + id).html().replace(/[^0-9]/g, '');
     var name = $("#item_name_" + id).html();
+    var qty = parseInt($("#item_qty_" + id).html());
     var tax = $("#item_tax_" + id).val();
+    var total = 0;
+    if (qty >= 0 && qty < 99) {
+        qty = qty + 1;
+    }
     var item = {
         id: id,
         name: name,
@@ -584,8 +568,7 @@ function addConfirmed(id) {
         rate: rate,
         tax: tax,
     };
-    $("#menu_item_" + id + " .item-info").addClass("selected");
-    $("#menu_item_" + id + " #qty-toggle").addClass("selected_qty");
+    total = total + parseFloat(rate) * parseFloat(qty);
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
             cart.items.splice(index, 1);
@@ -593,33 +576,47 @@ function addConfirmed(id) {
         }
     });
     cart.items.push(item);
+    $("#item_qty_" + id).html(qty);
+    $("#menu_item_" + id + " #qty-toggle #total_amt").html(total.toFixed(2));
     calcCart();
 }
 
-function increaseQty(id) {
-    $("#menu_item_" + id + " #qty-toggle").removeClass("remove_form");
-    
-//    var qty = parseInt($("#item_qty_" + id).val());
-//    if (qty > 0 && qty < 99) {
-//        qty = qty + 1;
-//    }
-//    $("#item_qty_" + id).val(qty);
-}
-
 function decreaseQty(id) {
-    var qty = parseInt($("#item_qty_" + id).val());
-    if (qty > 1 && qty < 99) {
+    var rate = $("#item_price_" + id).html().replace(/[^0-9]/g, '');
+    var name = $("#item_name_" + id).html();
+    var qty = parseInt($("#item_qty_" + id).html());
+    var tax = $("#item_tax_" + id).val();
+    var total = 0;
+    if (qty >= 0 && qty < 99) {
         qty = qty - 1;
     }
-    $("#item_qty_" + id).val(qty);
-}
-
-function removeFromCart(id) {
-    $('#request_process').attr('onclick', 'removeConfirmed(' + id + ')');
-    var name = $("#item_name_" + id).html();
-    $("#confirm_title").html("Remove Item");
-    $("#confirm_text").html("You're removing <b>" + name + "</b> from cart");
-    $("#popupDialog").popup("open");
+    var item = {
+        id: id,
+        name: name,
+        qty: qty,
+        rate: rate,
+        tax: tax,
+    };
+    total = total + parseFloat(rate) * parseFloat(qty);
+    $.each(cart.items, function (index, row) {
+        if (row.id == id) {
+            cart.items.splice(index, 1);
+            return false;
+        }
+    });
+    cart.items.push(item);
+    $("#item_qty_" + id).html(qty);
+    $("#menu_item_" + id + " #qty-toggle #total_amt").html(total.toFixed(2));
+    calcCart();
+    if (qty == 0) {
+        $("#menu_item_" + id + " #qty-toggle").addClass("remove_form");
+        $.each(cart.items, function (index, row) {
+            if (row.id == id) {
+                cart.items.splice(index, 1);
+                return false;
+            }
+        });
+    }
 }
 
 function removeConfirmed(id) {

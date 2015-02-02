@@ -164,8 +164,9 @@
                     </div>
                     <div id="qty-toggle" data-template-bind='[{"attribute": "class", "value": "id", "formatter": "itemQtyClass"}]'>
                         <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'><i class="fa fa-minus-circle"></i></a> 
-                        <span data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"}]'>1</span>
-                        <span id="total_amt">amt</span>
+                        <span data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"},
+                              {"attribute": "content", "value": "id", "formatter": "itemQtyVal"}]'></span>
+                        <span id="total_amt" data-template-bind='[{"attribute": "content", "value": "id", "formatter": "itemTotal"}]'></span>
                     </div>
                     <input type="hidden" data-value="tax" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemTaxId"}]' />
                 </div>

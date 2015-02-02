@@ -238,6 +238,8 @@ div[data-role="header"] .ui-title{
 
 .item-qty a{
     font-size: 1.5em;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .item-qty span{
