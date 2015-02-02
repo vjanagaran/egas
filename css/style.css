@@ -193,68 +193,56 @@ div[data-role="header"] .ui-title{
     margin-top: 10px;
 }
 
-.item-info{
-    overflow: hidden;
+.item-info {
+    margin: 0;
     clear: both;
+    overflow: hidden;
     padding: 5px;
 }
 
-.item-info > p{
+.item-info p{
+    float: left;
+    overflow: hidden;
     margin: 0;
     padding: 0;
-}
-
-.item-info .rate > span{
-    font-size: 2em;
-    line-height: 30px;
-}
-
-.item-info > p, .item-info .rate > span{
-    display: inline-block;
+    max-width: 50%;
 }
 
 .item-info .rate{
     float: right;
+    margin: 0;
+    padding: 0;
 }
 
-#qty-toggle{
-    background-color: #DDDDDD;
+.item-info .rate span, .item-info .rate a{
+    font-size: 1.5em;
+    line-height: 100%;
+}
+
+.item-info .rate a{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.item-qty{
     overflow: hidden;
-    clear: both;
-    position: relative;
+    margin: 0;
     padding: 5px;
+    position: relative;
 }
 
-#qty-toggle .select-item-qty, #qty-toggle .manipulate{
-    display: inline-block;
-}
-
-.select-item-qty, .manipulate{
-    float: left;    
-}
-
-.select-item-qty{
-    border: 1px solid #ffffff;
-}
-
-.select-item-qty > a{
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.manipulate .add-btn{
-    border: 1px solid #FFFFFF;
-    font-size: 21px;
-    line-height: 29px;
-    text-decoration: none;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.select-item-qty > input, .select-item-qty > a{
+.item-qty a, .item-qty span{
     float: left;
-    width: 75px;
-    text-align: center;
+    overflow: hidden;
+}
+
+.item-qty a{
+    font-size: 1.5em;
+}
+
+.item-qty span{
+    margin-left: 10%;
+    line-height: 200%;
 }
 
 #my_cart_items > table, #ordered_items > table, #ordered_items_list > table{
@@ -328,24 +316,6 @@ div[data-role="header"] .ui-title{
     }
     .image:hover {
         overflow-y: auto;
-    }
-}
-
-@media screen and (max-width: 370px) {
-    .select-item-qty > input, .select-item-qty > a{
-        width: 45px;
-    }
-
-    .manipulate .add-btn{
-        font-size: 19px;
-    }
-
-    .con_del > a{
-        font-size: 18px;
-    }
-
-    .select-qty > input, .select-qty > a{
-        width: 25px;
     }
 }
 

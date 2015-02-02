@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div role="main" class="ui-content">
-                <input type="text" name="code" value="" id="code" placeholder="Your Verification Code" />
+                <input type="password" name="code" value="" id="code" placeholder="Your Verification Code" />
                 <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="verifyCode();">Verify</a>
                 <div id="timer"></div><div id="resend"></div>
             </div>
@@ -152,28 +152,22 @@
                 <div data-template-bind='[
                      {"attribute": "class", "value": "id", "formatter": "menuItemClass"},
                      {"attribute": "id", "value": "id", "formatter": "menuItemId"}]'> 
-                    <div data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "menuItemOnclick"},
-                         {"attribute": "class", "value": "id", "formatter": "itemInfoClass"}]'                  >
+                    <div data-template-bind='[{"attribute": "class", "value": "id", "formatter": "itemInfoClass"}]'                  >
                         <p data-content="name" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemNameId"}]'></p>
                         <div class="rate">
                             <span data-template-bind='[{"attribute": "content", "value": "original", "formatter": "itemPriceSplContent"},
                                   {"attribute": "class", "value": "is_spl", "formatter": "itemPriceSpl"}]'></span>
                             <span data-template-bind='[{"attribute": "content", "value": "rate", "formatter": "itemPriceSplContent"},
                                   {"attribute": "id", "value": "id", "formatter": "itemPriceId"}]'></span>
+                            <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyIncreaseOnclick"}]'><i class="fa fa-plus-circle"></i></a>
                         </div>
                     </div>
                     <div id="qty-toggle" data-template-bind='[{"attribute": "class", "value": "id", "formatter": "itemQtyClass"}]'>
-                        <div class="select-item-qty"><a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'>&ndash;</a> 
-                            <input data-role="none" name="qty" type="text" readonly="true" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"},
-                                   {"attribute": "value", "value": "id", "formatter": "itemQtyVal"}]'> 
-                            <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyIncreaseOnclick"}]'>+</a>
-                        </div>
-                        <div class="manipulate">
-                            <a class="add-btn" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemOnclick"}]'>&nbsp;&nbsp;&nbsp;&#10004;&nbsp;&nbsp;&nbsp;</a>
-                            <a class="remove-item" data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "itemRemoveclick"}]'>&#10008;</a>
-                            <input type="hidden" data-value="tax" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemTaxId"}]' />
-                        </div>
+                        <a data-template-bind='[{"attribute": "onclick", "value": "id", "formatter": "qtyDecreaseOnclick"}]'><i class="fa fa-minus-circle"></i></a> 
+                        <span data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemQtyId"}]'>1</span>
+                        <span id="total_amt">amt</span>
                     </div>
+                    <input type="hidden" data-value="tax" data-template-bind='[{"attribute": "id", "value": "id", "formatter": "itemTaxId"}]' />
                 </div>
             </script>
         </div> <!-- shopping items-->
