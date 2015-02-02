@@ -237,9 +237,18 @@ div[data-role="header"] .ui-title{
     border: 1px solid #ffffff;
 }
 
+.select-item-qty > a{
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .manipulate .add-btn{
-    margin-left: 50px;
-    font-size: 20px;
+    border: 1px solid #FFFFFF;
+    font-size: 21px;
+    line-height: 29px;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 .select-item-qty > input, .select-item-qty > a{
@@ -319,6 +328,24 @@ div[data-role="header"] .ui-title{
     }
     .image:hover {
         overflow-y: auto;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .select-item-qty > input, .select-item-qty > a{
+        width: 45px;
+    }
+
+    .manipulate .add-btn{
+        font-size: 17px;
+    }
+
+    .con_del > a{
+        font-size: 18px;
+    }
+
+    .select-qty > input, .select-qty > a{
+        width: 25px;
     }
 }
 

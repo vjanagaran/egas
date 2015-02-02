@@ -216,8 +216,6 @@ function validateEmail(email) {
 /********  Intro Page Functions **/
 
 function getStart() {
-    removeVal(config.user_id);
-    removeVal(config.user_status);
     if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
         $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
     } else {
@@ -251,9 +249,15 @@ function validRegister() {
 
 function refreshRegister() {
     $("#err_msg").empty();
-    $("#name").val("");
-    $("#mobile").val("");
-    $("#email").val("");
+    if (getVal(config.user_id) != null && getVal(config.user_status) != 1) {
+        $("#name").val(getVal(config.user_name));
+        $("#mobile").val(getVal(config.user_mobile));
+        $("#email").val(getVal(config.user_email));
+    } else {
+        $("#name").val("");
+        $("#mobile").val("");
+        $("#email").val("");
+    }
 }
 
 function createCode() {
