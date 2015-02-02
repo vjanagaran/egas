@@ -149,7 +149,7 @@ $.addTemplateFormatter({
                 val = parseFloat(item.qty) * parseFloat(item.rate);
             }
         });
-        return val.toFixed(2);
+        return "&#8377;" + val.toFixed(2);
     },
     itemQtyVal: function (value, options) {
         var val = 0;
@@ -583,7 +583,7 @@ function increaseQty(id) {
     });
     cart.items.push(item);
     $("#item_qty_" + id).html(qty);
-    $("#menu_item_" + id + " #qty-toggle #total_amt").html(total.toFixed(2));
+    $("#menu_item_" + id + " #qty-toggle #total_amt").html("&#8377;" + total.toFixed(2));
     calcCart();
 }
 
@@ -612,7 +612,7 @@ function decreaseQty(id) {
     });
     cart.items.push(item);
     $("#item_qty_" + id).html(qty);
-    $("#menu_item_" + id + " #qty-toggle #total_amt").html(total.toFixed(2));
+    $("#menu_item_" + id + " #qty-toggle #total_amt").html("&#8377;" + total.toFixed(2));
     calcCart();
     if (qty == 0) {
         $("#menu_item_" + id + " #qty-toggle").addClass("remove_form");

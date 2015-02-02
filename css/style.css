@@ -248,6 +248,10 @@ div[data-role="header"] .ui-title{
     line-height: 200%;
 }
 
+.item-qty span#total_amt{
+    float: right;
+}
+
 #my_cart_items > table, #ordered_items > table, #ordered_items_list > table{
     width: 100%;
 }
