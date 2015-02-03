@@ -304,6 +304,16 @@ function validRegister() {
         $("#reg_err").popup("open");
         return false;
     }
+    if ($.trim($("#addressl1").val()).length < 3) {
+        $("#reg_err_text").html("<b>Address Line one is mandatory</b>");
+        $("#reg_err").popup("open");
+        return false;
+    }
+    if ($.trim($("#area_pin").val()).length < 6) {
+        $("#reg_err_text").html("<b>Enter a valid pin code</b>");
+        $("#reg_err").popup("open");
+        return false;
+    }
     return true;
 }
 
