@@ -68,6 +68,15 @@
                 <input type="text" name="name" value="" id="name" placeholder="Your Name" />
                 <input type="text" name="mobile" id="mobile" value="" placeholder="Your Mobile Number" />
                 <input type="text" name="email" id="email" value="" placeholder="Your Email id" />
+                <select id="gas_type">
+                    <option value="1">Residential</option>
+                    <option value="0">Commercial</option>
+                </select>
+                <input type="text" name="addressl1" id="addressl1" value="" placeholder="Address Line 1" />
+                <input type="text" name="addressl2" id="addressl2" value="" placeholder="Address Line 2" />
+                <input type="text" name="fix_city" id="fix_city" readonly="true" value="Chennai" placeholder="City" />
+                <input type="text" name="area_pin" id="area_pin" value="" placeholder="Pin code" />
+                <input type="text" name="alt_number" id="alt_number" value="" placeholder="Alternative Number" />
                 <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="createCode();">Submit</a>
             </div>
             <div id="err_msg"></div>
@@ -120,7 +129,7 @@
             </div>
 
             <script type="text/html" id="category_list_tpl">
-                <a class="ui-btn ui-btn-b category" data-template-bind='[
+                <a class="ui-btn ui-btn-a category" data-template-bind='[
                    {"attribute": "href", "value": "cat_id", "formatter": "menuHref"}]'>
                     <span data-content="cat_name"></span>
                 </a>
@@ -243,7 +252,6 @@
                 <div id="address_form">
                     <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
                     <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
-                    <input type="text" name="area" id="area" value="" placeholder="Your area" />
                     <input readonly="true" type="text" name="city" id="city" value="Chennai" placeholder="Your city" />
                     <input type="text" name="pincode" id="pincode" value="" placeholder="Your area pincode" />
                     <input type="text" name="alt_num" id="alt_num" value="" placeholder="Alternet phone number" />
@@ -357,7 +365,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <p>Your policy and privacy will come here.</p>
+                <div id="policy_details"></div>
             </div>
         </div> <!-- policy -->
 
@@ -372,14 +380,7 @@
             <div role="main" class="ui-content">
                 <div class="align-center">
                     <img src="img/map.png" alt="e-gas map" class="mapimg" />
-                    <p><b>E-Gas Cylinders</b><br/>
-                        No. 73/95,<br/> 
-                        Kutty Gramini Street,<br/> 
-                        Kamaraj Nagar,<br/> 
-                        Raja Annamalai Puram,<br/> 
-                        Chennai,<br/> 
-                        Tamil Nadu 600028,<br/> 
-                        India.</p>
+                    <div id="contact_details"></div>
                 </div>
             </div>
         </div> <!-- contact -->
@@ -393,21 +394,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
-                    <div data-role="collapsible"><h2>Question 1</h2>
-                        <h3>Answer 1</h3>
-                    </div>
-                </div>
-                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
-                    <div data-role="collapsible"><h2>Question 2</h2>
-                        <h3>Answer 2</h3>
-                    </div>
-                </div>
-                <div data-role="collapsibleset" data-theme="a" data-content-theme="a">
-                    <div data-role="collapsible"><h2>Question 3</h2>
-                        <h3>Answer 3</h3>
-                    </div>
-                </div>
+                <div id="faq_details"></div>
             </div>
         </div> <!-- faq -->
 
@@ -494,7 +481,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <p>About app will come here..</p>
+                <div id="about_app_details">About app will come here..</div>
             </div>
         </div> <!-- about -->
 

@@ -30,6 +30,9 @@ var router = new $.mobile.Router([{
         "#view_ordered_items(?:[?/](.*))?": {handler: "viewordereditemsPage", events: "bs"},
         "#more": {handler: "morePage", events: "bs"},
         "#contact": {handler: "contactPage", events: "bs"},
+        "#faq": {handler: "faqPage", events: "bs"},
+        "#about": {handler: "aboutPage", events: "bs"},
+        "#policy": {handler: "policyPage", events: "bs"},
         "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
@@ -88,13 +91,23 @@ var router = new $.mobile.Router([{
             },
             morePage: function (type, match, ui) {
                 log("More page", 3);
-                $("#mypannel").panel("close");
                 calcCart();
+            },
+            faqPage: function (type, match, ui) {
+                log("FAQ page", 3);
+                showFAQ();
+            },
+            aboutPage: function (type, match, ui) {
+                log("About App page", 3);
+                showAboutApp();
+            },
+            policyPage: function (type, match, ui) {
+                log("Policy page", 3);
+                showPolicy();
             },
             contactPage: function (type, match, ui) {
                 log("Contact page", 3);
-                $("#mypannel").panel("close");
-                calcCart();
+                showContact();
             },
             feedbackPage: function (type, match, ui) {
                 log("Feedback Page", 3);
@@ -314,6 +327,11 @@ function createCode() {
         var name = $.trim($('#name').val());
         var mobile = $.trim($('#mobile').val());
         var email = $.trim($('#email').val());
+        var addressl1 = $.trim($('#addressl1').val());
+        var addressl2 = $.trim($('#addressl2').val());
+        var pin = $.trim($('#area_pin').val());
+        var alt_num = $.trim($('#alt_number').val());
+        var gas_type = $.trim($('#gas_type').val());
         var details = {
             name: name,
             mobile: mobile,
@@ -333,6 +351,11 @@ function createCode() {
                     setVal(config.user_name, name);
                     setVal(config.user_mobile, mobile);
                     setVal(config.user_email, email);
+                    setVal(config.user_address1, addressl1);
+                    setVal(config.user_address2, addressl2);
+                    setVal(config.user_pincode, pin);
+                    setVal(config.user_alternet_number, alt_num);
+                    setVal(config.cylinder_type, gas_type);
                     setVal(config.user_id, html.id);
                     setVal(config.user_status, html.status);
                     after_reg = "verify";
@@ -344,6 +367,11 @@ function createCode() {
                     setVal(config.user_name, name);
                     setVal(config.user_mobile, mobile);
                     setVal(config.user_email, email);
+                    setVal(config.user_address1, addressl1);
+                    setVal(config.user_address2, addressl2);
+                    setVal(config.user_pincode, pin);
+                    setVal(config.user_alternet_number, alt_num);
+                    setVal(config.cylinder_type, gas_type);
                     setVal(config.user_status, html.status);
                     setVal(config.user_id, html.id);
                     after_reg = "verify";
@@ -774,12 +802,10 @@ function setDetails() {
         $("#shosho_address").removeClass("remove_form");
         $("#address_form").addClass("remove_form");
     } else {
-        $("#address_form").removeClass("remove_form");
         $("#shosho_address").addClass("remove_form");
+        $("#address_form").removeClass("remove_form");
         $("#address1").val(getVal(config.user_address1));
         $("#address2").val(getVal(config.user_address2));
-        $("#city").val(getVal(config.user_city));
-        $("#area").val(getVal(config.user_area));
         $("#pincode").val(getVal(config.user_pincode));
         $("#alt_num").val(getVal(config.user_alternet_number));
     }
@@ -795,6 +821,10 @@ function showDetails() {
     } else {
         $("#address_form").removeClass("remove_form");
         $("#shosho_address").addClass("remove_form");
+        $("#address1").val(getVal(config.user_address1));
+        $("#address2").val(getVal(config.user_address2));
+        $("#pincode").val(getVal(config.user_pincode));
+        $("#alt_num").val(getVal(config.user_alternet_number));
     }
 }
 
@@ -913,7 +943,7 @@ function showOrders() {
                 } else {
                     $("#ordered_items").empty();
                     $.each(data.data, function (index, row) {
-                        out = out + '<li><a href="#view_ordered_items?cat=' + row.id + '">#' + row.id + '. on ' + $.format.date(row.date, "dd-MMM-yy") + ' &#8377; ' + parseFloat(row.amount).toFixed(2) + ' (' + row.status + ')</a></li>';
+                        out = out + '<li><a class="ui-btn" href="#view_ordered_items?cat=' + row.id + '">#' + row.id + '. on ' + $.format.date(row.date, "dd-MMM-yy") + ' &#8377; ' + parseFloat(row.amount).toFixed(2) + ' (' + row.status + ')</a></li>';
                     });
                     out = out + '</ul></div>';
                     $(out).appendTo("#ordered_items").enhanceWithin();
@@ -1080,6 +1110,42 @@ function receiveForm() {
 
 function openJayam() {
     window.open('http://www.jayam.co.uk', '_system', 'toolbar=0,location=0,height=200,width=400');
+}
+
+
+/****** Contact page functions  ***/
+
+function showFAQ() {
+    $("#faq_details").empty();
+    var rs = $.parseJSON(getVal(config.app_config));
+    $("#faq_details").append(rs["faq_details"]);
+}
+
+
+/****** Contact page functions  ***/
+
+function showContact() {
+    $("#contact_details").empty();
+    var rs = $.parseJSON(getVal(config.app_config));
+    $("#contact_details").append(rs["contact_details"]);
+}
+
+
+/****** Policy page functions  ***/
+
+function showPolicy() {
+    $("#policy_details").empty();
+    var rs = $.parseJSON(getVal(config.app_config));
+    $("#policy_details").append(rs["policy_details"]);
+}
+
+
+/****** About app page functions  ***/
+
+function showAboutApp() {
+    $("#about_app_details").empty();
+    var rs = $.parseJSON(getVal(config.app_config));
+    $("#about_app_details").append(rs["about_app_details"]);
 }
 
 
