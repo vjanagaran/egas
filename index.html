@@ -87,7 +87,7 @@
                 <input type="text" name="alt_number" id="alt_number" value="" placeholder="Alternative Number" />
                 <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="createCode();">Submit</a>
             </div>
-            <div id="err_msg"></div>
+            <div id="err_msg" class="ui-content"></div>
             <div data-role="popup" id="reg_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
                     <h1>Alert</h1>
@@ -111,7 +111,7 @@
             <div role="main" class="ui-content">
                 <input type="password" name="code" value="" id="code" placeholder="Your Verification Code" />
                 <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="verifyCode();">Verify</a>
-                <div id="timer"></div><div id="resend"></div>
+                <div id="timer" class="ui-content"></div><div id="resend"></div>
             </div>
             <div data-role="popup" id="verify_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
@@ -205,7 +205,7 @@
                 <input type="text" value="" placeholder="Your email" id="me_email"/>
                 <a href="#" onclick="updateUser();" class="ui-btn ui-btn-corner-all ui-btn-a">Update Details</a>
             </div>
-            <div id="update_success"></div>
+            <div id="update_success" class="ui-content"></div>
         </div> <!-- me -->
 
         <div data-role="page" id="cart" data-title="E-Gas Cylinders">
@@ -215,7 +215,7 @@
                 <a class="ui-btn-right ui-btn ui-shadow ui-corner-all" href="#"><span>Total</span> <span id="cart_items_total"> 0.00</span></a>
             </div>
             <div role="main" class="ui-content">
-                <div id="my_cart_items"></div>
+                <div id="my_cart_items" class="ui-content"></div>
             </div>
             <div data-role="popup" id="cart_manipulation" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
@@ -256,7 +256,7 @@
                         Chennai - 600028</p>
                 </div>
                 <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="home_delivery" value="1">Home Delivery</label></div>
-                <div id="delivery_err"></div>
+                <div id="delivery_err" class="ui-content"></div>
                 <div id="address_form">
                     <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
                     <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
@@ -282,7 +282,7 @@
             </div>
             <div role="main" class="ui-content">
                 <div class="ui-content"><label><input data-role="none" type="radio" name="cash_pay" id="cash_pay" value="Cash">Cash on Delivery</label></div>
-                <div id="success_msg"></div>
+                <div id="success_msg" class="ui-content"></div>
             </div>
             <div data-role="popup" id="order_success" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
@@ -415,7 +415,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <ul data-role="listview" data-theme="b">
+                <ul data-role="listview" data-inset="true" data-theme="b">
                     <li><a href="#" class="ui-btn" onclick="gplusShare()"><i class="fa fa-google-plus-square"></i> Share with google+</a></li>
                     <li><a href="#" class="ui-btn" onclick="fbShare()"><i class="fa fa-facebook-square"></i> Share with facebook</a></li>
                     <li><a href="#" class="ui-btn" onclick="twitterShare()"><i class="fa fa-twitter-square"></i> Share with twitter</a></li>

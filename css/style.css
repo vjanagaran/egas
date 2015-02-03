@@ -39,6 +39,22 @@ div[data-role="footer"] .ui-grid-solo .ui-btn{
     display: block;
 }
 
+.ui-listview > li.ui-last-child{
+    border-radius: 0;
+}
+
+.ui-content .ui-listview-inset{
+    margin-top: 0px;
+}
+
+.ui-listview.ui-corner-all{
+    border-radius: 0;
+}
+
+.ui-listview > .ui-shadow{
+    box-shadow: none;
+}
+
 body, input, select, textarea, button, .ui-btn {
     font-family: futurastd_book;
 }
@@ -217,6 +233,10 @@ div[data-role="header"] .ui-title{
 .item-info .rate span, .item-info .rate a{
     font-size: 1.5em;
     line-height: 100%;
+}
+
+.item-info .rate a, .item-qty a{
+    padding: 0 10px;
 }
 
 .item-info .rate a{

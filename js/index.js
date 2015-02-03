@@ -9,11 +9,11 @@ if (is_mobile) {
 }
 
 function onDeviceReady() {
+    $.mobile.defaultPageTransition = 'none';
+    $.mobile.defaultDialogTransition = 'none';
     if (is_mobile) {
         push.initPushwoosh();
     }
-    //getAppConfig();
-    //getAllItems();
 }
 
 var router = new $.mobile.Router([{
@@ -245,33 +245,6 @@ function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
-
-/*function getAppConfig() {
- $.ajax({
- type: "GET",
- url: config.api_url + "module=config&action=list",
- cache: false,
- success: function (rs) {
- if (rs.error == false) {
- setVal(config.app_config, JSON.stringify(rs.data));
- }
- }
- });
- }
- 
- function getAllItems() {
- $.ajax({
- type: "GET",
- dataType: 'json',
- url: config.api_url + "module=menu&action=all",
- cache: false,
- success: function (rs) {
- if (rs.error == false) {
- setVal(config.product_list, JSON.stringify(rs.data));
- }
- }
- });
- }*/
 
 
 /********  Loading Page Functions **/
