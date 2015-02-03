@@ -12,11 +12,12 @@ function onDeviceReady() {
     if (is_mobile) {
         push.initPushwoosh();
     }
-    getAppConfig();
-    getAllItems();
+    //getAppConfig();
+    //getAllItems();
 }
 
 var router = new $.mobile.Router([{
+        "#loading": {handler: "loadingPage", events: "bs"},
         "#intro": {handler: "introPage", events: "bs"},
         "#register": {handler: "registerPage", events: "bs"},
         "#verify": {handler: "verifyPage", events: "bs"},
@@ -36,6 +37,10 @@ var router = new $.mobile.Router([{
         "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
+            loadingPage: function (type, match, ui) {
+                log("Intro Page", 3)
+                loadLocalData();
+            },
             introPage: function (type, match, ui) {
                 log("Intro Page", 3)
                 getPromoVideo();
@@ -241,7 +246,39 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function getAppConfig() {
+/*function getAppConfig() {
+ $.ajax({
+ type: "GET",
+ url: config.api_url + "module=config&action=list",
+ cache: false,
+ success: function (rs) {
+ if (rs.error == false) {
+ setVal(config.app_config, JSON.stringify(rs.data));
+ }
+ }
+ });
+ }
+ 
+ function getAllItems() {
+ $.ajax({
+ type: "GET",
+ dataType: 'json',
+ url: config.api_url + "module=menu&action=all",
+ cache: false,
+ success: function (rs) {
+ if (rs.error == false) {
+ setVal(config.product_list, JSON.stringify(rs.data));
+ }
+ }
+ });
+ }*/
+
+
+/********  Loading Page Functions **/
+
+function loadLocalData() {
+    $("#load_gif").append(loading);
+    $("#load_data").append("Loading app configuration");
     $.ajax({
         type: "GET",
         url: config.api_url + "module=config&action=list",
@@ -249,24 +286,25 @@ function getAppConfig() {
         success: function (rs) {
             if (rs.error == false) {
                 setVal(config.app_config, JSON.stringify(rs.data));
+                $("#load_data").empty();
+                $("#load_data").append("Loading shoping menus");
+                $.ajax({
+                    type: "GET",
+                    dataType: 'json',
+                    url: config.api_url + "module=menu&action=all",
+                    cache: false,
+                    success: function (rs) {
+                        if (rs.error == false) {
+                            setVal(config.product_list, JSON.stringify(rs.data));
+                            $(":mobile-pagecontainer").pagecontainer("change", "#intro");
+                        }
+                    }
+                });
             }
         }
     });
 }
 
-function getAllItems() {
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: config.api_url + "module=menu&action=all",
-        cache: false,
-        success: function (rs) {
-            if (rs.error == false) {
-                setVal(config.product_list, JSON.stringify(rs.data));
-            }
-        }
-    });
-}
 
 /********  Intro Page Functions **/
 
@@ -842,22 +880,25 @@ function processStep2() {
     $("#delivery_err").empty();
     if ((getVal(config.user_id) != null)) {
         var address1 = $("#address1").val();
+        var pincode = $("#pincode").val();
         var che = $("input[name='delivery']:checked");
         var obj = che.val();
-        if (obj == 1 && address1 < 3) {
+        if (obj == 1 && address1.length < 3) {
+            $("#delivery_err").empty();
             $("#delivery_err").append("<b>Address line 1 mandatory</b>");
+            $("#address1").focus();
+        } else if (obj == 1 && pincode.length < 6) {
+            $("#delivery_err").empty();
+            $("#delivery_err").append("<b>Enter a valid pin code</b>");
             $("#address1").focus();
         } else {
             cart.delivery = obj;
             var address2 = $("#address2").val();
             var city = $("#city").val();
-            var area = $("#area").val();
-            var pincode = $("#pincode").val();
             var alternet = $("#alt_num").val();
             setVal(config.user_address1, address1);
             setVal(config.user_address2, address2);
             setVal(config.user_city, city);
-            setVal(config.user_area, area);
             setVal(config.user_pincode, pincode);
             setVal(config.user_alternet_number, alternet);
             $(":mobile-pagecontainer").pagecontainer("change", "#payment");
