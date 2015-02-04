@@ -312,12 +312,12 @@ function validRegister() {
     $("#reg_err .ui-content a").attr("data-rel", "back");
     $("#reg_err .ui-content a").removeAttr("onclick");
     if ($.trim($("#name").val()).length < 3) {
-        $("#reg_err_text").html("<b>Name should be 3 char</b>");
+        $("#reg_err_text").html("<b>Name should be at least 3 char</b>");
         $("#reg_err").popup("open");
         return false;
     }
     if (!validateEmail($.trim(jQuery("#email").val()))) {
-        $("#reg_err_text").html("<b>Please enter valid email</b>");
+        $("#reg_err_text").html("<b>Please enter valid email address</b>");
         $("#reg_err").popup("open");
         return false;
     }
@@ -327,7 +327,7 @@ function validRegister() {
         return false;
     }
     if ($.trim($("#addressl1").val()).length < 3) {
-        $("#reg_err_text").html("<b>Address Line one is mandatory</b>");
+        $("#reg_err_text").html("<b>Address line 1 is mandatory</b>");
         $("#reg_err").popup("open");
         return false;
     }
@@ -546,7 +546,7 @@ function validateUpdation() {
         return false;
     }
     if (!validateEmail($.trim(jQuery("#me_email").val()))) {
-        $("#update_success_text").html("<b>Please enter valid email</b>");
+        $("#update_success_text").html("<b>Please enter valid email address</b>");
         $("#update_success").popup("open");
         return false;
     }
@@ -743,7 +743,7 @@ function showMyCart() {
         out = out + '<tr><td class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
         out = out + '<tr><td colspan="2"><textarea rows="3" name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
     } else {
-        out = "<p>No items found in your cart</p>";
+        out = '<a class=ui-btn href="#shopping">Shop now</a>';
         $("#cart div[data-role=footer]").addClass("remove-item");
     }
     grand_total = g_total.toFixed(2);
@@ -785,6 +785,7 @@ function decreaseCartQty(id) {
                 row.qty = new_qty;
                 return false;
             } else {
+                $("#cart_manipulation_text").html("<b>You're removing " + row.name + " from cart</b>")
                 $("#cart_request_process_btn1").attr("onclick", "confirmRemoveFromCart(" + row.id + ")");
                 $("#cart_request_process_btn2").attr("onclick", "ignoreRemoveFromCart(" + row.id + ")");
                 $("#cart_manipulation").popup("open");
@@ -1145,7 +1146,7 @@ function receiveForm() {
             }
         });
     } else {
-        $("#feedback_err_text").html("<b>Your feedback can't be empty</b>");
+        $("#feedback_err_text").html("<b>Please enter feedback</b>");
         $("#feedback_err").popup("open");
     }
     return false;
@@ -1205,7 +1206,7 @@ function referFriend() {
         message: msg
     };
     if (!validateEmail($.trim(email))) {
-        $("#refer_err_text").html("<b>Please enter valid email</b>");
+        $("#refer_err_text").html("<b>Please enter valid email address</b>");
         $("#refer_err").popup("open");
     } else {
         if (msg != "") {
@@ -1225,7 +1226,7 @@ function referFriend() {
                 }
             });
         } else {
-            $("#refer_err_text").html("<b>Message for your friend cant be empty</b>");
+            $("#refer_err_text").html("<b>Please enter message</b>");
             $("#refer_err").popup("open");
         }
     }
