@@ -246,6 +246,10 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+$("#loading").on("pageshow", function () {
+    $("div#make_center").center();
+});
+
 
 /********  Loading Page Functions **/
 
@@ -336,6 +340,7 @@ function validRegister() {
 }
 
 function refreshRegister() {
+    $("div#err_msg").center();
     $("#err_msg").empty();
     if (getVal(config.user_id) != null && getVal(config.user_status) != 1) {
         $("#name").val(getVal(config.user_name));
@@ -507,6 +512,7 @@ function resend() {
 
 function showMe() {
     $("#me_loader").empty();
+    $("#me_loader").center();
     var id = getVal(config.user_id);
     var name = getVal(config.user_name);
     var mobile = getVal(config.user_mobile);
