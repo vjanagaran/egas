@@ -633,7 +633,7 @@ function increaseQty(id) {
         name: name,
         qty: qty,
         rate: rate,
-        tax: tax,
+        tax: tax
     };
     total = total + parseFloat(rate) * parseFloat(qty);
     $.each(cart.items, function (index, row) {
@@ -650,43 +650,47 @@ function increaseQty(id) {
 
 function decreaseQty(id) {
     var rate = $("#item_price_" + id).html().replace(/[^0-9]/g, '');
-    var name = $("#item_name_" + id).html();
     var qty = parseInt($("#item_qty_" + id).html());
-    var tax = $("#item_tax_" + id).val();
     var total = 0;
     if (qty >= 0 && qty < 99) {
         qty = qty - 1;
     }
-    var item = {
-        id: id,
-        name: name,
-        qty: qty,
-        rate: rate,
-        tax: tax,
-    };
     total = total + parseFloat(rate) * parseFloat(qty);
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
-            cart.items.splice(index, 1);
-            return false;
+            if (qty > 0) {
+                row.qty = qty;
+                return false;
+            } else {
+                $("#request_process_btn1").attr("onclick", "confirmRemove(" + row.id + ")");
+                $("#request_process_btn2").attr("onclick", "ignoreRemove(" + row.id + ")");
+                $("#popupDialog").popup("open");
+                return false;
+            }
         }
     });
-    cart.items.push(item);
     $("#item_qty_" + id).html(qty);
     $("#menu_item_" + id + " #qty-toggle #total_amt").html("&#8377;" + total.toFixed(2));
     calcCart();
-    if (qty == 0) {
-        $("#menu_item_" + id + " #qty-toggle").addClass("remove_form");
-        $.each(cart.items, function (index, row) {
-            if (row.id == id) {
-                cart.items.splice(index, 1);
-                return false;
-            }
-        });
-    }
 }
 
-function removeConfirmed(id) {
+function ignoreRemove(id) {
+    $("#popupDialog").popup("close");
+    var rate = $("#item_price_" + id).html().replace(/[^0-9]/g, '');
+    var total = 0;
+    $.each(cart.items, function (index, row) {
+        if (row.id == id) {
+            row.qty = 1;
+            return false;
+        }
+    });
+    total = total + parseFloat(rate) * parseFloat(1);
+    $("#item_qty_" + id).html(1);
+    $("#menu_item_" + id + " #qty-toggle #total_amt").html("&#8377;" + total.toFixed(2));
+    calcCart();
+}
+
+function confirmRemove(id) {
     $("#popupDialog").popup("close");
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
@@ -694,9 +698,8 @@ function removeConfirmed(id) {
             return false;
         }
     });
-    $("#menu_item_" + id + " .item-info").removeClass("selected");
-    $("#menu_item_" + id + " #qty-toggle").removeClass("selected_qty");
     calcCart();
+    $("#menu_item_" + id + " #qty-toggle").addClass("remove_form");
 }
 
 
@@ -705,7 +708,6 @@ function removeConfirmed(id) {
 function showMyCart() {
     calcCart();
     $("#my_cart_items").empty();
-    $("#success_msg").empty();
     var out = "";
     var tax_row = "";
     var total = 0;
@@ -715,8 +717,8 @@ function showMyCart() {
         $("#cart div[data-role=footer]").removeClass("remove-item");
         out = out + '<table data-role="table" data-mode="none"><tbody>';
         $.each(cart.items, function (index, row) {
-            out = out + '<tr><td class = "align-left">' + row.name + '</td><td class="align-right"> &#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</td><td class="align-center"><a onclick="showToggle(' + row.id + ')"><i class="fa fa-crop"></i></a></td></tr>';
-            out = out + '<tr id="cart_toggle_' + row.id + '" class="remove_form"><td colspan="3"><div class="cart_toggle"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id + ')">&ndash;</a> <input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"> <a onclick="increaseCartQty(' + row.id + ')">+</a></div> <div class="con_del"><a onclick="updateCart(' + row.id + ')">&#10004;</a> <a onclick="removeItem(' + row.id + ');">&#10008;</a></div></div></td></tr>';
+            out = out + '<tr><td class="align-left" colspan="2">' + row.name + '</td></tr>';
+            out = out + '<tr><td class="align-left"><div class="select-qty"><a onclick="decreaseCartQty(' + row.id + ')"><i class="fa fa-minus-circle"></i></a><input data-role="none" name="qty" type="text" readonly="true" id="cart_item_' + row.id + '" value="' + row.qty + '"><a onclick="increaseCartQty(' + row.id + ')"><i class="fa fa-plus-circle"></i></a></div></td><td class="align-right"> <span id="cart_item_total_' + row.id + '">&#8377;' + (parseInt(row.rate) * parseInt(row.qty)).toFixed(2) + '</span></td></tr>';
             total = total + parseFloat(row.rate) * parseInt(row.qty);
             if (isNaN(cart_tax[row.tax])) {
                 cart_tax[row.tax] = 0;
@@ -725,15 +727,15 @@ function showMyCart() {
         });
         g_total = total;
         $.each(cart_tax, function (index, val) {
-            tax_row = tax_row + '<tr><td colspan="2" class="align-left">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) +
+            tax_row = tax_row + '<tr><td class="align-left">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) +
                     '</td></tr>';
             g_total = g_total + val;
         });
-        out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
-        out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td></tr>';
+        out = out + '<tr><td colspan="2">&nbsp;</td></tr>';
+        out = out + '<tr><td class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td></tr>';
         out = out + tax_row;
-        out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
-        out = out + '<tr><td colspan="3"><textarea rows="3" name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
+        out = out + '<tr><td class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
+        out = out + '<tr><td colspan="2"><textarea rows="3" name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
     } else {
         out = "<p>No items found in your cart</p>";
         $("#cart div[data-role=footer]").addClass("remove-item");
@@ -742,69 +744,74 @@ function showMyCart() {
     $(out).appendTo("#my_cart_items").enhanceWithin();
 }
 
-function showToggle(id) {
-    $("#cart_toggle_" + id).toggleClass("remove_form");
-}
-
 function increaseCartQty(id) {
+    var rate = 0;
+    var total = 0;
     var new_qty = parseInt($("#cart_item_" + id).val());
     if (new_qty > 0 && new_qty < 99) {
         new_qty = new_qty + 1;
     }
-    $("#cart_item_" + id).val(new_qty);
-}
-
-function decreaseCartQty(id) {
-    var new_qty = parseInt($("#cart_item_" + id).val());
-    if (new_qty > 1 && new_qty < 99) {
-        new_qty = new_qty - 1;
-    }
-    $("#cart_item_" + id).val(new_qty);
-}
-
-function updateCart(id) {
-    $('#cart_request_process').attr('onclick', 'updateCartConfirmed(' + id + ')');
-    var qty = $("#cart_item_" + id).val();
-    var name = "";
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
-            name = row.name;
-            qty = row.qty;
-        }
-    });
-    $("#cart_confirm_title").html("Update Item");
-    $("#cart_confirm_text").html("You're updating <b>" + name + "</b> into cart <b>" + qty + " nos.</b>");
-    $("#cart_manipulation").popup("open");
-}
-
-function updateCartConfirmed(id) {
-    $("#cart_manipulation").popup("close");
-    var new_qty = $("#cart_item_" + id).val();
-    $.each(cart.items, function (index, row) {
-        if (row.id == id) {
+            rate = row.rate;
             row.qty = new_qty;
             return false;
         }
     });
+    total = total + parseFloat(rate) * parseFloat(new_qty);
+    $("#cart_item_" + id).val(new_qty);
+    $("#cart_item_total" + id).html("&#8377;" + total.toFixed(2));
     showMyCart();
-    calcCart();
     $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
-function removeItem(id) {
-    var name = "";
-    $('#cart_request_process').attr('onclick', 'removeItemConfirmed(' + id + ')');
+function decreaseCartQty(id) {
+    var rate = 0;
+    var total = 0;
+    var new_qty = parseInt($("#cart_item_" + id).val());
+    if (new_qty >= 0 && new_qty < 99) {
+        new_qty = new_qty - 1;
+    }
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
-            name = row.name;
+            if (new_qty > 0) {
+                rate = row.rate;
+                row.qty = new_qty;
+                return false;
+            } else {
+                $("#cart_request_process_btn1").attr("onclick", "confirmRemoveFromCart(" + row.id + ")");
+                $("#cart_request_process_btn2").attr("onclick", "ignoreRemoveFromCart(" + row.id + ")");
+                $("#cart_manipulation").popup("open");
+                return false;
+            }
         }
     });
-    $("#cart_confirm_title").html("Remove Item");
-    $("#cart_confirm_text").html("You're removing <b>" + name + "</b> from cart");
-    $("#cart_manipulation").popup("open");
+    total = total + parseFloat(rate) * parseFloat(new_qty);
+    $("#cart_item_" + id).val(new_qty);
+    $("#cart_item_total" + id).html("&#8377;" + total.toFixed(2));
+    showMyCart();
+    $("#cart_items_total").html("&#8377;" + grand_total);
 }
 
-function removeItemConfirmed(id) {
+function ignoreRemoveFromCart(id) {
+    $("#cart_manipulation").popup("close");
+    var rate = 0;
+    var total = 0;
+    $.each(cart.items, function (index, row) {
+        if (row.id == id) {
+            rate = row.rate;
+            row.qty = 1;
+            return false;
+        }
+    });
+    total = total + parseFloat(rate) * parseFloat(1);
+    $("#cart_item_" + id).val(1);
+    $("#cart_item_total" + id).html("&#8377;" + total.toFixed(2));
+    showMyCart();
+    $("#cart_items_total").html("&#8377;" + grand_total);
+}
+
+function confirmRemoveFromCart(id) {
     $("#cart_manipulation").popup("close");
     $.each(cart.items, function (index, row) {
         if (row.id == id) {
@@ -812,7 +819,6 @@ function removeItemConfirmed(id) {
             return false;
         }
     });
-    $("#menu_item_" + id).removeClass("selected");
     showMyCart();
     $("#cart_items_total").html("&#8377;" + grand_total);
 }

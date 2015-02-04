@@ -188,25 +188,13 @@ div[data-role="header"] .ui-title{
     clear: both;
 }
 
-.select-qty, .con_del{
-    display: inline-block;
-}
-
 .select-qty{
     float: left;
     border: 1px solid #E4E4E4;
 }
 
-.con_del{
-    float: right;
-}
-
-.con_del > a{
-    font-size: 25px;
-    margin: 0 10px;
-}
-
-.select-qty > a, .con_del > a{
+.select-qty > a{
+    font-size: 21px;
     text-decoration: none;
     cursor: pointer;
 }
