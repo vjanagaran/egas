@@ -13,6 +13,10 @@
 body{
 }
 
+textarea{
+    height: auto!important;
+}
+
 .ui-header-fixed {
     z-index: 1002;
 }
@@ -94,6 +98,11 @@ div[data-role="header"] .ui-title{
     background: #ffffff;
     padding: 2px;
     border: 2px solid #9E9E9E;
+}
+
+#make_center{
+    width: 100%;
+    height: auto;
 }
 
 .jayam {

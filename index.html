@@ -37,9 +37,16 @@
 
         <div data-role="page" id="loading" data-title="E-Gas Cylinders">
             <div role="main" class="ui-content">
-                <div id="load_gif"></div>
-                <p class="align-center" id="load_data"></p>
+                <div id="make_center">
+                    <div id="load_gif"></div>
+                    <p class="align-center" id="load_data"></p>
+                </div>
             </div>
+            <script>
+                $("#loading").on("pageshow", function () {
+                    $("div#make_center").center();
+                });
+            </script>
         </div> <!-- loading page-->
 
         <div data-role="page" id="intro" data-title="E-Gas Cylinders">
@@ -205,7 +212,18 @@
                 <input type="text" value="" placeholder="Your email" id="me_email"/>
                 <a href="#" onclick="updateUser();" class="ui-btn ui-btn-corner-all ui-btn-a">Update Details</a>
             </div>
-            <div id="update_success" class="ui-content"></div>
+            <div id="me_loader"></div>
+            <div data-role="popup" id="update_success" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="update_success_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
+                </div>
+            </div>
         </div> <!-- me -->
 
         <div data-role="page" id="cart" data-title="E-Gas Cylinders">
@@ -256,13 +274,23 @@
                         Chennai - 600028</p>
                 </div>
                 <div class="ui-content"><label><input onchange="showDetails();" data-role="none" type="radio" name="delivery" id="home_delivery" value="1">Home Delivery</label></div>
-                <div id="delivery_err" class="ui-content"></div>
                 <div id="address_form">
                     <input type="text" name="address1" id="address1" value="" placeholder="Your Address Line 1" />
                     <input type="text" name="address2" id="address2" value="" placeholder="Your Address Line 2" />
                     <input readonly="true" type="text" name="city" id="city" value="Chennai" placeholder="Your city" />
                     <input type="text" name="pincode" id="pincode" value="" placeholder="Your area pincode" />
                     <input type="text" name="alt_num" id="alt_num" value="" placeholder="Alternet phone number" />
+                </div>
+            </div>
+            <div data-role="popup" id="delivery_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="delivery_err_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
                 </div>
             </div>
             <div data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -438,7 +466,7 @@
                     <div><input type="text" value="" id="contact_email" name="email" placeholder="Your Email"></div>
                     <div><input type="text" name="phone" id="contact_num" placeholder="Your Mobile No"><span id="num_msg"></span></div>
                 </div>
-                <div><textarea id="contact_message" name="message" placeholder="Your Feedback"></textarea></div>
+                <div><textarea id="contact_message" rows="3" name="message" placeholder="Your Feedback"></textarea></div>
                 <div><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" onclick="return receiveForm();">Submit</a></div>
             </div>
             <div data-role="popup" id="feedback_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
@@ -464,7 +492,7 @@
             </div>
             <div role="main" class="ui-content">
                 <input type="email" placeholder="Your friend's email id" value="" name="friend_email" id="friend_email"/>
-                <textarea name="friend_message" id="friend_message" placeholder="Your message for friend"></textarea>
+                <textarea name="friend_message" rows="3" id="friend_message" placeholder="Your message for friend"></textarea>
                 <a href="#" class="ui-btn ui-btn-corner-all" onclick="referFriend();">Refer</a>
             </div>
             <div data-role="popup" id="refer_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">

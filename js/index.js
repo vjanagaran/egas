@@ -249,6 +249,13 @@ function validateEmail(email) {
 
 /********  Loading Page Functions **/
 
+jQuery.fn.center = function () {
+    this.css("position", "fixed");
+    this.css("top", ($(window).height() / 2) - (this.outerHeight() / 2));
+    this.css("left", ($(window).width() / 2) - (this.outerWidth() / 2));
+    return this;
+}
+
 function loadLocalData() {
     $("#load_gif").append(loading);
     $("#load_data").append("Loading app configuration");
@@ -495,11 +502,11 @@ function resend() {
     });
 }
 
+
 /**********   Me Page functions ***/
 
 function showMe() {
-    $("#my_details").empty();
-    $("#update_success").empty();
+    $("#me_loader").empty();
     var id = getVal(config.user_id);
     var name = getVal(config.user_name);
     var mobile = getVal(config.user_mobile);
@@ -512,36 +519,38 @@ function showMe() {
 }
 
 function checkUpdation() {
+    $("#me_loader").empty();
     var up_name = $.trim($("#me_name").val());
     var up_email = $.trim(jQuery("#me_email").val());
     var name = $.trim(getVal(config.user_name));
     var email = $.trim(getVal(config.user_email));
     if (up_name == name && up_email == email) {
-        $("#update_success").empty();
-        $("#update_success").append("<b>No informations found to update</b>");
+        $("#update_success_text").html("<b>No informations found to update</b>");
+        $("#update_success").popup("open");
         return false;
     }
     return true;
 }
 
 function validateUpdation() {
+    $("#me_loader").empty();
     if ($.trim($("#me_name").val()).length < 3) {
-        $("#update_success").empty();
-        $("#update_success").append("<b>Name should be 3 char</b>");
+        $("#update_success_text").html("<b>Name must be 3 characters</b>");
+        $("#update_success").popup("open");
         return false;
     }
     if (!validateEmail($.trim(jQuery("#me_email").val()))) {
-        $("#update_success").empty();
-        $("#update_success").append("<b>Please enter valid email</b>");
+        $("#update_success_text").html("<b>Please enter valid email</b>");
+        $("#update_success").popup("open");
         return false;
     }
     return true;
 }
 
 function updateUser() {
-    $("#update_success").empty();
-    $("#update_success").append(loading);
     if (validateUpdation() && checkUpdation()) {
+        $("#me_loader").empty();
+        $("#me_loader").append(loading);
         var name = $("#me_name").val();
         var email = $("#me_email").val();
         var data = {
@@ -556,18 +565,21 @@ function updateUser() {
             cache: false,
             success: function (html) {
                 if (html.error == false) {
+                    $("#me_loader").empty();
                     setVal(config.user_name, name);
                     setVal(config.user_email, email);
-                    $("#update_success").empty();
-                    $("#update_success").append(html.message);
+                    $("#update_success_text").html("<b>" + html.message + "</b>");
+                    $("#update_success").popup("open");
                 } else {
-                    $("#update_success").empty();
-                    $("#update_success").append(html.message);
+                    $("#me_loader").empty();
+                    $("#update_success_text").html("<b>" + html.message + "</b>");
+                    $("#update_success").popup("open");
                 }
             },
             error: function (request, status, error) {
-                $("#update_success").empty();
-                $("#update_success").append("Process failed please try again after some times.....");
+                $("#me_loader").empty();
+                $("#update_success_text").html("<b>Process failed please try again after some times.....</b>");
+                $("#update_success").popup("open");
             }
         });
     }
@@ -721,7 +733,7 @@ function showMyCart() {
         out = out + '<tr><td colspan="2" class="align-left">Total</td><td class="align-right">&#8377;' + total.toFixed(2) + '</td></tr>';
         out = out + tax_row;
         out = out + '<tr><td colspan="2" class="align-left">Grand Total</td><td class="align-right">&#8377;' + g_total.toFixed(2) + '</td></tr>';
-        out = out + '<tr><td colspan="3"><textarea name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
+        out = out + '<tr><td colspan="3"><textarea rows="3" name="orderdecs" id="orderdecs" placeholder="Order description (optional)...."></textarea></td></tr></tbody></table>';
     } else {
         out = "<p>No items found in your cart</p>";
         $("#cart div[data-role=footer]").addClass("remove-item");
@@ -816,7 +828,6 @@ function processStep1() {
 
 function setDetails() {
     $("#takeaway").attr("checked", true)
-    $("#delivery_err").empty();
     var che = $("input[type='radio']:checked");
     var obj = che.val();
     if (obj == 0) {
@@ -833,7 +844,6 @@ function setDetails() {
 }
 
 function showDetails() {
-    $("#delivery_err").empty();
     var che = $("input[type='radio']:checked");
     var obj = che.val();
     if (obj == 0) {
@@ -850,19 +860,18 @@ function showDetails() {
 }
 
 function processStep2() {
-    $("#delivery_err").empty();
     if ((getVal(config.user_id) != null)) {
         var address1 = $("#address1").val();
         var pincode = $("#pincode").val();
         var che = $("input[name='delivery']:checked");
         var obj = che.val();
         if (obj == 1 && address1.length < 3) {
-            $("#delivery_err").empty();
-            $("#delivery_err").append("<b>Address line 1 mandatory</b>");
+            $("#delivery_err_text").html("<b>Address line 1 mandatory</b>");
+            $("#delivery_err").popup("open");
             $("#address1").focus();
         } else if (obj == 1 && pincode.length < 6) {
-            $("#delivery_err").empty();
-            $("#delivery_err").append("<b>Enter a valid pin code</b>");
+            $("#delivery_err_text").html("<b>Enter a valid pin code</b>");
+            $("#delivery_err").popup("open");
             $("#address1").focus();
         } else {
             cart.delivery = obj;
@@ -877,7 +886,8 @@ function processStep2() {
             $(":mobile-pagecontainer").pagecontainer("change", "#payment");
         }
     } else {
-        $("#delivery_err").append("<b>Please select a delivery type..</b>");
+        $("#delivery_err_text").html("<b>Please select a delivery type..</b>");
+        $("#delivery_err").popup("open");
     }
 }
 
@@ -1133,7 +1143,7 @@ function receiveForm() {
 /****** Menu Pannel functions  ***/
 
 function openJayam() {
-    window.open('http://www.jayam.co.uk', '_system', 'toolbar=0,location=0,height=200,width=400');
+    window.open('http://www.jayam.co.uk', '_blank');
 }
 
 
