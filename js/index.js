@@ -1055,25 +1055,25 @@ function loadOrderedItems(oid) {
 function gplusShare() {
     var url = "http://youtu.be/U-AAL_3r9Vg";
     var fullurl = "https://plus.google.com/share?url=" + url;
-    window.open(fullurl, '_system', "toolbar=0,location=0,height=450,width=550");
+    window.open(fullurl, '_blank');
 }
 
 function fbShare() {
     var url = "http://youtu.be/GB_JRRm8hAQ";
     var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
-    window.open(fullurl, '_system', "toolbar=0,location=0,height=450,width=650");
+    window.open(fullurl, '_blank');
 }
 
 function twitterShare() {
     var url = "http://youtu.be/GB_JRRm8hAQ";
     var ttl = "Dedicated mobile app about E-Gas Cylinder. Download now for free!";
     var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
-    window.open(fullurl, '_system', "menubar=1,resizable=1,width=450,height=350");
+    window.open(fullurl, '_blank');
 }
 
 function rateUs() {
     var fullurl = "http://youtu.be/GB_JRRm8hAQ";
-    window.open(fullurl, '_system', "menubar=1,resizable=1,width=450,height=350");
+    window.open(fullurl, '_blank');
 }
 
 
