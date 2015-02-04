@@ -34,6 +34,7 @@ var router = new $.mobile.Router([{
         "#faq": {handler: "faqPage", events: "bs"},
         "#about": {handler: "aboutPage", events: "bs"},
         "#policy": {handler: "policyPage", events: "bs"},
+        "#rate": {handler: "ratePage", events: "bs"},
         "#feedback": {handler: "feedbackPage", events: "bs"}
     }],
         {
@@ -109,6 +110,10 @@ var router = new $.mobile.Router([{
             policyPage: function (type, match, ui) {
                 log("Policy page", 3);
                 showPolicy();
+            },
+            ratePage: function (type, match, ui) {
+                log("Contact page", 3);
+                setRate();
             },
             contactPage: function (type, match, ui) {
                 log("Contact page", 3);
@@ -229,6 +234,7 @@ var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" wi
 var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
 var after_reg = "";
+var order_id = "";
 function calcCart() {
     var cart_qty = 0;
     $.each(cart.items, function (index, row) {
@@ -249,8 +255,6 @@ function validateEmail(email) {
 $("#loading").on("pageshow", function () {
     $("div#make_center").center();
 });
-
-
 /********  Loading Page Functions **/
 
 jQuery.fn.center = function () {
@@ -1016,6 +1020,7 @@ function loadOrderedItems(oid) {
     var ordered_tax = {};
     var total = 0;
     var tax_row = "";
+    order_id = oid;
     var g_total = 0;
     $("#ordered_items_list").empty();
     $("#ordered_items_list").append(loading);
@@ -1037,7 +1042,7 @@ function loadOrderedItems(oid) {
                 });
                 g_total = g_total + total;
                 $.each(ordered_tax, function (index, val) {
-                    tax_row = tax_row + '<tr><td class="align-left" colspan="2">TAX ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) + '</td></tr>';
+                    tax_row = tax_row + '<tr><td class="align-left" colspan="2">VAT ' + index + '%</td><td class="align-right">&#8377;' + val.toFixed(2) + '</td></tr>';
                     g_total = g_total + val;
                 });
                 out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
@@ -1047,7 +1052,8 @@ function loadOrderedItems(oid) {
                 out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
                 out = out + '<tr><td colspan="2">Delivery Type</td><td>' + data.delivery_type + '</td></tr>'
                 out = out + '<tr><td colspan="2">Order Status</td><td>' + data.status + '</td></tr>'
-                out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data.date, "dd-MMM-yy hh:mm") + '</td></tr></tbody></table>';
+                out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data.date, "dd-MMM-yy hh:mm") + '</td></tr>';
+                out = out + '<tr><td colspan="3"><a href="rate" class="ui-btn">Rate this Order</a></td></tr></tbody></table>';
                 $("#ordered_items_list").empty();
                 $("#ordered_items_list").append(out);
             } else {
@@ -1193,6 +1199,70 @@ function showAboutApp() {
     $("#about_app_details").empty();
     var rs = $.parseJSON(getVal(config.app_config));
     $("#about_app_details").append(rs["about_app_details"]);
+}
+
+
+/****** Rate page functions  ***/
+
+function setRate() {
+    $("#service_rate").raty();
+    $("#timeliness_rate").raty();
+    $("#price_rate").raty();
+}
+
+function validRate() {
+    if (typeof ($("#service_rate").raty("score")) == "undefined") {
+        $("#ratepopup_text").html("<b>Please rate our service</b>");
+        $("#ratepopup").popup("open");
+        return false;
+    }
+    if (typeof ($("#timeliness_rate").raty("score")) == "undefined") {
+        $("#ratepopup_text").html("<b>Please rate our timliness</b>");
+        $("#ratepopup").popup("open");
+        return false;
+    }
+    if (typeof ($("#price_rate").raty("score")) == "undefined") {
+        $("#ratepopup_text").html("<b>Please rate our price</b>");
+        $("#ratepopup").popup("open");
+        return false;
+    }
+    if ($("#rate_msg").val().length < 1) {
+        $("#ratepopup_text").html("<b>Please enter a rate message</b>");
+        $("#ratepopup").popup("open");
+        return false;
+    }
+    return true;
+}
+
+function rateService() {
+    var msg = $("#rate_msg").val();
+    var rate1 = $("#service_rate").raty("score");
+    var rate2 = $("#timeliness_rate").raty("score");
+    var rate3 = $("#price_rate").raty("score");
+    var data = {
+        order_id: 1, //order_id,
+        rate1: rate1,
+        rate2: rate2,
+        rate3: rate3,
+        review: msg
+    };
+    if (validRate()) {
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=rate_review&action=create",
+            data: data,
+            cache: false,
+            success: function (data) {
+                if (data.error == false) {
+                    $("#ratepopup_text").html("<b>" + data.message + "</b>");
+                    $("#ratepopup").popup("open");
+                } else {
+                    $("#ratepopup_text").html("<b>" + data.message + "</b>");
+                    $("#ratepopup").popup("open");
+                }
+            }
+        });
+    }
 }
 
 

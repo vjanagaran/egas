@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.raty.css" />
         <link rel="stylesheet" type="text/css" href="css/theme.min.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.5.min.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -15,6 +16,7 @@
         <script type="text/javascript" charset="utf-8" src="js/libs/jquery.mobile.router.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/libs/jquery.mobile-1.4.3.min.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/libs/jquery-dateFormat.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/libs/jquery.raty.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/push.js"></script>
         <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
         <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -22,6 +24,7 @@
             $(function () {
                 $("body>[data-role='panel']").panel();
                 $("[data-role=panel]").panel().enhanceWithin();
+                $("#externalpopup").enhanceWithin().popup();
             });
 
             $(document).on("pageinit", function () {
@@ -512,9 +515,50 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <div id="about_app_details">About app will come here..</div>
+                <div id="about_app_details"></div>
             </div>
         </div> <!-- about -->
+
+        <div data-role="page" id="rate" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">My Orders</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
+                </div>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+            </div>
+            <div role="main" class="ui-content">
+                <div id="service_rate"></div>
+                <div id="price_rate"></div>
+                <div id="timeliness_rate"></div>
+                <textarea name="rate_msg" id="rate_msg" rows="3" placeholder="Enter your message"></textarea>
+                <a onclick="rateService();" class="ui-btn" href="#">Submit Rate</a>
+            </div>
+            <div data-role="popup" id="ratepopup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Information</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <p id="ratepopup_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Rate Service -->
+
+        <div data-role="popup" id="externalpopup" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+            <div data-role="header" data-theme="a">
+                <h1>Information</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <p id="externalpopup_text">Thanks for using our Beta version. Currently, we support only Super gas connections and deliveries in selected parts of Chennai</p>
+                <div class="request_btns">
+                    <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
+                </div>
+            </div>
+        </div> <!-- External popup -->
 
         <div data-role="panel" id="mypannel" data-dismissible=”true” data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
