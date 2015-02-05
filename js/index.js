@@ -284,11 +284,11 @@ function loadLocalData() {
                     success: function (rs) {
                         if (rs.error == false) {
                             setVal(config.product_list, JSON.stringify(rs.data));
-                            if ($.mobile.activePage.find("#externalpopup").is(":visible")) {
-                                $("#emternalpopup .ui-content a").removeAttr("data-rel");
-                                $("#emternalpopup .ui-content a").attr("href", "#intro");
-                            } else {
+                            if ($("#externalpopup").parent().hasClass('ui-popup-hidden')) {
                                 $(":mobile-pagecontainer").pagecontainer("change", "#intro");
+                            } else {
+                                $("#externalpopup .ui-content a").removeAttr("data-rel");
+                                $("#externalpopup .ui-content a").attr("href", "#intro");
                             }
                         }
                     }
