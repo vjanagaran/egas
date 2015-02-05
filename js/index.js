@@ -8,6 +8,8 @@ if (is_mobile) {
     onDeviceReady();
 }
 
+var push_message = "";
+
 function onDeviceReady() {
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
@@ -285,10 +287,8 @@ function loadLocalData() {
                             if ($.mobile.activePage.find("#externalpopup").is(":visible")) {
                                 $("#emternalpopup .ui-content a").removeAttr("data-rel");
                                 $("#emternalpopup .ui-content a").attr("href", "#intro");
-                                console.log("popup visible");
                             } else {
                                 $(":mobile-pagecontainer").pagecontainer("change", "#intro");
-                                console.log("popup not visible");
                             }
                         }
                     }
@@ -304,6 +304,10 @@ function loadLocalData() {
 function getPromoVideo() {
     var rs = $.parseJSON(getVal(config.app_config));
     $("#promo-video").attr("src", rs["promo_url"] + "?rel=0&amp;showinfo=0");
+    if (push_message != "") {
+        $("#externalpopup_text").html(push_message);
+        $("#externalpopup").popup("open");
+    }
 }
 
 function getStart() {
