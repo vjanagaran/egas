@@ -252,9 +252,7 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-$("#loading").on("pageshow", function () {
-    $("div#make_center").center();
-});
+
 /********  Loading Page Functions **/
 
 jQuery.fn.center = function () {
@@ -284,7 +282,14 @@ function loadLocalData() {
                     success: function (rs) {
                         if (rs.error == false) {
                             setVal(config.product_list, JSON.stringify(rs.data));
-                            $(":mobile-pagecontainer").pagecontainer("change", "#intro");
+                            if ($.mobile.activePage.find("#externalpopup").is(":visible")) {
+                                $("#emternalpopup .ui-content a").removeAttr("data-rel");
+                                $("#emternalpopup .ui-content a").attr("href", "#intro");
+                                console.log("popup visible");
+                            } else {
+                                $(":mobile-pagecontainer").pagecontainer("change", "#intro");
+                                console.log("popup not visible");
+                            }
                         }
                     }
                 });
@@ -1053,7 +1058,7 @@ function loadOrderedItems(oid) {
                 out = out + '<tr><td colspan="2">Delivery Type</td><td>' + data.delivery_type + '</td></tr>'
                 out = out + '<tr><td colspan="2">Order Status</td><td>' + data.status + '</td></tr>'
                 out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data.date, "dd-MMM-yy hh:mm") + '</td></tr>';
-                out = out + '<tr><td colspan="3"><a href="rate" class="ui-btn">Rate this Order</a></td></tr></tbody></table>';
+                out = out + '<tr><td colspan="3"><a href="#rate" class="ui-btn">Rate this Order</a></td></tr></tbody></table>';
                 $("#ordered_items_list").empty();
                 $("#ordered_items_list").append(out);
             } else {
@@ -1240,7 +1245,7 @@ function rateService() {
     var rate2 = $("#timeliness_rate").raty("score");
     var rate3 = $("#price_rate").raty("score");
     var data = {
-        order_id: 1, //order_id,
+        order_id: order_id,
         rate1: rate1,
         rate2: rate2,
         rate3: rate3,

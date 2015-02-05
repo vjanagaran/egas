@@ -45,6 +45,11 @@
                     <p class="align-center" id="load_data"></p>
                 </div>
             </div>
+            <script>
+                $("#loading").on("pageshow", function () {
+                    $("div#make_center").center();
+                });
+            </script>
         </div> <!-- loading page-->
 
         <div data-role="page" id="intro" data-title="E-Gas Cylinders">
@@ -521,7 +526,7 @@
 
         <div data-role="page" id="rate" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
-                <h1 class="ui-title" role="heading">My Orders</h1>
+                <h1 class="ui-title" role="heading">Rate us</h1>
                 <div class="ui-btn-right">
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
                     <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
@@ -529,9 +534,11 @@
                 <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
             </div>
             <div role="main" class="ui-content">
-                <div id="service_rate"></div>
-                <div id="price_rate"></div>
-                <div id="timeliness_rate"></div>
+                <table>
+                    <tr><td>Service:</td><td><div id="service_rate"></div></td></tr>
+                    <tr><td>Price:</td><td><div id="price_rate"></div></td></tr>
+                    <tr><td>Timeliness:</td><td><div id="timeliness_rate"></div></td></tr>
+                </table>
                 <textarea name="rate_msg" id="rate_msg" rows="3" placeholder="Enter your message"></textarea>
                 <a onclick="rateService();" class="ui-btn" href="#">Submit Rate</a>
             </div>
@@ -553,7 +560,7 @@
                 <h1>Information</h1>
             </div>
             <div role="main" class="ui-content">
-                <p id="externalpopup_text">Thanks for using our Beta version. Currently, we support only Super gas connections and deliveries in selected parts of Chennai</p>
+                <p id="externalpopup_text"></p>
                 <div class="request_btns">
                     <a href="#" class="ui-btn-1" data-rel="back">Ok</a>
                 </div>
