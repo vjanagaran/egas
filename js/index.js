@@ -8,8 +8,6 @@ if (is_mobile) {
     onDeviceReady();
 }
 
-var push_message = "";
-
 function onDeviceReady() {
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
@@ -304,10 +302,6 @@ function loadLocalData() {
 function getPromoVideo() {
     var rs = $.parseJSON(getVal(config.app_config));
     $("#promo-video").attr("src", rs["promo_url"] + "?rel=0&amp;showinfo=0");
-    if (push_message != "") {
-        $("#externalpopup_text").html(push_message);
-        $("#externalpopup").popup("open");
-    }
 }
 
 function getStart() {
@@ -1061,10 +1055,25 @@ function loadOrderedItems(oid) {
                 out = out + '<tr><td colspan="3">&nbsp;</td></tr>';
                 out = out + '<tr><td colspan="2">Delivery Type</td><td>' + data.delivery_type + '</td></tr>'
                 out = out + '<tr><td colspan="2">Order Status</td><td>' + data.status + '</td></tr>'
-                out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data.date, "dd-MMM-yy hh:mm") + '</td></tr>';
-                out = out + '<tr><td colspan="3"><a href="#rate" class="ui-btn">Rate this Order</a></td></tr></tbody></table>';
+                out = out + '<tr><td colspan="2">Order Date</td><td>' + $.format.date(data["data"].created_at, "dd-MMM-yy hh:mm") + '</td></tr>';
+                if (data.status == "Completed" && data["data"].review_status == null) {
+                    out = out + '<tr><td colspan="3"><a href="#rate" class="ui-btn">Rate Order</a></td></tr></tbody></table>';
+                } else if (data.status == "Completed" && data["data"].review_status == 1) {
+                    out = out + '<tr><td colspan="3">&nbsp;</td></tr></tbody></table>';
+                    out = out + '<table><tbody><tr><td colspan="2"><b>Your Ratings</b></td></tr>';
+                    out = out + '<tr><td>Service:</td><td><div id="your_rate1"></div></td></tr>';
+                    out = out + '<tr><td>Price:</td><td><div id="your_rate2"></div></td></tr>';
+                    out = out + '<tr><td>Timeliness:</td><td><div id="your_rate3"></div></td></tr>';
+                    out = out + '<tr><td>Message:</td><td>' + data["data"].review + '</td></tr>';
+                    out = out + '</tbody></table>';
+                } else {
+                    out = out + '</tbody></table>';
+                }
                 $("#ordered_items_list").empty();
                 $("#ordered_items_list").append(out);
+                $("#your_rate1").raty({readOnly: true, score: data["data"].rate1});
+                $("#your_rate2").raty({readOnly: true, score: data["data"].rate2});
+                $("#your_rate3").raty({readOnly: true, score: data["data"].rate3});
             } else {
                 $("#ordered_items_list").empty();
                 $("#ordered_items_list").append(data.message);
@@ -1189,7 +1198,12 @@ function showFAQ() {
 function showContact() {
     $("#contact_details").empty();
     var rs = $.parseJSON(getVal(config.app_config));
-    $("#contact_details").append(rs["contact_details"]);
+    var direction = '<a href="#" class="ui-btn" onclick="getDirection()">Get Directions</a>'
+    $("#contact_details").append(rs["contact_details"] + direction);
+}
+
+function getDirection() {
+    window.open('https://www.google.co.in/maps/dir//Thiru+Enterprises,+No.+73%2F95,+Kutty+Gramini+Street,+Kamaraj+Nagar,+Raja+Annamalai+Puram,+Chennai,+Tamil+Nadu+600028/@13.020363,80.262495,17z/data=!4m13!1m4!3m3!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2sThiru+Enterprises,+No.+73%2F95!3b1!4m7!1m0!1m5!1m1!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2m2!1d80.262495!2d13.020363?hl=en96324', '_blank');
 }
 
 
@@ -1246,8 +1260,8 @@ function validRate() {
 function rateService() {
     var msg = $("#rate_msg").val();
     var rate1 = $("#service_rate").raty("score");
-    var rate2 = $("#timeliness_rate").raty("score");
-    var rate3 = $("#price_rate").raty("score");
+    var rate2 = $("#price_rate").raty("score");
+    var rate3 = $("#timeliness_rate").raty("score");
     var data = {
         order_id: order_id,
         rate1: rate1,

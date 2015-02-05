@@ -24,8 +24,9 @@ function registerPushwooshAndroid() {
                     console.warn('user data: ' + JSON.stringify(userData));
                 }
                 $("#externalpopup_text").html(title);
+                $("#externalpopup .ui-content a").removeAttr("href");
+                $("#externalpopup .ui-content a").attr("data-rel", "back");
                 $("#externalpopup").popup("open");
-                //push_message = title;
             });
 
     push.pushNotification.onDeviceReady({projectid: GoogleAppID, appid: PWAppID});
@@ -53,8 +54,9 @@ function registerPushwooshIOS() {
             function (event) {
                 var notification = event.notification;
                 $("#externalpopup_text").html(notification.aps.alert);
+                $("#externalpopup .ui-content a").removeAttr("href");
+                $("#externalpopup .ui-content a").attr("data-rel", "back");
                 $("#externalpopup").popup("open");
-                //push_message = notification.aps.alert;
                 push.pushNotification.setApplicationIconBadgeNumber(0);
             });
 

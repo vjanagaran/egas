@@ -417,7 +417,7 @@
                 <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
             </div>
             <div role="main" class="ui-content">
-                <div class="align-center">
+                <div>
                     <img src="img/map.png" alt="e-gas map" class="mapimg" />
                     <div id="contact_details"></div>
                 </div>
@@ -517,7 +517,7 @@
                 <div class="ui-btn-right">
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
                 </div>
-                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Menu</a>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Back</a>
             </div>
             <div role="main" class="ui-content">
                 <div id="about_app_details"></div>
@@ -529,15 +529,16 @@
                 <h1 class="ui-title" role="heading">Rate us</h1>
                 <div class="ui-btn-right">
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
-                    <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
                 </div>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a data-rel="back" data-icon="carat-l" data-iconpos="notext">Back</a>
             </div>
             <div role="main" class="ui-content">
                 <table>
-                    <tr><td>Service:</td><td><div id="service_rate"></div></td></tr>
-                    <tr><td>Price:</td><td><div id="price_rate"></div></td></tr>
-                    <tr><td>Timeliness:</td><td><div id="timeliness_rate"></div></td></tr>
+                    <tbody>
+                        <tr><td>Service:</td><td><div id="service_rate"></div></td></tr>
+                        <tr><td>Price:</td><td><div id="price_rate"></div></td></tr>
+                        <tr><td>Timeliness:</td><td><div id="timeliness_rate"></div></td></tr>
+                    </tbody>
                 </table>
                 <textarea name="rate_msg" id="rate_msg" rows="3" placeholder="Enter your message"></textarea>
                 <a onclick="rateService();" class="ui-btn" href="#">Submit Rate</a>
