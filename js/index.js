@@ -39,15 +39,15 @@ var router = new $.mobile.Router([{
     }],
         {
             loadingPage: function (type, match, ui) {
-                log("Intro Page", 3)
+                log("Intro Page", 3);
                 loadLocalData();
             },
             introPage: function (type, match, ui) {
-                log("Intro Page", 3)
+                log("Intro Page", 3);
                 getPromoVideo();
             },
             registerPage: function (type, match, ui) {
-                log("Register Page", 3)
+                log("Register Page", 3);
                 refreshRegister();
             },
             verifyPage: function (type, match, ui) {
@@ -55,7 +55,7 @@ var router = new $.mobile.Router([{
                 startTimer();
             },
             shoppingPage: function (type, match, ui) {
-                log("Catalog Page", 3)
+                log("Catalog Page", 3);
                 loadShopping();
             },
             shoppingitemsPage: function (type, match, ui) {
@@ -260,7 +260,7 @@ jQuery.fn.center = function () {
     this.css("top", ($(window).height() / 2) - (this.outerHeight() / 2));
     this.css("left", ($(window).width() / 2) - (this.outerWidth() / 2));
     return this;
-}
+};
 
 function loadLocalData() {
     $("#load_gif").append(loading);
@@ -1092,25 +1092,29 @@ function loadOrderedItems(oid) {
 function gplusShare() {
     var url = "http://youtu.be/U-AAL_3r9Vg";
     var fullurl = "https://plus.google.com/share?url=" + url;
-    window.open(fullurl, '_blank');
+    window.open(fullurl, '_system');
+    return false;
 }
 
 function fbShare() {
     var url = "http://youtu.be/GB_JRRm8hAQ";
     var fullurl = "http://www.facebook.com/sharer/sharer.php?u=" + url;
-    window.open(fullurl, '_blank');
+    window.open(fullurl, '_system');
+    return false;
 }
 
 function twitterShare() {
     var url = "http://youtu.be/GB_JRRm8hAQ";
     var ttl = "Dedicated mobile app about E-Gas Cylinder. Download now for free!";
     var fullurl = "https://twitter.com/share?original_referer=http://www.charing.com/&source=tweetbutton&text=" + ttl + "&url=" + url;
-    window.open(fullurl, '_blank');
+    window.open(fullurl, '_system');
+    return false;
 }
 
 function rateUs() {
     var fullurl = "http://youtu.be/GB_JRRm8hAQ";
-    window.open(fullurl, '_blank');
+    window.open(fullurl, '_system');
+    return false;
 }
 
 
@@ -1180,7 +1184,8 @@ function receiveForm() {
 /****** Menu Pannel functions  ***/
 
 function openJayam() {
-    window.open('http://www.jayam.co.uk', '_blank');
+    window.open('http://www.jayam.co.uk', '_system');
+    return false;
 }
 
 
@@ -1203,7 +1208,8 @@ function showContact() {
 }
 
 function getDirection() {
-    window.open('https://www.google.co.in/maps/dir//Thiru+Enterprises,+No.+73%2F95,+Kutty+Gramini+Street,+Kamaraj+Nagar,+Raja+Annamalai+Puram,+Chennai,+Tamil+Nadu+600028/@13.020363,80.262495,17z/data=!4m13!1m4!3m3!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2sThiru+Enterprises,+No.+73%2F95!3b1!4m7!1m0!1m5!1m1!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2m2!1d80.262495!2d13.020363?hl=en96324', '_blank');
+    window.open('https://www.google.co.in/maps/dir//Thiru+Enterprises,+No.+73%2F95,+Kutty+Gramini+Street,+Kamaraj+Nagar,+Raja+Annamalai+Puram,+Chennai,+Tamil+Nadu+600028/@13.020363,80.262495,17z/data=!4m13!1m4!3m3!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2sThiru+Enterprises,+No.+73%2F95!3b1!4m7!1m0!1m5!1m1!1s0x3a5267c46139fa95:0x98a4165dd0cd40e6!2m2!1d80.262495!2d13.020363?hl=en96324', '_system');
+    return false;
 }
 
 
