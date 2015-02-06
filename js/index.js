@@ -1301,6 +1301,8 @@ function referFriend() {
     var email = $("#friend_email").val();
     var msg = $.trim($("#friend_message").val());
     var data = {
+        name: getVal(config.user_name),
+        mobile: getVal(config.user_mobile),
         email: email,
         message: msg
     };
