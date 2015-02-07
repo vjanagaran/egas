@@ -68,7 +68,6 @@ var router = new $.mobile.Router([{
                 log("Cart Items page", 3);
                 showMyCart();
                 $("#cart_items_total").html("&#8377;" + grand_total);
-                $("#success_msg").empty();
             },
             deliveryPage: function (type, match, ui) {
                 log("Delivery page", 3);
@@ -1131,6 +1130,28 @@ function showFeedbackForm() {
     }
 }
 
+function validForm() {
+    if ($.trim($("#contact_name").val()).length < 3) {
+        $("#feedback_err_text").html("<b>Name must be 3 char</b>");
+        $("#feedback_err").popup("open");
+        $("#contact_name").focus();
+        return false;
+    }
+    if (!validateEmail($.trim(jQuery("#contact_email").val()))) {
+        $("#feedback_err_text").html("<b>Please enter valid email</b>");
+        $("#feedback_err").popup("open");
+        $("#contact_email").focus();
+        return false;
+    }
+    if ($.trim($("#contact_message").val()).length < 20) {
+        $("#feedback_err_text").html("<b>Message at least 20 char</b>");
+        $("#feedback_err").popup("open");
+        $("#contact_message").focus();
+        return false;
+    }
+    return true;
+}
+
 function receiveForm() {
     var message = $.trim($("#contact_message").val());
     var data = {};
@@ -1189,7 +1210,7 @@ function openJayam() {
 }
 
 
-/****** Contact page functions  ***/
+/****** FAQ page functions  ***/
 
 function showFAQ() {
     $("#faq_details").empty();
