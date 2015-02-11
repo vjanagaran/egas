@@ -918,6 +918,8 @@ function processStep2() {
 /****** Payment page functions  ***/
 
 function processOrder() {
+    $("#success_msg").empty();
+    $("#success_msg").append(loading);
     var id = getVal(config.user_id);
     var delivery = cart.delivery;
     var decs = cart.decs;
@@ -951,6 +953,7 @@ function processOrder() {
             cache: false,
             success: function (html) {
                 if (html.error == false) {
+                    $("#success_msg").empty();
                     cart.items = [];
                     grand_total = 0;
                     $("#order_success .ui-content a").removeAttr("data-rel");
@@ -958,6 +961,7 @@ function processOrder() {
                     $("#order_success_text").html("<b>" + html.message + "</b>");
                     $("#order_success").popup("open");
                 } else {
+                    $("#success_msg").empty();
                     $("#order_success_text").html("<b>" + html.message + "</b>");
                     $("#order_success .ui-content a").removeAttr("onclick");
                     $("#order_success .ui-content a").attr("data-rel", "back");
