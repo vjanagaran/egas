@@ -345,6 +345,10 @@ function validRegister() {
     return true;
 }
 
+function removeDetails() {
+    $("#remove_for_exist_user").addClass("remove-item");
+}
+
 function refreshRegister() {
     $("div#err_msg").center();
     $("#err_msg").empty();
