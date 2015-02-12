@@ -74,7 +74,7 @@
             </div>
         </div> <!-- introduction page-->
 
-        <div data-role="page" id="register" data-title="E-Gas Cylinders">
+        <div data-role="page" id="register_one" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">Registration</h1>
                 <div class="ui-btn-right">
@@ -83,20 +83,42 @@
             </div>
             <div role="main" class="ui-content">
                 <input type="text" name="mobile" id="mobile" value="" onblur="" placeholder="Your Mobile Number" />
-                <div id="remove_for_exist_user">
-                    <input type="text" name="name" value="" id="name" placeholder="Your Name" />
-                    <input type="text" name="email" id="email" value="" placeholder="Your Email id" />
-                    <select id="gas_type" data-role="none">
-                        <option value="1">Residential</option>
-                        <option value="0">Commercial</option>
-                    </select>
-                    <input type="text" name="addressl1" id="addressl1" value="" placeholder="Address Line 1" />
-                    <input type="text" name="addressl2" id="addressl2" value="" placeholder="Address Line 2" />
-                    <input type="text" name="fix_city" id="fix_city" readonly="true" value="Chennai" placeholder="City" />
-                    <input type="text" name="area_pin" id="area_pin" value="" placeholder="Pin code" />
-                    <input type="text" name="alt_number" id="alt_number" value="" placeholder="Alternative Number" />
-                    <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="createCode();">Submit</a>
+                <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="registerPartOne();">Proceed</a>
+                <div id="reg_one_spinner"></div>
+            </div>
+            <div data-role="popup" id="reg_err_one" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="a">
+                    <h1>Alert</h1>
                 </div>
+                <div role="main" class="ui-content">
+                    <p id="reg_err_one_text"></p>
+                    <div class="request_btns">
+                        <a href="#" class="ui-btn-1">Ok</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- register part one-->
+
+        <div data-role="page" id="register" data-title="E-Gas Cylinders">
+            <div data-role="header" data-position="fixed">
+                <h1 class="ui-title" role="heading">Registration</h1>
+                <div class="ui-btn-right">
+                    <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
+                </div>
+            </div>
+            <div role="main" class="ui-content">
+                <input type="text" name="name" value="" id="name" placeholder="Your Name" />
+                <input type="text" name="email" id="email" value="" placeholder="Your Email id" />
+                <select id="gas_type" data-role="none">
+                    <option value="1">Residential</option>
+                    <option value="0">Commercial</option>
+                </select>
+                <input type="text" name="addressl1" id="addressl1" value="" placeholder="Address Line 1" />
+                <input type="text" name="addressl2" id="addressl2" value="" placeholder="Address Line 2" />
+                <input type="text" name="fix_city" id="fix_city" readonly="true" value="Chennai" placeholder="City" />
+                <input type="text" name="area_pin" id="area_pin" value="" placeholder="Pin code" />
+                <input type="text" name="alt_number" id="alt_number" value="" placeholder="Alternative Number" />
+                <a class="ui-btn ui-corner-all ui-btn-a" href="#" onclick="createCode();">Submit</a>
             </div>
             <div id="err_msg" class="ui-content"></div>
             <div data-role="popup" id="reg_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">

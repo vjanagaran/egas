@@ -307,7 +307,7 @@ function getStart() {
     if (getVal(config.user_id) != null && getVal(config.user_status) != 0) {
         $(":mobile-pagecontainer").pagecontainer("change", "#shopping");
     } else {
-        $(":mobile-pagecontainer").pagecontainer("change", "#register");
+        $(":mobile-pagecontainer").pagecontainer("change", "#register_one");
     }
 }
 
@@ -327,11 +327,6 @@ function validRegister() {
         $("#reg_err").popup("open");
         return false;
     }
-    if ($.trim($("#mobile").val()).length < 10) {
-        $("#reg_err_text").html("<b>Enter your 10 digit mobile number</b>");
-        $("#reg_err").popup("open");
-        return false;
-    }
     if ($.trim($("#addressl1").val()).length < 3) {
         $("#reg_err_text").html("<b>Address line 1 is mandatory</b>");
         $("#reg_err").popup("open");
@@ -345,8 +340,15 @@ function validRegister() {
     return true;
 }
 
-function removeDetails() {
-    $("#remove_for_exist_user").addClass("remove-item");
+function validMobile() {
+    $("#reg_err_one .ui-content a").attr("data-rel", "back");
+    $("#reg_err_one .ui-content a").removeAttr("href");
+    if ($.trim($("#mobile").val()).length < 10) {
+        $("#reg_err_one_text").html("<b>Enter your 10 digit mobile number</b>");
+        $("#reg_err_one").popup("open");
+        return false;
+    }
+    return true;
 }
 
 function refreshRegister() {
@@ -354,12 +356,55 @@ function refreshRegister() {
     $("#err_msg").empty();
     if (getVal(config.user_id) != null && getVal(config.user_status) != 1) {
         $("#name").val(getVal(config.user_name));
-        $("#mobile").val(getVal(config.user_mobile));
         $("#email").val(getVal(config.user_email));
     } else {
         $("#name").val("");
-        $("#mobile").val("");
         $("#email").val("");
+    }
+}
+
+function registerPartOne() {
+    if (validMobile()) {
+        $("#reg_one_spinner").empty();
+        $("#reg_one_spinner").append(loading);
+        var mobile = $.trim($('#mobile').val());
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=user_exist",
+            data: mobile,
+            cache: false,
+            success: function (rs) {
+                $("#reg_one_spinner").empty();
+                if (rs.error == false) {
+                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
+                    $("#reg_err_one .ui-content a").attr("href", "#register");
+                    setVal(config.user_mobile, mobile);
+                    $(":mobile-pagecontainer").pagecontainer("change", "#register");
+                } else {
+                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
+                    $("#reg_err_one .ui-content a").attr("href", "#verify");
+                    setVal(config.user_name, rs.name);
+                    setVal(config.user_mobile, mobile);
+                    setVal(config.user_email, rs.email);
+                    setVal(config.user_address1, rs.addressl1);
+                    setVal(config.user_address2, rs.addressl2);
+                    setVal(config.user_pincode, rs.pin);
+                    setVal(config.user_alternet_number, rs.alt_num);
+                    setVal(config.cylinder_type, rs.gas_type);
+                    setVal(config.user_status, rs.status);
+                    setVal(config.user_id, rs.id);
+                    $("#reg_err_one_text").html("<b>" + rs.message + "</b>");
+                    $("#reg_err_one").popup("open");
+                }
+                console.log(rs);
+            },
+            error: function (request, status, error) {
+                $("#reg_err_one .ui-content a").removeAttr("href");
+                $("#reg_err_one .ui-content a").attr("data-rel", "back");
+                $("#reg_err_one_text").html("<b>Process fail please try again......</b>");
+                $("#reg_err_one").popup("open");
+            }
+        });
     }
 }
 
@@ -368,7 +413,6 @@ function createCode() {
         $("#err_msg").empty();
         $("#err_msg").append(loading);
         var name = $.trim($('#name').val());
-        var mobile = $.trim($('#mobile').val());
         var email = $.trim($('#email').val());
         var addressl1 = $.trim($('#addressl1').val());
         var addressl2 = $.trim($('#addressl2').val());
@@ -377,9 +421,14 @@ function createCode() {
         var gas_type = $.trim($('#gas_type').val());
         var details = {
             name: name,
-            mobile: mobile,
+            mobile: getVal(config.user_mobile),
             email: email,
-            device_token: getVal(config.device_token)
+            device_token: getVal(config.device_token),
+            address1: addressl1,
+            address2: addressl2,
+            pincode: pin,
+            alt_num: alt_num,
+            gas_type: gas_type
         };
         $.ajax({
             type: "POST",
@@ -405,19 +454,8 @@ function createCode() {
                     $("#reg_err_text").html("<b>" + html.message + "</b>");
                     $("#reg_err").popup("open");
                 } else {
-                    $("#reg_err .ui-content a").removeAttr("data-rel");
-                    $("#reg_err .ui-content a").attr("onclick", "redirectToVerify()");
-                    setVal(config.user_name, name);
-                    setVal(config.user_mobile, mobile);
-                    setVal(config.user_email, email);
-                    setVal(config.user_address1, addressl1);
-                    setVal(config.user_address2, addressl2);
-                    setVal(config.user_pincode, pin);
-                    setVal(config.user_alternet_number, alt_num);
-                    setVal(config.cylinder_type, gas_type);
-                    setVal(config.user_status, html.status);
-                    setVal(config.user_id, html.id);
-                    after_reg = "verify";
+                    $("#reg_err .ui-content a").removeAttr("onclick");
+                    $("#reg_err .ui-content a").attr("data-rel", "back");
                     $("#reg_err_text").html("<b>" + html.message + "</b>");
                     $("#reg_err").popup("open");
                 }
