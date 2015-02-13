@@ -13,6 +13,7 @@ function onDeviceReady() {
     $.mobile.defaultDialogTransition = 'none';
     if (is_mobile) {
         push.initPushwoosh();
+        window.analytics.startTrackerWithId('UA-59665096-1');
     }
 }
 
@@ -46,6 +47,9 @@ var router = new $.mobile.Router([{
             introPage: function (type, match, ui) {
                 log("Intro Page", 3);
                 getPromoVideo();
+                if (is_mobile) {
+                    window.analytics.trackView('Intro Page');
+                }
             },
             registerPage: function (type, match, ui) {
                 log("Register Page", 3);
@@ -54,14 +58,23 @@ var router = new $.mobile.Router([{
             registerStepOnePage: function (type, match, ui) {
                 log("Register Step One Page", 3);
                 resetMobileNo();
+                if (is_mobile) {
+                    window.analytics.trackView('Register Page');
+                }
             },
             verifyPage: function (type, match, ui) {
                 log("Verification Page", 3);
                 startTimer();
+                if (is_mobile) {
+                    window.analytics.trackView('Verification Page');
+                }
             },
             shoppingPage: function (type, match, ui) {
                 log("Catalog Page", 3);
                 loadShopping();
+                if (is_mobile) {
+                    window.analytics.trackView('Catalog Page');
+                }
             },
             shoppingitemsPage: function (type, match, ui) {
                 log("Catalog Items page", 3);
@@ -73,6 +86,9 @@ var router = new $.mobile.Router([{
                 log("Cart Items page", 3);
                 showMyCart();
                 $("#cart_items_total").html("&#8377;" + grand_total);
+                if (is_mobile) {
+                    window.analytics.trackView('Cart Page');
+                }
             },
             deliveryPage: function (type, match, ui) {
                 log("Delivery page", 3);

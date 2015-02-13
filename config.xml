@@ -11,6 +11,8 @@
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.6.3" />
     <preference name="orientation" value="default" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="6000" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
@@ -44,6 +46,7 @@
     <gap:plugin name="org.apache.cordova.vibration" />
     <gap:plugin name="com.pushwoosh.plugins.pushwoosh" />
     <gap:plugin name="de.appplant.cordova.plugin.hidden-statusbar-overlay" />
+    <gap:plugin name="com.danielcwilson.plugins.googleanalytics" />
     <icon src="icon.png" />
     <gap:splash src="splash.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="res/icon/android/icon-36-ldpi.png" />
