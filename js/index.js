@@ -19,6 +19,7 @@ function onDeviceReady() {
 var router = new $.mobile.Router([{
         "#loading": {handler: "loadingPage", events: "bs"},
         "#intro": {handler: "introPage", events: "bs"},
+        "#register_one": {handler: "registerStepOnePage", events: "bs"},
         "#register": {handler: "registerPage", events: "bs"},
         "#verify": {handler: "verifyPage", events: "bs"},
         "#shopping": {handler: "shoppingPage", events: "bs"},
@@ -49,6 +50,10 @@ var router = new $.mobile.Router([{
             registerPage: function (type, match, ui) {
                 log("Register Page", 3);
                 refreshRegister();
+            },
+            registerStepOnePage: function (type, match, ui) {
+                log("Register Step One Page", 3);
+                resetMobileNo();
             },
             verifyPage: function (type, match, ui) {
                 log("Verification Page", 3);
@@ -312,6 +317,76 @@ function getStart() {
 }
 
 
+/**********   Register Step One functions ***/
+
+function validMobile() {
+    $("#reg_err_one .ui-content a").attr("data-rel", "back");
+    $("#reg_err_one .ui-content a").removeAttr("href");
+    if ($.trim($("#mobile").val()).length < 10) {
+        $("#reg_err_one_text").html("<b>Enter your 10 digit mobile number</b>");
+        $("#reg_err_one").popup("open");
+        return false;
+    }
+    return true;
+}
+
+function registerPartOne() {
+    if (validMobile()) {
+        $("#reg_one_spinner").empty();
+        $("#reg_one_spinner").append(loading);
+        var mobile = $.trim($('#mobile').val());
+        var data = {mobile: mobile};
+        $.ajax({
+            type: "POST",
+            url: config.api_url + "module=user&action=user_exist",
+            data: data,
+            cache: false,
+            success: function (rs) {
+                $("#reg_one_spinner").empty();
+                if (rs.error == false) {
+                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
+                    $("#reg_err_one .ui-content a").attr("href", "#register");
+                    setVal(config.user_mobile, mobile);
+                    $(":mobile-pagecontainer").pagecontainer("change", "#register");
+                } else {
+                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
+                    $("#reg_err_one .ui-content a").attr("href", "#verify");
+                    setVal(config.user_name, rs.name);
+                    setVal(config.user_mobile, mobile);
+                    setVal(config.user_email, rs.email);
+                    setVal(config.user_address1, rs.address1);
+                    setVal(config.user_address2, rs.address2);
+                    setVal(config.user_city, rs.city);
+                    setVal(config.user_pincode, rs.pincode);
+                    setVal(config.user_alternet_number, rs.alt_num);
+                    setVal(config.cylinder_type, rs.gas_type);
+                    setVal(config.user_status, rs.status);
+                    setVal(config.user_id, rs.id);
+                    $("#reg_err_one_text").html("<b>" + rs.message + "</b>");
+                    $("#reg_err_one").popup("open");
+                }
+            },
+            error: function (request, status, error) {
+                $("#reg_one_spinner").empty();
+                $("#reg_err_one .ui-content a").removeAttr("href");
+                $("#reg_err_one .ui-content a").attr("data-rel", "back");
+                $("#reg_err_one_text").html("<b>Process fail please try again......</b>");
+                $("#reg_err_one").popup("open");
+            }
+        });
+    }
+}
+
+function resetMobileNo() {
+    $("#reg_one_spinner").empty();
+    if (getVal(config.user_id) != null && getVal(config.user_status) != 1) {
+        $("#mobile").val(getVal(config.user_mobile));
+    } else {
+        $("#mobile").val("");
+    }
+}
+
+
 /**********   Register Page functions ***/
 
 function validRegister() {
@@ -340,72 +415,15 @@ function validRegister() {
     return true;
 }
 
-function validMobile() {
-    $("#reg_err_one .ui-content a").attr("data-rel", "back");
-    $("#reg_err_one .ui-content a").removeAttr("href");
-    if ($.trim($("#mobile").val()).length < 10) {
-        $("#reg_err_one_text").html("<b>Enter your 10 digit mobile number</b>");
-        $("#reg_err_one").popup("open");
-        return false;
-    }
-    return true;
-}
-
 function refreshRegister() {
     $("div#err_msg").center();
     $("#err_msg").empty();
-    if (getVal(config.user_id) != null && getVal(config.user_status) != 1) {
-        $("#name").val(getVal(config.user_name));
-        $("#email").val(getVal(config.user_email));
-    } else {
-        $("#name").val("");
-        $("#email").val("");
-    }
-}
-
-function registerPartOne() {
-    if (validMobile()) {
-        $("#reg_one_spinner").empty();
-        $("#reg_one_spinner").append(loading);
-        var mobile = $.trim($('#mobile').val());
-        $.ajax({
-            type: "POST",
-            url: config.api_url + "module=user&action=user_exist",
-            data: mobile,
-            cache: false,
-            success: function (rs) {
-                $("#reg_one_spinner").empty();
-                if (rs.error == false) {
-                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
-                    $("#reg_err_one .ui-content a").attr("href", "#register");
-                    setVal(config.user_mobile, mobile);
-                    $(":mobile-pagecontainer").pagecontainer("change", "#register");
-                } else {
-                    $("#reg_err_one .ui-content a").removeAttr("data-rel");
-                    $("#reg_err_one .ui-content a").attr("href", "#verify");
-                    setVal(config.user_name, rs.name);
-                    setVal(config.user_mobile, mobile);
-                    setVal(config.user_email, rs.email);
-                    setVal(config.user_address1, rs.addressl1);
-                    setVal(config.user_address2, rs.addressl2);
-                    setVal(config.user_pincode, rs.pin);
-                    setVal(config.user_alternet_number, rs.alt_num);
-                    setVal(config.cylinder_type, rs.gas_type);
-                    setVal(config.user_status, rs.status);
-                    setVal(config.user_id, rs.id);
-                    $("#reg_err_one_text").html("<b>" + rs.message + "</b>");
-                    $("#reg_err_one").popup("open");
-                }
-                console.log(rs);
-            },
-            error: function (request, status, error) {
-                $("#reg_err_one .ui-content a").removeAttr("href");
-                $("#reg_err_one .ui-content a").attr("data-rel", "back");
-                $("#reg_err_one_text").html("<b>Process fail please try again......</b>");
-                $("#reg_err_one").popup("open");
-            }
-        });
-    }
+    $("#name").val("");
+    $("#email").val("");
+    $("#addressl1").val("");
+    $("#addressl2").val("");
+    $("#area_pin").val("");
+    $("#alt_number").val("");
 }
 
 function createCode() {
@@ -418,6 +436,7 @@ function createCode() {
         var addressl2 = $.trim($('#addressl2').val());
         var pin = $.trim($('#area_pin').val());
         var alt_num = $.trim($('#alt_number').val());
+        var city = $.trim($('#fix_city').val());
         var gas_type = $.trim($('#gas_type').val());
         var details = {
             name: name,
@@ -426,6 +445,7 @@ function createCode() {
             device_token: getVal(config.device_token),
             address1: addressl1,
             address2: addressl2,
+            city: city,
             pincode: pin,
             alt_num: alt_num,
             gas_type: gas_type
@@ -441,7 +461,6 @@ function createCode() {
                     $("#reg_err .ui-content a").removeAttr("data-rel");
                     $("#reg_err .ui-content a").attr("onclick", "redirectToVerify()");
                     setVal(config.user_name, name);
-                    setVal(config.user_mobile, mobile);
                     setVal(config.user_email, email);
                     setVal(config.user_address1, addressl1);
                     setVal(config.user_address2, addressl2);
