@@ -17,6 +17,7 @@ config = function () {
         user_city: "e-gas_user_city",
         user_image: "e-gas_user_image",
         user_id: "e-gas_userid",
+        user_type: "e-gas_user_type",
         cylinder_type: "e-gas_cylinder_type",
         user_status: "e-gas_user_status",
         user_alternet_number: "e-gas_user_alternet_number",
