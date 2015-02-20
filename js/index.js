@@ -1393,6 +1393,7 @@ function validRate() {
 }
 
 function rateService() {
+    $("#rate_spinner").empty();
     var msg = $("#rate_msg").val();
     var rate1 = $("#service_rate").raty("score");
     var rate2 = $("#price_rate").raty("score");
@@ -1405,12 +1406,16 @@ function rateService() {
         review: msg
     };
     if (validRate()) {
+        $("#rate_spinner").append(loading);
+        $("#rate .ui-content a").addClass("remove-item");
         $.ajax({
             type: "POST",
             url: config.api_url + "module=rate_review&action=create",
             data: data,
             cache: false,
             success: function (data) {
+                $("#rate_spinner").empty();
+                $("#rate .ui-content a").removeClass("remove-item");
                 if (data.error == false) {
                     $("#ratepopup_text").html("<b>" + data.message + "</b>");
                     $("#ratepopup").popup("open");
