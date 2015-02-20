@@ -348,6 +348,7 @@ function validMobile() {
 
 function registerPartOne() {
     if (validMobile()) {
+        $("#register_one .ui-content a").addClass("remove-item");
         $("#reg_one_spinner").empty();
         $("#reg_one_spinner").append(loading);
         var mobile = $.trim($('#mobile').val());
@@ -358,6 +359,7 @@ function registerPartOne() {
             data: data,
             cache: false,
             success: function (rs) {
+                $("#register_one .ui-content a").removeClass("remove-item");
                 $("#reg_one_spinner").empty();
                 if (rs.error == false) {
                     $("#reg_err_one .ui-content a").removeAttr("data-rel");
@@ -383,6 +385,7 @@ function registerPartOne() {
                 }
             },
             error: function (request, status, error) {
+                $("#register_one .ui-content a").removeClass("remove-item");
                 $("#reg_one_spinner").empty();
                 $("#reg_err_one .ui-content a").removeAttr("href");
                 $("#reg_err_one .ui-content a").attr("data-rel", "back");
@@ -444,6 +447,7 @@ function refreshRegister() {
 
 function createCode() {
     if (validRegister()) {
+        $("#register .ui-content a").addClass("remove-item");
         $("#err_msg").empty();
         $("#err_msg").append(loading);
         var name = $.trim($('#name').val());
@@ -472,6 +476,7 @@ function createCode() {
             data: details,
             cache: false,
             success: function (html) {
+                $("#register .ui-content a").removeClass("remove-item");
                 $("#err_msg").empty();
                 if (html.error == false) {
                     $("#reg_err .ui-content a").removeAttr("data-rel");
@@ -496,6 +501,7 @@ function createCode() {
                 }
             },
             error: function (request, status, error) {
+                $("#register .ui-content a").removeClass("remove-item");
                 $("#err_msg").empty();
                 $("#err_msg").append("Process fail please try again......");
             }
@@ -528,6 +534,7 @@ function startTimer() {
 function verifyCode() {
     var code = $("#code").val();
     if (code != "") {
+        $("#verify .ui-content a").addClass("remove-item");
         var details = {
             user: getVal(config.user_id),
             code: code
@@ -538,6 +545,7 @@ function verifyCode() {
             data: details,
             cache: false,
             success: function (html) {
+                $("#verify .ui-content a").removeClass("remove-item");
                 if (html.error == false) {
                     $("#verify_err .ui-content a").removeAttr("data-rel");
                     $("#verify_err .ui-content a").attr("onclick", "redirectToShopping()");
@@ -550,6 +558,7 @@ function verifyCode() {
                 }
             },
             error: function (request, status, error) {
+                $("#verify .ui-content a").removeClass("remove-item");
                 $("#err_msg").empty();
                 $("#err_msg").append("Process fail please try again......");
             }
@@ -562,6 +571,7 @@ function redirectToShopping() {
 }
 
 function resend() {
+    $("#verify .ui-content a").addClass("remove-item");
     var mobile = getVal(config.user_mobile);
     var email = getVal(config.user_email);
     var id = getVal(config.user_id);
@@ -578,12 +588,14 @@ function resend() {
         data: details,
         cache: false,
         success: function (html) {
+            $("#verify .ui-content a").removeClass("remove-item");
             if (html.error == false) {
                 $("#verify_err_text").html("<b>" + html.message + "</b>");
                 $("#verify_err").popup("open");
             }
         },
         error: function (request, status, error) {
+            $("#verify .ui-content a").removeClass("remove-item");
             $("#verify_err_text").html("<b>Process fail please try again......</b>");
             $("#verify_err").popup("open");
         }
@@ -638,6 +650,7 @@ function validateUpdation() {
 
 function updateUser() {
     if (validateUpdation() && checkUpdation()) {
+        $("#me .ui-content a").addClass("remove-item");
         $("#me_loader").empty();
         $("#me_loader").append(loading);
         var name = $("#me_name").val();
@@ -653,6 +666,7 @@ function updateUser() {
             data: data,
             cache: false,
             success: function (html) {
+                $("#me .ui-content a").removeClass("remove-item");
                 if (html.error == false) {
                     $("#me_loader").empty();
                     setVal(config.user_name, name);
@@ -666,6 +680,7 @@ function updateUser() {
                 }
             },
             error: function (request, status, error) {
+                $("#me .ui-content a").removeClass("remove-item");
                 $("#me_loader").empty();
                 $("#update_success_text").html("<b>Process failed please try again after some times.....</b>");
                 $("#update_success").popup("open");
@@ -993,6 +1008,7 @@ function processStep2() {
 function processOrder() {
     $("#success_msg").empty();
     $("#success_msg").append(loading);
+    $("#payment div[data-role=footer]").addClass("remove-item");
     var id = getVal(config.user_id);
     var delivery = cart.delivery;
     var decs = cart.decs;
@@ -1025,6 +1041,7 @@ function processOrder() {
             data: data,
             cache: false,
             success: function (html) {
+                $("#payment div[data-role=footer]").removeClass("remove-item");
                 if (html.error == false) {
                     $("#success_msg").empty();
                     cart.items = [];
@@ -1042,11 +1059,13 @@ function processOrder() {
                 }
             },
             error: function (request, status, error) {
+                $("#payment div[data-role=footer]").removeClass("remove-item");
                 $("#success_msg").empty();
                 $("#success_msg").append("Process not successfull try again later......");
             }
         });
     } else {
+        $("#payment div[data-role=footer]").removeClass("remove-item");
         $("#success_msg").append("<b>Please select the payment mode</b>");
     }
 }
@@ -1201,6 +1220,7 @@ function rateUs() {
 /****** Feedback page functions  ***/
 
 function showFeedbackForm() {
+    $("#feedback_spinner").empty();
     var name = getVal(config.user_name);
     var email = getVal(config.user_email);
     var mobile = getVal(config.user_mobile);
@@ -1212,6 +1232,7 @@ function showFeedbackForm() {
 }
 
 function validForm() {
+    $("#feedback_spinner").empty();
     if ($.trim($("#contact_name").val()).length < 3) {
         $("#feedback_err_text").html("<b>Name must be 3 char</b>");
         $("#feedback_err").popup("open");
@@ -1234,12 +1255,15 @@ function validForm() {
 }
 
 function receiveForm() {
+    $("#feedback_spinner").empty();
+    $("#feedback_spinner").append(loading);
     var message = $.trim($("#contact_message").val());
     var data = {};
     var name = getVal(config.user_name);
     var email = getVal(config.user_email);
     var mobile = getVal(config.user_mobile);
     if (message != "") {
+        $("#feedback .ui-content a").addClass("remove-item");
         if (name != null && email != null && mobile != null) {
             data = {
                 name: name,
@@ -1266,6 +1290,8 @@ function receiveForm() {
             data: data,
             cache: false,
             success: function (data) {
+                $("#feedback_spinner").empty();
+                $("#feedback .ui-content a").removeClass("remove-item");
                 if (data.error == false) {
                     $("#feedback_err_text").html("<b>" + data.message + "</b>");
                     $("#feedback_err").popup("open");
@@ -1276,6 +1302,7 @@ function receiveForm() {
             }
         });
     } else {
+        $("#feedback_spinner").empty();
         $("#feedback_err_text").html("<b>Please enter feedback</b>");
         $("#feedback_err").popup("open");
     }
@@ -1413,12 +1440,17 @@ function referFriend() {
         $("#refer_err").popup("open");
     } else {
         if (msg != "") {
+            $("#refer .ui-content a").addClass("remove-item");
+            $("#refer_spinner").empty();
+            $("#refer_spinner").append(loading);
             $.ajax({
                 type: "POST",
                 url: config.api_url + "module=user&action=invitefriend",
                 data: data,
                 cache: false,
                 success: function (data) {
+                    $("#refer .ui-content a").removeClass("remove-item");
+                    $("#refer_spinner").empty();
                     if (data.error == false) {
                         $("#refer_err_text").html("<b>" + data.message + "</b>");
                         $("#refer_err").popup("open");

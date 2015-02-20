@@ -493,6 +493,7 @@
                 </div>
                 <div><textarea id="contact_message" rows="3" name="message" placeholder="Your Feedback"></textarea></div>
                 <div><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" onclick="return receiveForm();">Submit</a></div>
+                <div id="feedback_spinner"></div>
             </div>
             <div data-role="popup" id="feedback_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
@@ -519,6 +520,7 @@
                 <input type="email" placeholder="Your friend's email id" value="" name="friend_email" id="friend_email"/>
                 <textarea name="friend_message" rows="3" id="friend_message" placeholder="Your message for friend"></textarea>
                 <a href="#" class="ui-btn ui-btn-corner-all" onclick="referFriend();">Refer</a>
+                <div id="refer_spinner"></div>
             </div>
             <div data-role="popup" id="refer_err" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header" data-theme="a">
