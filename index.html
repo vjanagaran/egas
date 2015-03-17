@@ -32,6 +32,7 @@
                     if ($(this).attr("href") == "#" + $.mobile.activePage[0].id) {
                         $("[data-role=panel]").panel("close");
                     }
+                    panel_open = false;
                 });
             });
         </script>
@@ -162,7 +163,7 @@
         <div data-role="page" id="shopping" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <h1 class="ui-title" role="heading">Category</h1>
-                <a class="ui-btn-left ui-btn ui-btn-a ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-left ui-btn ui-btn-a ui-shadow ui-corner-all" onclick="openPanel();"><i class="fa fa-list"></i></a>
                 <a class="ui-btn-right ui-btn ui-btn-a ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-shopping-cart"></i> <span id="category_cart"> 0</span></a>
             </div>
             <div role="main" class="ui-content">
@@ -226,7 +227,7 @@
         <div data-role="page" id="me" data-title="E-Gas Cylinders">
             <div data-role="header" data-position="fixed">
                 <h1 class="ui-title" role="heading">User Profile</h1>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" onclick="openPanel();"><i class="fa fa-list"></i></a>
                 <div class="ui-btn-right">
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
                     <a class="ui-btn ui-shadow ui-corner-all" href="#cart" data-iconpos="notext"><i class="fa fa-briefcase"></i> <span id="me_cart"> 0</span></a>
@@ -365,7 +366,7 @@
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
                     <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="order_cart"> 0</span></a>
                 </div>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" onclick="openPanel();"><i class="fa fa-list"></i></a>
             </div>
             <div role="main" class="ui-content">
                 <div id="ordered_items"></div>
@@ -404,7 +405,7 @@
                     <a class="ui-btn ui-shadow ui-corner-all" href="#faq" data-iconpos="notext"><i class="fa fa-info-circle"></i></a>
                     <a class="ui-btn ui-shadow ui-corner-all" href="#cart"><i class="fa fa-briefcase"></i> <span id="more_cart"> 0</span></a>
                 </div>
-                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" href="#mypannel"><i class="fa fa-list"></i></a>
+                <a class="ui-btn-left ui-btn ui-shadow ui-corner-all" onclick="openPanel();"><i class="fa fa-list"></i></a>
             </div>
             <div role="main" class="ui-content">
                 <ul data-role="listview" data-inset="true" data-theme='b'>
@@ -593,7 +594,7 @@
             </div>
         </div> <!-- External popup -->
 
-        <div data-role="panel" id="mypannel" data-dismissible=”true” data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
+        <div data-role="panel" id="mypanel" data-dismissible=”true” data-position="left" data-theme="b" data-position-fixed="true" data-display="overlay">
             <br/><br/> 
             <ul class="ui-content" data-role="listview">
                 <li><a href="#shopping" class="ui-btn"><i class="fa fa-briefcase"></i> Shop</a></li>

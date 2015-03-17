@@ -251,6 +251,7 @@ function log(msg, level) {
 /********  Common Functions and Global Variables **/
 
 var loading = '<div class="align-center"><br/><br/><img src="img/loading.gif" width="60" /></div>';
+var panel_open = false;
 var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
 var after_reg = "";
@@ -270,6 +271,18 @@ function calcCart() {
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+}
+
+function openPanel() {
+    if (panel_open != true) {
+        $("#mypanel").panel();
+        $("#mypanel").panel("open");
+        panel_open = true;
+    } else {
+        $("#mypanel").panel();
+        $("#mypanel").panel("close");
+        panel_open = false;
+    }
 }
 
 
