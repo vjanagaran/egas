@@ -155,6 +155,16 @@ $.addTemplateFormatter({
     menuHref: function (value, options) {
         return "#shoppingitems?cat=" + value;
     },
+    countItem: function (value, options) {
+        var count = "";
+        $.each(cart.items, function (index, row) {
+            if (value == row.cat_id) {
+                count = row.qty;
+                return false;
+            }
+        });
+        return count;
+    },
     menuItemClass: function (value, options) {
         var cls = "menu-items";
         return cls;
@@ -256,6 +266,7 @@ var cart = {items: [], decs: "", delivery: ""};
 var grand_total = 0;
 var after_reg = "";
 var order_id = "";
+var cat_id = "";
 function calcCart() {
     var cart_qty = 0;
     $.each(cart.items, function (index, row) {
@@ -722,6 +733,7 @@ function loadShopping() {
 /**********   Shoping Items Page functions ***/
 
 function loadShoppingItems(cat) {
+    cat_id = cat;
     $("#menus").empty();
     var heading = "";
     var rs = $.parseJSON(getVal(config.product_list));
@@ -747,6 +759,7 @@ function increaseQty(id) {
     }
     var item = {
         id: id,
+        cat_id: cat_id,
         name: name,
         qty: qty,
         rate: rate,

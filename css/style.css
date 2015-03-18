@@ -133,7 +133,7 @@ div[data-role="header"] .ui-title{
     list-style: none;
 }
 
-#shopping .category{
+#shopping .category {
     margin: 10px;
     border-radius: 5px;
     text-align: left;
@@ -141,13 +141,17 @@ div[data-role="header"] .ui-title{
     border-bottom: 1px solid #999999;
 }
 
-#shopping .category > span{
+#shopping .category > span {
     margin: 5px;
     float: left;
     font-size: 1.25em;
 }
 
-.request_btns{
+#shopping .category > span:last-child {
+    float: right;
+}
+
+.request_btns {
     width: 100%;
     margin-top: 20px;
     border-top: 1px solid #eee;
