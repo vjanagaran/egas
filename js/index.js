@@ -156,13 +156,15 @@ $.addTemplateFormatter({
         return "#shoppingitems?cat=" + value;
     },
     countItem: function (value, options) {
-        var count = "";
+        var count = 0;
         $.each(cart.items, function (index, row) {
             if (value == row.cat_id) {
-                count = row.qty;
-                return false;
+                count = count + row.qty;
             }
         });
+        if (count == 0) {
+            count = "";
+        }
         return count;
     },
     menuItemClass: function (value, options) {
